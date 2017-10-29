@@ -5,9 +5,7 @@
 
     <groupId>org.bal.apps</groupId>
     <artifactId>demo</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
-
+    <version>1.0</version>
     <name>demo</name>
     <description>Demo project for Spring Boot with rest</description>
 
@@ -74,7 +72,28 @@
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
+                <configuration>
+                    <mainClass>org.bal.app.MainApplication</mainClass>
+                    <layout>ZIP</layout>
+                </configuration>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>1.5.6.RELEASE</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -82,18 +101,23 @@
                 <executions>
                     <execution>
                         <id>filter-dockerfile</id>
-                        <phase>generate-resources</phase>
+                        <phase>process-resources</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <outputDirectory>${project.build.directory}/</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>src/main/docker</directory>
+                                    <directory>${project.basedir}/src/main/docker</directory>
                                     <filtering>true</filtering>
+                                    <includes>
+                                        <include>Dockerfile</include>
+                                    </includes>
                                 </resource>
                             </resources>
+                            <useDefaultDelimiters>false</useDefaultDelimiters>
+                            <delimiters>%</delimiters>
                         </configuration>
                     </execution>
                 </executions>

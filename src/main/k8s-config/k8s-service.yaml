@@ -1,0 +1,17 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: demo
+  namespace: my-project
+  labels:
+    run: demo
+spec:
+  ports:
+  - protocol: TCP
+    port: 9090
+    targetPort: 9090
+    nodePort: 32000
+  selector:
+    run: demo
+  type: NodePort

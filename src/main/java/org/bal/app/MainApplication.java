@@ -20,4 +20,10 @@ public class MainApplication {
         LocalDateTime currentDate = LocalDateTime.now();
         return "Hello World! -[" + currentDate + "]";
     }
+
+    @RequestMapping("/peron/$id")
+    public String person(String id) {
+
+        return "Person is: " + id;
+    }
 }
