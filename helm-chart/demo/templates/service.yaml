@@ -1,0 +1,20 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ template "demo.fullname" . }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ template "demo.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  ports:
+  - protocol: {{ .Values.service.protocol }}
+    port: {{ .Values.service.externalPort }}
+    targetPort: {{ .Values.service.internalPort }}
+    nodePort: {{ .Values.service.nodePort }}
+  selector:
+    app: {{ template "demo.name" . }}
+    release: {{ .Release.Name }}
+  type: {{ .Values.service.type }}
