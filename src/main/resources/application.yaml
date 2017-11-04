@@ -1,0 +1,19 @@
+server:
+  port : 9090
+#app.name: %project.artifactId%
+
+zipkin:
+  nodePort: 30002
+  external-host: 192.168.99.100
+#oc config
+#service-host: zipkin-service.myproject.svc
+  service-host: zipkin.my-project
+
+#used by the client of grpc to connect to grpc server.
+person-service:
+  external-host: 192.168.1.15
+  external-port: 50051
+
+logging:
+  level:
+    ROOT: DEBUG
