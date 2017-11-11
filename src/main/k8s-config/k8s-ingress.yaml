@@ -3,8 +3,6 @@ kind: Ingress
 metadata:
   name: demo-ingress
   namespace: my-project
-  annotations:
-    ingress.kubernetes.io/rewrite-target: /
 spec:
   backend:
     serviceName: default-http-backend

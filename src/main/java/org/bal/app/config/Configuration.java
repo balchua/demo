@@ -28,17 +28,17 @@ import zipkin.reporter.okhttp3.OkHttpSender;
 @Import({TracingHandlerInterceptor.class})
 public class Configuration extends WebMvcConfigurerAdapter {
 
-    @Value("${zipkin.external-host}")
-    private String zipkinExternalHost;
+    @Value("${zipkin.host}")
+    private String zipkinHost;
 
-    @Value("${zipkin.nodePort}")
-    private int zipkinNodePort;
+    @Value("${zipkin.port}")
+    private int zipkinPort;
 
-    @Value("${person-service.external-host}")
-    private String personServiceExternalHost;
+    @Value("${person-service.host}")
+    private String personServiceHost;
 
-    @Value("${person-service.external-port}")
-    private int personServiceExternalPort;
+    @Value("${person-service.port}")
+    private int personServicePort;
 
     @Autowired
     private TracingHandlerInterceptor serverInterceptor;
@@ -69,7 +69,7 @@ public class Configuration extends WebMvcConfigurerAdapter {
      */
     @Bean
     public Sender sender() {
-        return OkHttpSender.create("http://" + zipkinExternalHost + ":" + zipkinNodePort + "/api/v1/spans");
+        return OkHttpSender.create("http://" + zipkinHost + ":" + zipkinPort + "/api/v1/spans");
     }
 
     @Bean
@@ -80,7 +80,7 @@ public class Configuration extends WebMvcConfigurerAdapter {
 
     @Bean
     public ManagedChannelBuilder managedChannelBuilder() {
-        return ManagedChannelBuilder.forAddress(personServiceExternalHost, personServiceExternalPort).intercept(grpcTracing().newClientInterceptor())
+        return ManagedChannelBuilder.forAddress(personServiceHost, personServicePort).intercept(grpcTracing().newClientInterceptor())
                 .usePlaintext(true);
     }
 

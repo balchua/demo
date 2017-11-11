@@ -24,11 +24,32 @@ spec:
           protocol: TCP
         imagePullPolicy: IfNotPresent
         readinessProbe:
-          initialDelaySeconds: 5
+          initialDelaySeconds: 30
           failureThreshold: 3
           httpGet:
             path: /
             port: 9090
+        env:
+          - name: ZIPKIN_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: demo-config
+                key: zipkin-host
+          - name: ZIPKIN_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: demo-config
+                key: zipkin-port
+          - name: PERSON_SERVICE_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: demo-config
+                key: person-service-host
+          - name: PERSON_SERVICE_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: demo-config
+                key: person-service-port
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst
