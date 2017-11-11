@@ -23,4 +23,33 @@ spec:
         - containerPort: {{ .Values.service.internalPort }}
           protocol: {{ .Values.service.protocol }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        
+        readinessProbe:
+          initialDelaySeconds: 30
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: {{ .Values.service.internalPort }}
+        env:
+          - name: ZIPKIN_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "nginx.fullname" . }}
+                key: zipkin-host
+          - name: ZIPKIN_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "nginx.fullname" . }}
+                key: zipkin-port
+          - name: PERSON_SERVICE_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "nginx.fullname" . }}
+                key: person-service-host
+          - name: PERSON_SERVICE_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: demo-config
+                key: person-service-port
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst

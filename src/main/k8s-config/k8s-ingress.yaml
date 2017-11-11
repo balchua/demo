@@ -15,3 +15,7 @@ spec:
         backend:
           serviceName: demo
           servicePort: 9090
+      - path: /person
+        backend:
+          serviceName: demo
+          servicePort: 9090

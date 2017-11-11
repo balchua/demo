@@ -13,4 +13,4 @@ person-service:
 
 logging:
   level:
-    ROOT: DEBUG
+    ROOT: INFO

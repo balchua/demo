@@ -16,11 +16,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import zipkin.Span;
-import zipkin.reporter.AsyncReporter;
-import zipkin.reporter.Reporter;
-import zipkin.reporter.Sender;
-import zipkin.reporter.okhttp3.OkHttpSender;
+import zipkin2.Span;
+import zipkin2.reporter.AsyncReporter;
+import zipkin2.reporter.Reporter;
+import zipkin2.reporter.Sender;
+import zipkin2.reporter.okhttp3.OkHttpSender;
+
 
 @org.springframework.context.annotation.Configuration
 @ComponentScan("org.bal.app.client")
@@ -54,13 +55,13 @@ public class Configuration extends WebMvcConfigurerAdapter {
     @Bean
     public Tracing tracing() {
         return Tracing.newBuilder()
-                .localServiceName("get-person")
-                .reporter(reporter()).build();
+                .localServiceName("person-rest-service")
+                .spanReporter(reporter()).build();
     }
 
     // decides how to name and tag spans. By default they are named the same as the http method.
     @Bean
-    HttpTracing httpTracing(Tracing tracing) {
+    public HttpTracing httpTracing(Tracing tracing) {
         return HttpTracing.create(tracing);
     }
 
@@ -69,7 +70,7 @@ public class Configuration extends WebMvcConfigurerAdapter {
      */
     @Bean
     public Sender sender() {
-        return OkHttpSender.create("http://" + zipkinHost + ":" + zipkinPort + "/api/v1/spans");
+        return OkHttpSender.create("http://" + zipkinHost + ":" + zipkinPort + "/api/v2/spans");
     }
 
     @Bean

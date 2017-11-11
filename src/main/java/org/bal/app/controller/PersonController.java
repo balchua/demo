@@ -27,6 +27,6 @@ public class PersonController {
     public String person(@RequestParam(value = "id", defaultValue = "123") String id) {
         Person person;
         person = personService.getPersonById(Integer.valueOf(id));
-        return "Person is: " + person.getFirstName();
+        return "Hello: " + person.getFirstName();
     }
 }

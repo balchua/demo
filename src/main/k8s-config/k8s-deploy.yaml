@@ -8,6 +8,7 @@ metadata:
     run: demo
 spec:
   replicas: 2
+  revisionHistoryLimit: 2
   selector:
     matchLabels:
       run: demo
@@ -18,13 +19,15 @@ spec:
     spec:
       containers:
       - name: demo
-        image: demo:1.0
+        image: demo:1.0.1
         ports:
         - containerPort: 9090
           protocol: TCP
         imagePullPolicy: IfNotPresent
         readinessProbe:
           initialDelaySeconds: 30
+          periodSeconds: 60
+          timeoutSeconds: 5
           failureThreshold: 3
           httpGet:
             path: /

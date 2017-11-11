@@ -38,3 +38,11 @@ resources:
   requests:
     cpu: 100m
     memory: 128Mi
+
+zipkin:
+  host:
+  port:
+
+person-service:
+  host:
+  port:
