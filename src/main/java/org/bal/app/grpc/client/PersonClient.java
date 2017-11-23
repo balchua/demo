@@ -1,6 +1,7 @@
 package org.bal.app.grpc.client;
 
 
+import com.google.protobuf.Empty;
 import org.bal.app.proto.internal.Person;
 import org.bal.app.proto.internal.PersonById;
 import org.bal.app.proto.internal.PersonManagementGrpc.PersonManagementBlockingStub;
@@ -30,6 +31,11 @@ public class PersonClient {
         LOGGER.debug("NAME: " + person.getFirstName());
         return person;
 
+    }
+
+    public Person randomNames() {
+        Person person = blockingStub.randomNames(Empty.newBuilder().build());
+        return person;
     }
 
     /*@Scheduled

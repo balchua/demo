@@ -100,6 +100,6 @@ public class Configuration extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(serverInterceptor);
+        registry.addInterceptor(serverInterceptor).excludePathPatterns("/health");
     }
 }

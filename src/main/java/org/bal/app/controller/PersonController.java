@@ -17,8 +17,9 @@ public class PersonController {
     @Autowired
     private PersonClient personService;
 
-    @RequestMapping("/")
-    public String home() {
+
+    @RequestMapping("/hello")
+    public String hello() {
         LocalDateTime currentDate = LocalDateTime.now();
         return "Hello World! -[" + currentDate + "]";
     }
@@ -29,4 +30,12 @@ public class PersonController {
         person = personService.getPersonById(Integer.valueOf(id));
         return "Hello: " + person.getFirstName();
     }
+
+    @RequestMapping("/randomNames")
+    public String randomNames() {
+        Person person;
+        person = personService.randomNames();
+        return "Hello " + person.getDescription() + " " + person.getFirstName();
+    }
+
 }

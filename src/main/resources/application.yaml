@@ -3,13 +3,13 @@ server:
 #app.name: %project.artifactId%
 
 zipkin:
-  host: ${ZIPKIN_HOST}
-  port: ${ZIPKIN_PORT}
+  host: ${ZIPKIN_HOST:localhost}
+  port: ${ZIPKIN_PORT:9411}
 
 #used by the client of grpc to connect to grpc server.
 person-service:
-  host: ${PERSON_SERVICE_HOST}
-  port: ${PERSON_SERVICE_PORT}
+  host: ${PERSON_SERVICE_HOST:localhost}
+  port: ${PERSON_SERVICE_PORT:50051}
 
 logging:
   level:

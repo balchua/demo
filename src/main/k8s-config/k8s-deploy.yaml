@@ -9,9 +9,6 @@ metadata:
 spec:
   replicas: 2
   revisionHistoryLimit: 2
-  selector:
-    matchLabels:
-      run: demo
   template:
     metadata:
       labels:
@@ -24,13 +21,13 @@ spec:
         - containerPort: 9090
           protocol: TCP
         imagePullPolicy: IfNotPresent
-        readinessProbe:
+        livenessProbe:
           initialDelaySeconds: 30
           periodSeconds: 60
           timeoutSeconds: 5
           failureThreshold: 3
           httpGet:
-            path: /
+            path: /health
             port: 9090
         env:
           - name: ZIPKIN_HOST
