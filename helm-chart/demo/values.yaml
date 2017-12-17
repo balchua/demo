@@ -5,7 +5,7 @@ namespace: my-project
 replicaCount: 1
 image:
   repository: demo
-  tag: 1.0.0
+  tag: 1.1.0
   pullPolicy: IfNotPresent
 service:
   name: demo
@@ -40,9 +40,9 @@ resources:
     memory: 128Mi
 
 zipkin:
-  host:
-  port:
+  host: zipkin
+  port: 9411
 
-person-service:
-  host:
-  port:
+person_service:
+  host: grpc-service
+  port: 9999

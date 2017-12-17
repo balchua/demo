@@ -38,4 +38,10 @@ public class PersonController {
         return "Hello " + person.getDescription() + " " + person.getFirstName();
     }
 
+    @RequestMapping("/rightNow")
+    public String rightNow() {
+        LocalDateTime currentDate = LocalDateTime.now();
+        return "Now is [" + currentDate + "]";
+    }
+
 }

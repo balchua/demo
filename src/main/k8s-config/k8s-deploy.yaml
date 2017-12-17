@@ -11,12 +11,14 @@ spec:
   revisionHistoryLimit: 2
   template:
     metadata:
+      annotations:
+        kubernetes.io/change-cause: "Update to demo artifact version 1.1.0 test"
       labels:
         run: demo
     spec:
       containers:
       - name: demo
-        image: demo:1.0.1
+        image: demo:1.1.0
         ports:
         - containerPort: 9090
           protocol: TCP

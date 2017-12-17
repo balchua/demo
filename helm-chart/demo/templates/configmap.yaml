@@ -1,0 +1,11 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name:  {{ template "demo.fullname" . }}
+  namespace: {{ .Values.namespace }}
+data:
+  zipkin-host: {{ .Values.zipkin.host }}
+  zipkin-port: {{ .Values.zipkin.port | quote }}
+  person-service-host: {{ .Values.person_service.host }}
+  person-service-port: {{ .Values.person_service.port | quote }}
+
