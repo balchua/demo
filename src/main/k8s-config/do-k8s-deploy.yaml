@@ -1,0 +1,57 @@
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: demo
+  namespace: do-myproject
+  labels:
+    run: demo
+spec:
+  replicas: 2
+  revisionHistoryLimit: 2
+  template:
+    metadata:
+      annotations:
+        kubernetes.io/change-cause: "Update to demo artifact version 1.1.0 test"
+      labels:
+        run: demo
+    spec:
+      containers:
+      - name: demo
+        image: balchu/demo:1.1.0
+        ports:
+        - containerPort: 9090
+          protocol: TCP
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          initialDelaySeconds: 30
+          periodSeconds: 60
+          timeoutSeconds: 5
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: 9090
+        env:
+          - name: ZIPKIN_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: demo-config
+                key: zipkin-host
+          - name: ZIPKIN_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: demo-config
+                key: zipkin-port
+          - name: PERSON_SERVICE_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: demo-config
+                key: person-service-host
+          - name: PERSON_SERVICE_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: demo-config
+                key: person-service-port
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst

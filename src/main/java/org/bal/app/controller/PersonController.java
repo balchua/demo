@@ -2,7 +2,10 @@ package org.bal.app.controller;
 
 
 import org.bal.app.grpc.client.PersonClient;
+import org.bal.app.proto.internal.FileContent;
 import org.bal.app.proto.internal.Person;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -10,10 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 
+
 @RestController
 public class PersonController {
 
-
+    private static final Logger LOG = LoggerFactory.getLogger(PersonController.class);
     @Autowired
     private PersonClient personService;
 
@@ -36,6 +40,13 @@ public class PersonController {
         Person person;
         person = personService.randomNames();
         return "Hello " + person.getDescription() + " " + person.getFirstName();
+    }
+
+    @RequestMapping("whatsInTheFile")
+    public String whatsInTheFile() {
+        FileContent fileContent = personService.whatsInTheFile();
+        LOG.info(fileContent.getContent());
+        return fileContent.getContent();
     }
 
     @RequestMapping("/rightNow")

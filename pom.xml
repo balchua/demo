@@ -178,7 +178,7 @@
                     <!--
                     <repository>${image-registry-host}:${image-registry-port}/myproject/${project.artifactId}</repository>
                     -->
-                    <repository>${project.artifactId}</repository>
+                    <repository>balchu/${project.artifactId}</repository>
                     <tag>${project.version}</tag>
                     <pullNewerImage>false</pullNewerImage>
                 </configuration>

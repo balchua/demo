@@ -2,6 +2,7 @@ package org.bal.app.grpc.client;
 
 
 import com.google.protobuf.Empty;
+import org.bal.app.proto.internal.FileContent;
 import org.bal.app.proto.internal.Person;
 import org.bal.app.proto.internal.PersonById;
 import org.bal.app.proto.internal.PersonManagementGrpc.PersonManagementBlockingStub;
@@ -36,6 +37,12 @@ public class PersonClient {
     public Person randomNames() {
         Person person = blockingStub.randomNames(Empty.newBuilder().build());
         return person;
+    }
+
+
+    public FileContent whatsInTheFile() {
+        FileContent fileContent = blockingStub.whatsTheNameInTheFile(Empty.newBuilder().build());
+        return fileContent;
     }
 
     /*@Scheduled
