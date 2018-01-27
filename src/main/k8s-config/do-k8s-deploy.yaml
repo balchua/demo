@@ -18,11 +18,11 @@ spec:
     spec:
       containers:
       - name: demo
-        image: balchu/demo:1.1.0
+        image: balchu/demo:1.2.0
         ports:
         - containerPort: 9090
           protocol: TCP
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         livenessProbe:
           initialDelaySeconds: 30
           periodSeconds: 60
@@ -32,6 +32,8 @@ spec:
             path: /health
             port: 9090
         env:
+          - name: TZ
+            value: Asia/Singapore
           - name: ZIPKIN_HOST
             valueFrom:
               configMapKeyRef:
