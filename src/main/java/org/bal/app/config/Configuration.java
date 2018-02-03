@@ -55,7 +55,7 @@ public class Configuration extends WebMvcConfigurerAdapter {
     @Bean
     public Tracing tracing() {
         return Tracing.newBuilder()
-                .localServiceName("person-rest-service")
+                .localServiceName("rest-frontend-service")
                 .spanReporter(reporter()).build();
     }
 
