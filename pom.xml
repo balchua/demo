@@ -5,7 +5,7 @@
 
     <groupId>org.bal.apps</groupId>
     <artifactId>demo</artifactId>
-    <version>1.2.1</version>
+    <version>1.2.5</version>
     <name>demo</name>
     <description>Demo project for Spring Boot with rest</description>
 
@@ -48,11 +48,25 @@
             <artifactId>spring-security-web</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>3.1.1</version>
+        </dependency>
+        <dependency>
             <groupId>org.bal.app</groupId>
             <artifactId>grpc-domain</artifactId>
             <version>1.6.2</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave-grpc -->
+
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-grpc</artifactId>
@@ -78,6 +92,11 @@
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-spring-web</artifactId>
             <version>${brave.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
         </dependency>
     </dependencies>
     <repositories>

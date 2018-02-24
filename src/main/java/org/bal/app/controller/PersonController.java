@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,24 +36,24 @@ public class PersonController {
         return "Hello: " + person.getFirstName();
     }
 
-    @RequestMapping("/randomNames")
+    @RequestMapping(value = "/randomNames", method = {RequestMethod.GET, RequestMethod.POST})
     public String randomNames() {
         Person person;
         person = personService.randomNames();
         return "Hello " + person.getDescription() + " " + person.getFirstName();
     }
 
-    @RequestMapping("whatsInTheFile")
+    @RequestMapping(value = "/whatsInTheFile", method = {RequestMethod.GET, RequestMethod.POST})
     public String whatsInTheFile() {
         FileContent fileContent = personService.whatsInTheFile();
         LOG.info(fileContent.getContent());
         return fileContent.getContent();
     }
 
-    @RequestMapping("/rightNow")
+    @RequestMapping(value = "/rightNow", method = {RequestMethod.GET, RequestMethod.POST})
     public String rightNow() {
         LocalDateTime currentDate = LocalDateTime.now();
-        return "Now is [" + currentDate + "]";
+        return "Date and time in UTC is [" + currentDate + "]";
     }
 
 }

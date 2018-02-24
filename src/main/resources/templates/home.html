@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+    <title>Demo</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <style type="text/css">
+        body {
+           background: white;
+           width: 100%;
+           background-image: url('../k8s-fidget-spinner.jpg');
+           background-repeat: no-repeat;
+        }
+        .main-title {
+           background-color: #519bf7;
+           color: white;
+           height: 20%;
+        }
+
+        .btn {
+           background-color: #519bf7;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="main-title text-center"><h1>Welcome to Kubernetes</h1></div>
+    <br/>
+    <br/>
+
+    <!-- Trigger the modal with a button -->
+    <div class="nowBtnContainer">
+        <button type="button" class="btn btn-info btn-lg" id="nowBtnId">Now</button>
+        <button type="button" class="btn btn-info btn-lg" id="randomBtnId">Random Names</button>
+        <button type="button" class="btn btn-info btn-lg" id="fileBtnId">What's in the file?</button>
+    </div>
+    <br/>
+    <br/>
+
+
+    <!-- Bootstrap Modal -->
+    <div class="modal fade" id="modalId" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Bootstrap Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Header</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p id="greetingId"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/webjars/jquery/3.1.1/jquery.min.js" type="text/javascript"></script>
+<script src="/webjars/bootstrap/4.0.0/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/js/getresources.js" type="text/javascript"></script>
+
+</body>
+</html>

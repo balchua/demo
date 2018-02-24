@@ -9,20 +9,23 @@ metadata:
 spec:
   replicas: 2
   revisionHistoryLimit: 2
+  selector:
+      matchLabels:
+        run: demo
   template:
     metadata:
       annotations:
-        kubernetes.io/change-cause: "Update to demo artifact version 1.1.0 test"
+        kubernetes.io/change-cause: "demo version 1.2.5"
       labels:
         run: demo
     spec:
       containers:
       - name: demo
-        image: balchu/demo:1.2.1
+        image: balchu/demo:1.2.5
         ports:
         - containerPort: 9090
           protocol: TCP
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         livenessProbe:
           initialDelaySeconds: 30
           periodSeconds: 60

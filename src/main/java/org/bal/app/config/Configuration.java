@@ -16,6 +16,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import org.thymeleaf.templateresolver.ITemplateResolver;
 import zipkin2.Span;
 import zipkin2.reporter.AsyncReporter;
 import zipkin2.reporter.Reporter;
@@ -95,11 +98,28 @@ public class Configuration extends WebMvcConfigurerAdapter {
         return PersonManagementGrpc.newBlockingStub(managedChannel());
     }
 
+    @Bean(name = "htmlTemplateEngine")
+    public TemplateEngine htmlTemplateEngine() {
+        TemplateEngine templateEngine = new TemplateEngine();
+        templateEngine.addTemplateResolver(textTemplateResolver());
+        return templateEngine;
+    }
+
+    private ITemplateResolver textTemplateResolver() {
+        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+        templateResolver.setPrefix("/templates/");
+        templateResolver.setSuffix(".html");
+        templateResolver.setCharacterEncoding("UTF8");
+        templateResolver.setCacheable(false);
+        return templateResolver;
+    }
+
     /**
      * adds tracing to the application-defined web controller
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(serverInterceptor).excludePathPatterns("/health");
+        registry.addInterceptor(serverInterceptor).excludePathPatterns("/health")
+                .excludePathPatterns("/webjars/*");
     }
 }
