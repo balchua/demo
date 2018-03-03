@@ -25,7 +25,7 @@ spec:
         ports:
         - containerPort: 9090
           protocol: TCP
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         livenessProbe:
           initialDelaySeconds: 30
           periodSeconds: 60
@@ -34,6 +34,13 @@ spec:
           httpGet:
             path: /health
             port: 9090
+        resources:
+          limits:
+            memory: 512M
+            cpu: 1000m
+          requests:
+            memory: 256M
+            cpu: 500m
         env:
           - name: TZ
             value: Asia/Singapore
