@@ -1,5 +1,5 @@
 server:
-  port : 9090
+  port : 9091
 #app.name: %project.artifactId%
 
 zipkin:
@@ -14,3 +14,15 @@ person-service:
 logging:
   level:
     ROOT: DEBUG
+
+#prometheus and spring actuator
+endpoints:
+  metrics:
+    id: springmetrics
+    sensitive: false
+    enabled: true
+  prometheus:
+    id: metrics
+    enabled: true
+    sensitive: false
+

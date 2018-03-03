@@ -6,10 +6,12 @@ metadata:
   namespace: do-myproject
   labels:
     run: demo
+  annotations:
+      prometheus.io/scrape: 'true'
 spec:
   ports:
   - protocol: TCP
     port: 9090
-    targetPort: 9090
+    targetPort: 9091
   selector:
     run: demo

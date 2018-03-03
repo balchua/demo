@@ -15,15 +15,15 @@ spec:
   template:
     metadata:
       annotations:
-        kubernetes.io/change-cause: "demo version 1.2.5"
+        kubernetes.io/change-cause: "demo version 1.2.6"
       labels:
         run: demo
     spec:
       containers:
       - name: demo
-        image: balchu/demo:1.2.5
+        image: balchu/demo:1.2.6
         ports:
-        - containerPort: 9090
+        - containerPort: 9091
           protocol: TCP
         imagePullPolicy: Always
         livenessProbe:
@@ -33,7 +33,7 @@ spec:
           failureThreshold: 3
           httpGet:
             path: /health
-            port: 9090
+            port: 9091
         resources:
           limits:
             memory: 512M
