@@ -1,0 +1,11 @@
+apiVersion: skaffold/v1beta1
+kind: Config
+build:
+  artifacts:
+    - image: balchu/demo
+      context: .
+      jibMaven: {}
+deploy:
+  kubectl:
+    manifests:
+      - src/main/k8s-config/do/dev-install.yaml
