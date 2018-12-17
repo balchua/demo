@@ -194,29 +194,47 @@
                 </executions>
             </plugin>
 
+            <!--
+                        <plugin>
+                            <groupId>com.spotify</groupId>
+                            <artifactId>dockerfile-maven-plugin</artifactId>
+                            <version>${dockerfile-maven-version}</version>
+                            <executions>
+                                <execution>
+                                    <id>default</id>
+                                    <goals>
+                                        <goal>build</goal>
+                                        &lt;!&ndash;
+                                        <goal>push</goal>
+                                        &ndash;&gt;
+                                    </goals>
+                                </execution>
+                            </executions>
+                            <configuration>
+                                <contextDirectory>${project.build.directory}</contextDirectory>
+                                &lt;!&ndash;
+                                <repository>${image-registry-host}:${image-registry-port}/myproject/${project.artifactId}</repository>
+                                &ndash;&gt;
+                                <repository>balchu/${project.artifactId}</repository>
+                                <tag>${project.version}</tag>
+                                <pullNewerImage>false</pullNewerImage>
+                            </configuration>
+                        </plugin>
+            -->
             <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>dockerfile-maven-plugin</artifactId>
-                <version>${dockerfile-maven-version}</version>
-                <executions>
-                    <execution>
-                        <id>default</id>
-                        <goals>
-                            <goal>build</goal>
-                            <!--
-                            <goal>push</goal>
-                            -->
-                        </goals>
-                    </execution>
-                </executions>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>0.10.1</version>
                 <configuration>
-                    <contextDirectory>${project.build.directory}</contextDirectory>
-                    <!--
-                    <repository>${image-registry-host}:${image-registry-port}/myproject/${project.artifactId}</repository>
-                    -->
-                    <repository>balchu/${project.artifactId}</repository>
-                    <tag>${project.version}</tag>
-                    <pullNewerImage>false</pullNewerImage>
+                    <from>
+                        <image>gcr.io/distroless/java:debug</image>
+                    </from>
+                    <container>
+                        <useCurrentTimestamp>true</useCurrentTimestamp>
+                    </container>
+                    <to>
+                        <image>balchu/${project.artifactId}:${project.version}</image>
+                    </to>
                 </configuration>
             </plugin>
         </plugins>
