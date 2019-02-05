@@ -17,11 +17,13 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>1.8</java.version>
-        <dockerfile-maven-version>1.3.6</dockerfile-maven-version>
+        <java.version>11</java.version>
         <brave.grpc.version>4.9.1</brave.grpc.version>
         <brave.version>4.9.1</brave.version>
         <zipkin-reporter.version>2.1.4</zipkin-reporter.version>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <prometheus.springboot-client.version>0.2.0</prometheus.springboot-client.version>
     </properties>
 
     <dependencies>
@@ -102,17 +104,17 @@
         <dependency>
             <groupId>io.prometheus</groupId>
             <artifactId>simpleclient_spring_boot</artifactId>
-            <version>0.2.0</version>
+            <version>${prometheus.springboot-client.version}</version>
         </dependency>
         <dependency>
             <groupId>io.prometheus</groupId>
             <artifactId>simpleclient_servlet</artifactId>
-            <version>0.2.0</version>
+            <version>${prometheus.springboot-client.version}</version>
         </dependency>
         <dependency>
             <groupId>io.prometheus</groupId>
             <artifactId>simpleclient_hotspot</artifactId>
-            <version>0.2.0</version>
+            <version>${prometheus.springboot-client.version}</version>
         </dependency>
 
     </dependencies>
@@ -160,77 +162,21 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.6.0</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
+                <version>3.8.0</version>
             </plugin>
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.0.2</version>
-                <executions>
-                    <execution>
-                        <id>filter-dockerfile</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${project.basedir}/src/main/docker</directory>
-                                    <filtering>true</filtering>
-                                    <includes>
-                                        <include>Dockerfile</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                            <useDefaultDelimiters>false</useDefaultDelimiters>
-                            <delimiters>%</delimiters>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-            <!--
-                        <plugin>
-                            <groupId>com.spotify</groupId>
-                            <artifactId>dockerfile-maven-plugin</artifactId>
-                            <version>${dockerfile-maven-version}</version>
-                            <executions>
-                                <execution>
-                                    <id>default</id>
-                                    <goals>
-                                        <goal>build</goal>
-                                        &lt;!&ndash;
-                                        <goal>push</goal>
-                                        &ndash;&gt;
-                                    </goals>
-                                </execution>
-                            </executions>
-                            <configuration>
-                                <contextDirectory>${project.build.directory}</contextDirectory>
-                                &lt;!&ndash;
-                                <repository>${image-registry-host}:${image-registry-port}/myproject/${project.artifactId}</repository>
-                                &ndash;&gt;
-                                <repository>balchu/${project.artifactId}</repository>
-                                <tag>${project.version}</tag>
-                                <pullNewerImage>false</pullNewerImage>
-                            </configuration>
-                        </plugin>
-            -->
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>0.10.1</version>
                 <configuration>
                     <from>
-                        <image>gcr.io/distroless/java:debug</image>
+                        <image>adoptopenjdk/openjdk11:jdk-11.0.2.9</image>
                     </from>
                     <container>
                         <useCurrentTimestamp>true</useCurrentTimestamp>
+                        <jvmFlags>
+                            <jvmFlag>-Djava.security.egd=file:/dev/./urandom</jvmFlag>
+                        </jvmFlags>
                     </container>
                     <to>
                         <image>balchu/${project.artifactId}:${project.version}</image>

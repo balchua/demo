@@ -5,13 +5,14 @@ metadata:
   name: demo
   namespace: do-myproject
   labels:
-    run: demo
+    app: demo
   annotations:
-      prometheus.io/scrape: 'true'
+      prometheus.io/scrape: 'false'
 spec:
   ports:
   - protocol: TCP
     port: 9090
     targetPort: 9091
+    name: http
   selector:
-    run: demo
+    app: demo

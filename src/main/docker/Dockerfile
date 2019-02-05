@@ -1,5 +1,5 @@
 #FROM ${image-registry-host}:${image-registry-port}/myproject/openjdk:8-jdk-alpine
-FROM openjdk:8
+FROM openjdk:11-slim
 
 ADD %project.artifactId%-%project.version%.jar app.jar
 

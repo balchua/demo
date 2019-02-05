@@ -5,19 +5,19 @@ metadata:
   name: demo
   namespace: do-myproject
   labels:
-    run: demo
+    app: demo
 spec:
   replicas: 2
   revisionHistoryLimit: 2
   selector:
       matchLabels:
-        run: demo
+        app: demo
   template:
     metadata:
       annotations:
         kubernetes.io/change-cause: "demo version 1.2.6"
       labels:
-        run: demo
+        app: demo
     spec:
       containers:
       - name: demo
