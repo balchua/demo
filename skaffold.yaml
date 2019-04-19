@@ -1,10 +1,13 @@
-apiVersion: skaffold/v1beta1
+apiVersion: skaffold/v1beta8
 kind: Config
 build:
   artifacts:
     - image: balchu/demo
       context: .
       jibMaven: {}
+  local:
+    push: false
+    useDockerCLI: true
 deploy:
   kubectl:
     manifests:
