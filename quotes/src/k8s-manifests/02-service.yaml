@@ -1,0 +1,17 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: quote
+  namespace: my-project
+  labels:
+    app.kubernetes.io/name: quote
+spec:
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 50051
+    name: grpc
+    nodePort: 31000
+  selector:
+    app.kubernetes.io/name: quote

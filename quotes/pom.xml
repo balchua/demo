@@ -185,6 +185,7 @@
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>${jib.version}</version>
                 <configuration>
+                    <allowInsecureRegistries>true</allowInsecureRegistries>
                     <from>
                         <image>adoptopenjdk/openjdk11:jdk-11.0.3_7-debian-slim</image>
                     </from>
@@ -195,7 +196,7 @@
                         </jvmFlags>
                     </container>
                     <to>
-                        <image>balchu/${project.artifactId}:${project.version}</image>
+                        <image>localhost:32000/${project.artifactId}:${project.version}</image>
                     </to>
                 </configuration>
             </plugin>
