@@ -1,0 +1,12 @@
+grpc:
+    port : 50052
+    enableReflection: true
+
+logging:
+  level:
+    ROOT: DEBUG
+
+zipkin:
+  host: ${ZIPKIN_HOST:localhost}
+  port: ${ZIPKIN_PORT:9411}
+

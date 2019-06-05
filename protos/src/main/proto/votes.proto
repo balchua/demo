@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+
+option java_multiple_files = true;
+option java_package = "org.bal.vote.proto.internal";
+option java_outer_classname = "VotesProto";
+
+import "google/protobuf/empty.proto";
+
+package org.bal.vote.proto.internal;
+
+message VoteRequest {
+   int32 quoteId = 1;
+}
+
+message Vote {
+    int32 id = 1;
+    int32 quoteId = 2;
+    int32 count = 3;
+    string quote = 4;
+}
+
+
+message VotesList {
+    repeated Vote votes = 1;
+}
+
+message VoteResponse {
+    string statusMessage = 1;
+}
+
+service VoteManagement {
+
+    rpc GetAllVotes (google.protobuf.Empty) returns (VotesList) {}
+
+    rpc CastVote(VoteRequest) returns (VoteResponse) {}
+}

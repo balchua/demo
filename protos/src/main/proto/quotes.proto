@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+
+option java_multiple_files = true;
+option java_package = "org.bal.quote.proto.internal";
+option java_outer_classname = "QuotesProto";
+
+import "google/protobuf/empty.proto";
+
+package org.bal.quote.proto.internal;
+
+message Quote {
+    int32 id = 1;
+    string quote = 2;
+    string name = 3;
+}
+
+
+message QuoteById {
+    int32 id = 1;
+}
+
+message QuoteList {
+  repeated Quote quotes = 1;
+}
+
+service QuoteManagement {
+
+    rpc GetQuoteById (QuoteById) returns (Quote) {}
+    rpc AllQuotes (google.protobuf.Empty) returns (QuoteList) {}
+}

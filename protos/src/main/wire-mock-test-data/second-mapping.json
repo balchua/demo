@@ -1,0 +1,15 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/getPersonById",
+    "bodyPatterns": [
+      {
+        "equalToJson": "{ \"id\": 1 }"
+      }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "body": "{ 'id' : '456', 'firstName' : 'batman', 'lastName' : 'wayne', 'description' : 'superhero'}"
+  }
+}

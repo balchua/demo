@@ -1,0 +1,61 @@
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: grpc
+  namespace: do-myproject
+  labels:
+    app: grpc
+spec:
+  replicas: 4
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: grpc
+  template:
+    metadata:
+      annotations:
+        kubernetes.io/change-cause: "grpc version 1.7.2"
+      labels:
+        app: grpc
+    spec:
+      containers:
+      - name: grpc
+        image: balchu/grpc:1.7.2
+        ports:
+        - containerPort: 50051
+          protocol: TCP
+        imagePullPolicy: Always
+        resources:
+          limits:
+            memory: 512M
+            cpu: 1000m
+          requests:
+            memory: 512M
+            cpu: 500m
+        env:
+          - name: TZ
+            value: Asia/Singapore
+          - name: ZIPKIN_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: grpc-config
+                key: zipkin-host
+          - name: ZIPKIN_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: grpc-config
+                key: zipkin-port
+        volumeMounts:
+          - mountPath: "/data"
+            name: datadir
+      volumes:
+        - name: datadir
+          emptyDir: {}
+
+#          persistentVolumeClaim:
+#            claimName: sample-pv-claim
+
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst

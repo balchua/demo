@@ -1,0 +1,16 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: grpc-service
+  namespace: my-project
+  labels:
+    run: grpc
+spec:
+  ports:
+  -  protocol: TCP
+     port: 9999
+     targetPort: 50051
+  selector:
+    run: grpc
+
