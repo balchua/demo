@@ -1,14 +1,16 @@
-package org.bal.quote.config;
+package org.bal.frontend.config;
 
 
+import brave.CurrentSpanCustomizer;
+import brave.SpanCustomizer;
 import brave.Tracing;
 import brave.grpc.GrpcTracing;
 import brave.http.HttpTracing;
+import brave.propagation.B3Propagation;
+import brave.propagation.ExtraFieldPropagation;
+import brave.propagation.ThreadLocalCurrentTraceContext;
+import brave.servlet.TracingFilter;
 import brave.spring.webmvc.SpanCustomizingAsyncHandlerInterceptor;
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
-import org.bal.app.proto.internal.PersonManagementGrpc;
-import org.bal.app.proto.internal.PersonManagementGrpc.PersonManagementBlockingStub;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +27,8 @@ import zipkin2.reporter.Reporter;
 import zipkin2.reporter.Sender;
 import zipkin2.reporter.okhttp3.OkHttpSender;
 
+import javax.servlet.Filter;
+
 
 @org.springframework.context.annotation.Configuration
 @ComponentScan("org.bal.app.client")
@@ -38,12 +42,6 @@ public class Configuration extends WebMvcConfigurerAdapter {
     @Value("${zipkin.port}")
     private int zipkinPort;
 
-    @Value("${person-service.host}")
-    private String personServiceHost;
-
-    @Value("${person-service.port}")
-    private int personServicePort;
-
     @Autowired
     private SpanCustomizingAsyncHandlerInterceptor serverInterceptor;
 
@@ -51,17 +49,21 @@ public class Configuration extends WebMvcConfigurerAdapter {
      * Configuration for how to buffer spans into messages for Zipkin
      */
     @Bean
-    public Reporter<Span> reporter() {
+    public Reporter<Span> spanReporter() {
         return AsyncReporter.builder(sender()).build();
     }
 
-    @Bean
-    public Tracing tracing() {
-        return Tracing.newBuilder()
-                .localServiceName("rest-frontend-service")
-                .spanReporter(reporter()).build();
-    }
 
+    /** Controls aspects of tracing such as the service name that shows up in the UI */
+    @Bean Tracing tracing(@Value("${spring.application.name}") String serviceName) {
+        return Tracing.newBuilder()
+                .localServiceName(serviceName)
+                .propagationFactory(ExtraFieldPropagation.newFactory(B3Propagation.FACTORY, "user-name"))
+                .currentTraceContext(ThreadLocalCurrentTraceContext.newBuilder()
+                        .build()
+                )
+                .spanReporter(spanReporter()).build();
+    }
     // decides how to name and tag spans. By default they are named the same as the http method.
     @Bean
     public HttpTracing httpTracing(Tracing tracing) {
@@ -77,26 +79,23 @@ public class Configuration extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public GrpcTracing grpcTracing() {
-        return GrpcTracing.create(tracing());
+    public GrpcTracing grpcTracing(Tracing tracing) {
+        return GrpcTracing.create(tracing);
     }
 
-
+    /** Allows someone to add tags to a span if a trace is in progress */
     @Bean
-    public ManagedChannelBuilder managedChannelBuilder() {
-        return ManagedChannelBuilder.forAddress(personServiceHost, personServicePort).intercept(grpcTracing().newClientInterceptor())
-                .usePlaintext(true);
+    public SpanCustomizer spanCustomizer(Tracing tracing) {
+        return CurrentSpanCustomizer.create(tracing);
     }
 
+
+    /** Creates server spans for http requests */
     @Bean
-    public ManagedChannel managedChannel() {
-        return managedChannelBuilder().build();
+    public Filter tracingFilter(HttpTracing httpTracing) {
+        return TracingFilter.create(httpTracing);
     }
 
-    @Bean("personManagementBlockingStub")
-    public PersonManagementBlockingStub personManagementBlockingStub() {
-        return PersonManagementGrpc.newBlockingStub(managedChannel());
-    }
 
     @Bean(name = "htmlTemplateEngine")
     public TemplateEngine htmlTemplateEngine() {
@@ -119,7 +118,7 @@ public class Configuration extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(serverInterceptor).excludePathPatterns("/health")
+        registry.addInterceptor(serverInterceptor).excludePathPatterns("/healthz")
                 .excludePathPatterns("/webjars/*");
     }
 }

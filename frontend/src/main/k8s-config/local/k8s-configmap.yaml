@@ -1,0 +1,12 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: frontend-config
+  namespace: my-project
+data:
+  zipkin-host: zipkin
+  zipkin-port: "9411"
+  quote-service-host: quote
+  quote-service-port: "50051"
+  vote-service-host: votes
+  vote-service-port: "50052"

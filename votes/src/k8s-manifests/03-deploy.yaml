@@ -1,6 +1,6 @@
 ---
 kind: Deployment
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 metadata:
   name: votes
   namespace: my-project
@@ -9,9 +9,13 @@ metadata:
 spec:
   replicas: 1
   revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: votes
   template:
     metadata:
       annotations:
+        linkerd.io/inject: enabled
         kubernetes.io/change-cause: "Update to votes artifact version 2.0.0test"
       labels:
         app.kubernetes.io/name: votes

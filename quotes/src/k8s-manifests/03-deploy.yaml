@@ -1,6 +1,6 @@
 ---
 kind: Deployment
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 metadata:
   name: quote
   namespace: my-project
@@ -9,9 +9,13 @@ metadata:
 spec:
   replicas: 2
   revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: quote
   template:
     metadata:
       annotations:
+        linkerd.io/inject: enabled
         kubernetes.io/change-cause: "Update to demo artifact version 1.1.0 test"
       labels:
         app.kubernetes.io/name: quote

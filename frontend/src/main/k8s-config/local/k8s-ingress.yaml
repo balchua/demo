@@ -1,25 +1,21 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: demo-ingress
+  name: frontend-ingress
   namespace: my-project
 spec:
   backend:
     serviceName: default-http-backend
     servicePort: 80
   rules:
-  - host: demo.example.local
+  - host: frontend.example.local
     http:
       paths:
       - path: /
         backend:
-          serviceName: demo
+          serviceName: frontend
           servicePort: 9090
-      - path: /person
+      - path: /allQuotes
         backend:
-          serviceName: demo
-          servicePort: 9090
-      - path: /randomNames
-        backend:
-          serviceName: demo
+          serviceName: frontend
           servicePort: 9090

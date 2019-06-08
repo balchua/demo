@@ -1,28 +1,26 @@
+spring:
+  application:
+    name: frontend-service
+
 server:
   port : 9091
-#app.name: %project.artifactId%
 
 zipkin:
   host: ${ZIPKIN_HOST:localhost}
   port: ${ZIPKIN_PORT:9411}
 
 #used by the client of grpc to connect to grpc server.
-person-service:
-  host: ${PERSON_SERVICE_HOST:localhost}
-  port: ${PERSON_SERVICE_PORT:50051}
+quote-service:
+  host: ${QUOTE_HOST:quote}
+  port: ${QUOTE_PORT:50051}
+
+vote-service:
+  host: ${VOTE_HOST:votes}
+  port: ${VOTE_PORT:50052}
 
 logging:
   level:
-    ROOT: DEBUG
+    org.bal: INFO
+    org.springframework: INFO
 
-#prometheus and spring actuator
-endpoints:
-  metrics:
-    id: springmetrics
-    sensitive: false
-    enabled: true
-  prometheus:
-    id: metrics
-    enabled: true
-    sensitive: false
 

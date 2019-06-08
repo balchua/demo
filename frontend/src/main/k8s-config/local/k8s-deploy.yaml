@@ -1,0 +1,62 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: frontend
+  namespace: my-project
+  labels:
+    app.kubernetes.io/name: frontend
+spec:
+  replicas: 2
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: frontend
+  template:
+    metadata:
+      annotations:
+        kubernetes.io/change-cause: "Update to demo artifact version 1.1.0 test"
+      labels:
+        app.kubernetes.io/name: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: localhost:32000/frontend
+        ports:
+        - containerPort: 9091
+          protocol: TCP
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: ZIPKIN_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: frontend-config
+                key: zipkin-host
+          - name: ZIPKIN_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: frontend-config
+                key: zipkin-port
+          - name: QUOTE_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: frontend-config
+                key: quote-service-host
+          - name: QUOTE_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: frontend-config
+                key: quote-service-port
+          - name: VOTE_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: frontend-config
+                key: vote-service-host
+          - name: VOTE_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: frontend-config
+                key: vote-service-port
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
