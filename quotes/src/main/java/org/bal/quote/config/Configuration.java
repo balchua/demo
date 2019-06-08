@@ -1,4 +1,4 @@
-package org.bal.quote.server.config;
+package org.bal.quote.config;
 
 
 import brave.Tracing;

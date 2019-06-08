@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 /**
  * Server that manages startup/shutdown of a {@code Greeter} server.
  */
-@SpringBootApplication(scanBasePackages = "org.bal.quote.server.config")
+@SpringBootApplication(scanBasePackages = "org.bal.quote.config")
 public class QuoteServer {
     private static final Logger logger = Logger.getLogger(QuoteServer.class.getName());
 

@@ -185,6 +185,7 @@
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>${jib-version}</version>
                 <configuration>
+                    <allowInsecureRegistries>true</allowInsecureRegistries>
                     <from>
                         <image>adoptopenjdk/openjdk11:jdk-11.0.2.9</image>
                     </from>
@@ -199,32 +200,6 @@
                     </to>
                 </configuration>
             </plugin>
-
-           <!-- <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>dockerfile-maven-plugin</artifactId>
-                <version>${dockerfile-maven-version}</version>
-                <executions>
-                    <execution>
-                        <id>default</id>
-                        <goals>
-                            <goal>build</goal>
-                            &lt;!&ndash;
-                            <goal>push</goal>
-                            &ndash;&gt;
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <contextDirectory>${project.build.directory}</contextDirectory>
-                    &lt;!&ndash;
-                    <repository>${image-registry-host}:${image-registry-port}/myproject/${project.artifactId}</repository>
-                    &ndash;&gt;
-                    <repository>balchu/${project.artifactId}</repository>
-                    <tag>${project.version}</tag>
-                    <pullNewerImage>false</pullNewerImage>
-                </configuration>
-            </plugin>-->
         </plugins>
     </build>
 

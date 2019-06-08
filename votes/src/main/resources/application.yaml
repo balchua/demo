@@ -10,3 +10,6 @@ zipkin:
   host: ${ZIPKIN_HOST:localhost}
   port: ${ZIPKIN_PORT:9411}
 
+quotes_service:
+  host: ${QUOTE_HOST:localhost}
+  port: ${QUOTE_PORT:50051}

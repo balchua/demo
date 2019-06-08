@@ -12,7 +12,7 @@ import org.bal.quote.proto.internal.QuoteById;
 import org.bal.quote.proto.internal.QuoteList;
 import org.bal.quote.proto.internal.QuoteManagementGrpc;
 import org.bal.quote.server.service.QuoteManagementService;
-import org.bal.quote.server.config.Configuration;
+import org.bal.quote.config.Configuration;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

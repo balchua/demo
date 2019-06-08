@@ -29,7 +29,9 @@ public class VoteManagementService extends VoteManagementGrpc.VoteManagementImpl
     @Override
     public void castVote(VoteRequest request, StreamObserver<VoteResponse> responseObserver) {
         voteRepository.castVote(request.getQuoteId());
-        responseObserver.onNext(VoteResponse.newBuilder().setStatusMessage("OK").build());
+        Quote q = quoteClient.getQuoteById(request.getQuoteId());
+        String message = String.format("You voted for '%s'", q.getQuote());
+        responseObserver.onNext(VoteResponse.newBuilder().setStatusMessage(message).build());
         responseObserver.onCompleted();
     }
 

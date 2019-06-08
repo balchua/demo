@@ -1,0 +1,49 @@
+---
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: votes
+  namespace: my-project
+  labels:
+    app.kubernetes.io/name: votes
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  template:
+    metadata:
+      annotations:
+        kubernetes.io/change-cause: "Update to votes artifact version 2.0.0test"
+      labels:
+        app.kubernetes.io/name: votes
+    spec:
+      containers:
+      - name: quote
+        image: localhost:32000/votes
+        ports:
+        - containerPort: 50052
+          protocol: TCP
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: ZIPKIN_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: votes-config
+                key: zipkin-host
+          - name: ZIPKIN_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: votes-config
+                key: zipkin-port
+          - name: QUOTE_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: votes-config
+                key: quote-host
+          - name: QUOTE_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: votes-config
+                key: quote-port
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst

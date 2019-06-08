@@ -34,7 +34,7 @@ public class Configuration {
     @Bean
     public Tracing tracing() {
         return Tracing.newBuilder()
-                .localServiceName("grpc-backend-service")
+                .localServiceName("vote-service")
                 .spanReporter(reporter()).build();
     }
 
