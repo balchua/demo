@@ -24,9 +24,9 @@ public class VoteController {
 
 
     @RequestMapping(value = "/castVote", method = {RequestMethod.POST},produces = "application/json")
-    public String castVote(@RequestParam int quoteId) {
+    public String castVote(@RequestParam String quoteId) {
         log.debug("Casting votes");
-        String message = voteClient.castVote(quoteId);
+        String message = voteClient.castVote(Integer.parseInt(quoteId));
         return message;
     }
 

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 @Component
@@ -35,7 +36,7 @@ public class QuoteClient {
 
 
     public List<Quote> allQuotes() {
-       QuoteList list = blockingStub.allQuotes(Empty.newBuilder().build());
+       QuoteList list = blockingStub.withDeadlineAfter(100, TimeUnit.MILLISECONDS).allQuotes(Empty.newBuilder().build());
        return list.getQuotesList();
     }
 
