@@ -1,13 +1,17 @@
 package org.bal.quote.server.repository;
 
-import org.bal.quote.proto.internal.Quote;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface QuoteRepository {
-    Quote getQuoteById(int id);
+@Repository
+public interface QuoteRepository extends JpaRepository<QuoteEntity, Integer> {
 
-    List<Quote> allQuotes();
+    Optional<QuoteEntity> findById(Integer id);
 
-    void init();
+    List<QuoteEntity> findAll();
+
+
 }

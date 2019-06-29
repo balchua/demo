@@ -5,7 +5,6 @@ import brave.Tracing;
 import brave.grpc.GrpcTracing;
 import io.grpc.ServerInterceptor;
 import org.bal.quote.server.repository.QuoteRepository;
-import org.bal.quote.server.repository.QuoteRepositoryImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -25,12 +24,6 @@ public class Configuration {
 
     @Value("${zipkin.port:9411}")
     private int zipkinPort;
-
-
-    @Bean
-    public QuoteRepository quoteRepository() {
-        return new QuoteRepositoryImpl();
-    }
 
 
     /**

@@ -10,3 +10,21 @@ zipkin:
   host: ${ZIPKIN_HOST:localhost}
   port: ${ZIPKIN_PORT:9411}
 
+## default connection pool
+spring:
+  datasource:
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+    url: jdbc:postgresql://localhost:30526/quotesdb
+    username: postgresadmin
+    password: admin123
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+

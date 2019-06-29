@@ -1,0 +1,68 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: flyway-config
+  namespace: my-project
+  labels:
+    app: flyway
+data:
+  flyway.conf: |-
+    flyway.url=jdbc:postgresql://postgres:5432/quotesdb
+    flyway.user=postgresadmin
+    flyway.password=admin123
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: flyway-sql
+  namespace: my-project
+  labels:
+    app: flyway-sql
+data:
+  V001__Create_Quotes_Table.sql: |-
+    CREATE TABLE QUOTES (
+        ID NUMERIC NOT NULL PRIMARY KEY,
+        QUOTE VARCHAR(256) NOT NULL,
+        NAME VARCHAR(20) NOT NULL,
+        ACTIVE BOOLEAN
+    );
+
+  V010__Insert_Quotes.sql: |-
+   INSERT INTO QUOTES (ID, QUOTE, NAME, ACTIVE) VALUES(0, 'I can do this all day.', 'Steve Rogers', TRUE);
+   INSERT INTO QUOTES (ID, QUOTE, NAME, ACTIVE) VALUES(1, 'I am Iron Man.', 'Tony Stark', TRUE);
+   INSERT INTO QUOTES (ID, QUOTE, NAME, ACTIVE) VALUES(2, 'Hulk Smash!', 'Bruce Banner', TRUE);
+   INSERT INTO QUOTES (ID, QUOTE, NAME, ACTIVE) VALUES(3, 'Look, it’s me, I’m here, deal with it. Let’s move on.', 'James Rhodes', TRUE);
+   INSERT INTO QUOTES (ID, QUOTE, NAME, ACTIVE) VALUES(4, 'I don’t want to kill anyone. I don’t like bullies. I don’t care where they’re from.', 'Steve Rogers', TRUE);
+
+
+
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: demo-schema-migrate
+  namespace: my-project
+spec:
+  backoffLimit: 0
+  activeDeadlineSeconds: 100
+  template:
+    spec:
+      containers:
+        - name: flyway
+          image: boxfuse/flyway:5
+          args: ["migrate"]
+          volumeMounts:
+          - name: flyway-config-volume
+            mountPath: /flyway/conf
+          - name: sql-config
+            mountPath: /flyway/sql
+      volumes:
+      - name: flyway-config-volume
+        configMap:
+          name: flyway-config
+      - name: sql-config
+        configMap:
+          name: flyway-sql
+
+      restartPolicy: Never

@@ -7,24 +7,33 @@ import io.grpc.Server;
 import io.grpc.inprocess.InProcessChannelBuilder;
 import io.grpc.inprocess.InProcessServerBuilder;
 import io.grpc.testing.GrpcCleanupRule;
+import org.bal.quote.config.Configuration;
 import org.bal.quote.proto.internal.Quote;
 import org.bal.quote.proto.internal.QuoteById;
 import org.bal.quote.proto.internal.QuoteList;
 import org.bal.quote.proto.internal.QuoteManagementGrpc;
+import org.bal.quote.server.repository.QuoteEntity;
+import org.bal.quote.server.repository.QuoteRepository;
 import org.bal.quote.server.service.QuoteManagementService;
-import org.bal.quote.config.Configuration;
-import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
 
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = Configuration.class)
 public class QuoteServerTest {
     /**
@@ -34,17 +43,23 @@ public class QuoteServerTest {
     @Rule
     public final GrpcCleanupRule grpcCleanup = new GrpcCleanupRule();
 
+    @MockBean
+    private QuoteRepository quoteRepository;
+
+
     @Autowired
     private QuoteManagementService service;
 
     private ManagedChannel inProcessChannel;
     private Server server;
 
+
+
     protected InProcessChannelBuilder onChannelBuild(InProcessChannelBuilder channelBuilder){
         return  channelBuilder;
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         // Generate a unique in-process server name.
         String serverName = InProcessServerBuilder.generateName();
@@ -63,9 +78,16 @@ public class QuoteServerTest {
     @Test
     public void should_find_the_quote_by_id() throws Exception {
 
+        QuoteEntity entity = new QuoteEntity();
+        entity.setId(0);
+        entity.setName("Steve Rogers");
+        entity.setQuote("test me");
+
 
         QuoteManagementGrpc.QuoteManagementBlockingStub blockingStub =
                 QuoteManagementGrpc.newBlockingStub(inProcessChannel);
+
+        when(quoteRepository.findById(any(Integer.class))).thenReturn(Optional.of(entity));
 
 
         Quote quote = blockingStub.getQuoteById(QuoteById.newBuilder().setId(0).build());
@@ -83,7 +105,15 @@ public class QuoteServerTest {
         QuoteManagementGrpc.QuoteManagementBlockingStub blockingStub =
                 QuoteManagementGrpc.newBlockingStub(inProcessChannel);
 
+        QuoteEntity entity = new QuoteEntity();
+        entity.setId(0);
+        entity.setName("Steve Rogers");
+        entity.setQuote("im testing ok?");
 
+        List<QuoteEntity> entities = new ArrayList<>();
+        entities.add(entity);
+
+        when(quoteRepository.findAll()).thenReturn(entities);
         QuoteList quotes = blockingStub.allQuotes(Empty.newBuilder().build());
 
         assertThat(quotes.getQuotesList().size()).isGreaterThan(0);
