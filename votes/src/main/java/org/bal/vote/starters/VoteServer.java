@@ -26,7 +26,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * Server that manages startup/shutdown of a {@code Greeter} server.
  */
-@SpringBootApplication(scanBasePackageClasses = {Configuration.class, QuoteServiceConfiguration.class}, scanBasePackages = "org.bal.vote.server")
+@SpringBootApplication(scanBasePackageClasses = {Configuration.class}, scanBasePackages = "org.bal.vote.server")
 @Slf4j
 public class VoteServer {
 

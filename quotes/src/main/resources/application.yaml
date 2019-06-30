@@ -16,7 +16,7 @@ spring:
     hikari:
       connectionTimeout: 20000
       maximumPoolSize: 5
-    url: jdbc:postgresql://localhost:30526/quotesdb
+    url: jdbc:postgresql://postgres:5432/quotesdb
     username: postgresadmin
     password: admin123
   jpa:

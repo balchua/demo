@@ -17,8 +17,11 @@
 package org.bal.starters;
 
 
+import org.bal.quote.server.repository.QuoteRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.util.logging.Logger;
 
@@ -26,6 +29,8 @@ import java.util.logging.Logger;
  * Server that manages startup/shutdown of a {@code Greeter} server.
  */
 @SpringBootApplication(scanBasePackages = "org.bal.quote.config")
+@EnableJpaRepositories("org.bal.quote.server.repository")
+@EntityScan("org.bal.quote.server.repository")
 public class QuoteServer {
     private static final Logger logger = Logger.getLogger(QuoteServer.class.getName());
 

@@ -15,7 +15,7 @@ import zipkin2.reporter.Reporter;
 import zipkin2.reporter.Sender;
 import zipkin2.reporter.okhttp3.OkHttpSender;
 
-@ComponentScan("org.bal.quote.server")
+@ComponentScan(basePackages={"org.bal.quote.server","org.bal.quote.repository"})
 @SpringBootConfiguration
 public class Configuration {
 
