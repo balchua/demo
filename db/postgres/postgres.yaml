@@ -8,9 +8,18 @@ metadata:
 data:
   POSTGRES_DB: quotesdb
   POSTGRES_USER: postgresadmin
-  POSTGRES_PASSWORD: admin123
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-secrets
+  namespace: my-project
+type: Opaque
+data:
+  POSTGRES_PASSWORD: YWRtaW4xMjM=
 
 ---
+
 
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -49,6 +58,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: postgres-config
+            - secretRef:
+                name: postgres-secrets
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: postgredb
