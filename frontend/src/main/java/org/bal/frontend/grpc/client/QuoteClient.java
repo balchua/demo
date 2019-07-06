@@ -36,7 +36,7 @@ public class QuoteClient {
 
 
     public List<Quote> allQuotes() {
-       QuoteList list = blockingStub.withDeadlineAfter(100, TimeUnit.MILLISECONDS).allQuotes(Empty.newBuilder().build());
+       QuoteList list = blockingStub.allQuotes(Empty.newBuilder().build());
        return list.getQuotesList();
     }
 

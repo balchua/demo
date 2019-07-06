@@ -12,24 +12,33 @@ import org.bal.vote.config.TestConfig;
 import org.bal.vote.proto.internal.VoteManagementGrpc;
 import org.bal.vote.proto.internal.VoteRequest;
 import org.bal.vote.proto.internal.VotesList;
+import org.bal.vote.server.repository.VoteRepository;
 import org.bal.vote.server.service.VoteManagementService;
 import org.bal.vote.server.service.client.QuoteClient;
-import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import javax.annotation.Resource;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {TestConfig.class})
 @Slf4j
 public class VoteServerTest {
@@ -44,6 +53,10 @@ public class VoteServerTest {
     @MockBean
     private QuoteClient quoteClient;
 
+    @MockBean
+    private VoteRepository voteRepository;
+
+
     @Autowired
     private VoteManagementService service;
 
@@ -55,7 +68,7 @@ public class VoteServerTest {
         return  channelBuilder;
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws Exception {
         // Generate a unique in-process server name.
         String serverName = InProcessServerBuilder.generateName();
@@ -82,7 +95,17 @@ public class VoteServerTest {
 
         Quote quote = Quote.newBuilder().setId(0).setName("Steve Rogers").setQuote("test me").build();
 
+        List<Quote> quotes = new ArrayList<>();
+        quotes.add(quote);
+
+        Long voteCasted = 1l;
+        doNothing().when(voteRepository).castVote(any(Integer.class));
+        when(voteRepository.getVote(any(Integer.class))).thenReturn(1);
+
+
+        when(quoteClient.allQuotes()).thenReturn(quotes);
         when(quoteClient.getQuoteById(any(Integer.class))).thenReturn(quote);
+
         blockingStub.castVote(vote);
 
         VotesList votes = blockingStub.getAllVotes(Empty.newBuilder().build());

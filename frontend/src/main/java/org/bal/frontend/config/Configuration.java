@@ -9,6 +9,7 @@ import brave.http.HttpTracing;
 import brave.propagation.B3Propagation;
 import brave.propagation.ExtraFieldPropagation;
 import brave.propagation.ThreadLocalCurrentTraceContext;
+import brave.sampler.Sampler;
 import brave.servlet.TracingFilter;
 import brave.spring.webmvc.SpanCustomizingAsyncHandlerInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,9 @@ public class Configuration extends WebMvcConfigurerAdapter {
     @Value("${zipkin.port}")
     private int zipkinPort;
 
+    @Value("${zipkin.samplingRate}")
+    private float zipkinSamplingRate;
+
     @Autowired
     private SpanCustomizingAsyncHandlerInterceptor serverInterceptor;
 
@@ -59,6 +63,7 @@ public class Configuration extends WebMvcConfigurerAdapter {
         return Tracing.newBuilder()
                 .localServiceName(serviceName)
                 .propagationFactory(ExtraFieldPropagation.newFactory(B3Propagation.FACTORY, "user-name"))
+                .sampler(Sampler.create(zipkinSamplingRate))
                 .currentTraceContext(ThreadLocalCurrentTraceContext.newBuilder()
                         .build()
                 )

@@ -16,7 +16,7 @@ spec:
     metadata:
       annotations:
         linkerd.io/inject: enabled
-        kubernetes.io/change-cause: "Update to demo artifact version 1.1.0 test"
+        kubernetes.io/change-cause: "Update to demo artifact version 2.0.0 test"
       labels:
         app.kubernetes.io/name: frontend
     spec:

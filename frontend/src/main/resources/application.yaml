@@ -8,6 +8,7 @@ server:
 zipkin:
   host: ${ZIPKIN_HOST:localhost}
   port: ${ZIPKIN_PORT:9411}
+  samplingRate: ${ZIPKIN_SAMPLING_RATE:0.1}
 
 #used by the client of grpc to connect to grpc server.
 quote-service:
@@ -20,7 +21,7 @@ vote-service:
 
 logging:
   level:
-    org.bal: INFO
+    org.bal: DEBUG
     org.springframework: INFO
 
 

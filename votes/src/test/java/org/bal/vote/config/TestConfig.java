@@ -11,7 +11,6 @@ import org.bal.quote.proto.internal.Quote;
 import org.bal.quote.proto.internal.QuoteById;
 import org.bal.quote.proto.internal.QuoteList;
 import org.bal.quote.proto.internal.QuoteManagementGrpc;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +19,7 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @ComponentScan(basePackages = "org.bal.vote.server")
 
-@Import(org.bal.vote.config.Configuration.class)
+@Import({org.bal.vote.config.Configuration.class, RedisConfiguration.class})
 public class TestConfig {
 
     @Bean

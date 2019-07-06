@@ -1,0 +1,50 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: bot
+  namespace: my-project
+  labels:
+    app.kubernetes.io/name: bot
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bot
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+        kubernetes.io/change-cause: "Update to bot artifact version 2.0.0 test"
+      labels:
+        app.kubernetes.io/name: bot
+    spec:
+      containers:
+      - name: bot
+        image: localhost:32000/bot
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: ZIPKIN_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: bot-config
+                key: zipkin-host
+          - name: ZIPKIN_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: bot-config
+                key: zipkin-port
+          - name: FRONTEND_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: bot-config
+                key: frontend-host
+          - name: FRONTEND_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: bot-config
+                key: frontend-port
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst

@@ -10,5 +10,5 @@ public interface VoteRepository {
 
     void castVote(int quoteId);
 
-    Map<Integer, AtomicInteger> getAllVotes();
+    Integer getVote(int quoteId);
 }

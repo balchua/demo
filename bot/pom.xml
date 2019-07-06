@@ -1,39 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>org.bal.apps</groupId>
-    <artifactId>frontend</artifactId>
+    <artifactId>bot</artifactId>
+    <groupId>org.bal.app</groupId>
     <version>2.0.0</version>
-    <name>demo</name>
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.5.RELEASE</version>
     </parent>
-
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>11</java.version>
-        <brave.grpc.version>5.6.3</brave.grpc.version>
-        <brave.version>5.6.3</brave.version>
-        <zipkin-reporter.version>2.8.2</zipkin-reporter.version>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <prometheus.springboot-client.version>0.2.0</prometheus.springboot-client.version>
-        <grpc.version>1.21.0</grpc.version>
+        <springboot-grpc-version>3.3.0</springboot-grpc-version>
         <dockerfile-maven-version>1.3.6</dockerfile-maven-version>
         <slf4j.version>1.7.25</slf4j.version>
         <logback.version>1.2.3</logback.version>
+        <zipkin-reporter.version>2.8.2</zipkin-reporter.version>
+        <image-registry-host>localhost</image-registry-host>
+        <image-registry-port>32000</image-registry-port>
         <jib-version>1.3.0</jib-version>
         <lombok.version>1.18.8</lombok.version>
-        <webjars.bootstrap.version>4.3.1</webjars.bootstrap.version>
-        <webjars.jquery.version>3.4.1</webjars.jquery.version>
-        <webjars.fontawesome.version>5.8.2</webjars.fontawesome.version>
+        <junit-jupiter.version>5.3.2</junit-jupiter.version>
+        <mockito.version>2.24.0</mockito.version>
+        <okhttp.version>3.4.2</okhttp.version>
+        <brave.version>5.6.3</brave.version>
+        <zipkin-reporter.version>2.8.2</zipkin-reporter.version>
     </properties>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -45,44 +38,56 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
     <dependencies>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jetty</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>${okhttp.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
 
         <dependency>
-            <groupId>org.bal.app</groupId>
-            <artifactId>protos</artifactId>
-            <version>2.0.0</version>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <!-- unit tests -->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.6.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit-jupiter.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.zipkin.brave</groupId>
@@ -93,40 +98,22 @@
             <artifactId>brave-instrumentation-spring-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.zipkin.brave</groupId>
-            <artifactId>brave-instrumentation-grpc</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.grpc</groupId>
-                    <artifactId>grpc-all</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
             <groupId>io.zipkin.reporter2</groupId>
             <artifactId>zipkin-sender-okhttp3</artifactId>
+            <version>${zipkin-reporter.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
         </dependency>
-        <!-- webjars -->
         <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>${webjars.bootstrap.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery</artifactId>
-            <version>${webjars.jquery.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.webjars/font-awesome -->
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>font-awesome</artifactId>
-            <version>${webjars.fontawesome.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
     </dependencies>
@@ -135,7 +122,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <configuration>
-                    <mainClass>org.bal.frontend.MainApplication</mainClass>
+                    <mainClass>org.bal.demo.bot.BotRunner</mainClass>
                     <layout>ZIP</layout>
                 </configuration>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -147,11 +134,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.0</version>
-            </plugin>
+
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
@@ -174,5 +157,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>

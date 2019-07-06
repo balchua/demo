@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: bot-voter
+
+server:
+  port : ${FRONTEND_PORT:31002}
+  host: ${FRONTEND_HOST:frontend}
+
+zipkin:
+  host: ${ZIPKIN_HOST:127.0.0.1}
+  port: ${ZIPKIN_PORT:9411}
+  samplingRate: ${ZIPKIN_SAMPLING_RATE:0.1}
+
+logging:
+  level:
+    org.bal: INFO
+    org.springframework: INFO

@@ -13,3 +13,8 @@ zipkin:
 quotes_service:
   host: ${QUOTE_HOST:localhost}
   port: ${QUOTE_PORT:50051}
+
+redis:
+  host: ${REDIS_SERVER_HOST:redis}
+  port: ${REDIS_SERVER_PORT:6379}
+  password: ${REDIS_PASSWORD}
