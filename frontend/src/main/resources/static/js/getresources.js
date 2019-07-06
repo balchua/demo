@@ -38,10 +38,21 @@ $( document ).ready(function() {
 
    function showQuotes(data) {
         $.each(data, function(i, obj) {
-            $("#quotes-table tbody").append(
-                "<tr><td class='castVote' id='" + obj.quoteId +"'> <i class='fa fa-thumbs-up' aria-hidden='true' ></i> </td>" +
-                   "<td>"+ obj.quote +"</td>" +
-                "</tr>"
+            $("#quotes-container").append(
+            "<div class='col-md-3'>" +
+                 "<div class='card card-nav-tabs'>" +
+                    "<div class='card-header card-header-success'>" +
+                        "Quote" +
+                     "</div>" +
+                     "<div class='card-body'>" +
+                       "<blockquote class='blockquote mb-0'>" +
+                           "<p>" + obj.quote + "</p>" +
+                           "<footer class='blockquote-footer'>" + obj.name + "</footer>" +
+                       "</blockquote>" +
+                       "<i class='material-icons castVote' id='" + obj.quoteId + "'>thumb_up</i>" +
+                     "</div>" +
+                  "</div>" +
+            "</div>"
             );
         });
     }

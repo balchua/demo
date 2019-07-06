@@ -29,6 +29,7 @@ public class QuoteController {
         quoteClient.allQuotes().forEach(q -> {
             QuoteDTO qDTO = new QuoteDTO();
             qDTO.setQuote(q.getQuote());
+            qDTO.setName(q.getName());
             qDTO.setQuoteId(q.getId());
             quotes.add(qDTO);
         });

@@ -25,9 +25,9 @@ public class GhostVote {
     private String QUOTE_BASE_URL;
     private Random rn = new Random();
 
-    @Scheduled(fixedRate = 1000)
+    @Scheduled(fixedRateString = "${spring.application.castVoteFixedRate}")
     public void castGhostVote() {
-        int randomQuoteId = rn.nextInt(5);
+        int randomQuoteId = rn.nextInt(16);
         log.debug("Casting vote {}", randomQuoteId);
 
         RequestBody formBody = new FormBody.Builder()
@@ -47,7 +47,7 @@ public class GhostVote {
         }
     }
 
-    @Scheduled(fixedRate = 2000)
+    @Scheduled(fixedRateString = "${spring.application.listQuotesFixedRate}")
     public void listQuotes() {
         log.debug("listing quotes ... ");
 

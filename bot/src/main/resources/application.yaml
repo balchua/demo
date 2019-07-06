@@ -1,6 +1,8 @@
 spring:
   application:
     name: bot-voter
+    castVoteFixedRate: 2000
+    listQuotesFixedRate: 1000
 
 server:
   port : ${FRONTEND_PORT:31002}

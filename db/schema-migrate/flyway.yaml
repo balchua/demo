@@ -34,6 +34,19 @@ data:
    INSERT INTO QUOTES (ID, QUOTE, NAME, ACTIVE) VALUES(2, 'Hulk Smash!', 'Bruce Banner', TRUE);
    INSERT INTO QUOTES (ID, QUOTE, NAME, ACTIVE) VALUES(3, 'Look, it’s me, I’m here, deal with it. Let’s move on.', 'James Rhodes', TRUE);
    INSERT INTO QUOTES (ID, QUOTE, NAME, ACTIVE) VALUES(4, 'I don’t want to kill anyone. I don’t like bullies. I don’t care where they’re from.', 'Steve Rogers', TRUE);
+  V020__Insert_more_quotes.sql: |-
+   INSERT INTO QUOTES (ID, QUOTE, NAME, ACTIVE) VALUES(5, 'If you cage the beast, the beast will get angry.', 'Wolverine', TRUE);
+   INSERT INTO QUOTES (ID, QUOTE, NAME, ACTIVE) VALUES(6, 'Heroes are made by the path they choose, not the powers they are graced with.', 'Tony Stark', TRUE);
+   INSERT INTO QUOTES (ID, QUOTE, NAME, ACTIVE) VALUES(7, 'All we can do is our best, and sometimes the best we can do is start over.', 'Agent Carter', TRUE);
+   INSERT INTO QUOTES (ID, QUOTE, NAME, ACTIVE) VALUES(8, 'Your ancestors called it magic, but you call it science. I come from a land where they are one and the same.', 'Thor', TRUE);
+   INSERT INTO QUOTES (ID, QUOTE, NAME, ACTIVE) VALUES(9, 'That’s my secret Captain, I’m always angry.', 'Bruce Banner', TRUE);
+  V030__Insert_more_quotes.sql: |-
+    INSERT INTO QUOTES (ID, QUOTE, NAME, ACTIVE) VALUES(10, 'No mistakes. No do-overs. Look out for each other. This is the fight of our lives.', 'Steve Rogers', TRUE);
+    INSERT INTO QUOTES (ID, QUOTE, NAME, ACTIVE) VALUES(11, 'Today we don’t fight for one life, we fight for all of them.', 'Black Panther', TRUE);
+    INSERT INTO QUOTES (ID, QUOTE, NAME, ACTIVE) VALUES(12, 'If we can’t protect the world, you can be damn sure we’ll avenge it.', 'Tony Stark', TRUE);
+    INSERT INTO QUOTES (ID, QUOTE, NAME, ACTIVE) VALUES(13, 'It’s not enough to be against something. You have to be for something better.', 'Tony Stark', TRUE);
+    INSERT INTO QUOTES (ID, QUOTE, NAME, ACTIVE) VALUES(14, 'With great power comes great responsibility.', 'Stan Lee', TRUE);
+    INSERT INTO QUOTES (ID, QUOTE, NAME, ACTIVE) VALUES(15, 'Excelsior!!', 'Stan Lee', TRUE);
 
 
 

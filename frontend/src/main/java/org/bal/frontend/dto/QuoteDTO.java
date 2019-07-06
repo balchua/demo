@@ -10,4 +10,7 @@ public class QuoteDTO {
 
     @Getter @Setter
     private int quoteId;
+
+    @Getter @Setter
+    private String name;
 }
