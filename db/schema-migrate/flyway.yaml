@@ -47,9 +47,6 @@ data:
     INSERT INTO QUOTES (ID, QUOTE, NAME, ACTIVE) VALUES(13, 'It’s not enough to be against something. You have to be for something better.', 'Tony Stark', TRUE);
     INSERT INTO QUOTES (ID, QUOTE, NAME, ACTIVE) VALUES(14, 'With great power comes great responsibility.', 'Stan Lee', TRUE);
     INSERT INTO QUOTES (ID, QUOTE, NAME, ACTIVE) VALUES(15, 'Excelsior!!', 'Stan Lee', TRUE);
-
-
-
 ---
 apiVersion: batch/v1
 kind: Job

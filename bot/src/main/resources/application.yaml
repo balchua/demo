@@ -3,7 +3,7 @@ spring:
     name: bot-voter
     castVoteFixedRate: 2000
     listQuotesFixedRate: 1000
-
+    tallyVotesFixedRate: 500
 server:
   port : ${FRONTEND_PORT:31002}
   host: ${FRONTEND_HOST:frontend}

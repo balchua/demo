@@ -19,8 +19,6 @@ data:
   POSTGRES_PASSWORD: YWRtaW4xMjM=
 
 ---
-
-
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

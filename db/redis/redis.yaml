@@ -19,8 +19,8 @@ metadata:
 type: Opaque
 data:
   password: YWRtaW4=
-
 ---
+
 apiVersion: apps/v1beta2
 kind: StatefulSet
 metadata:

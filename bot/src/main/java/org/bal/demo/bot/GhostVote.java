@@ -65,6 +65,25 @@ public class GhostVote {
         }
     }
 
+
+    @Scheduled(fixedRateString = "${spring.application.tallyVotesFixedRate}")
+    public void tallyVotes() {
+        log.debug("talying votes ... ");
+
+
+        Request request = new Request.Builder()
+                .url(VOTE_BASE_URL + "/tally")
+                .get()
+                .build();
+
+        Call call = client.newCall(request);
+        try {
+            Response response = call.execute();
+        } catch (IOException e) {
+            log.error("Unable to list quotes", e);
+        }
+    }
+
     @PostConstruct
     private void init() {
         VOTE_BASE_URL = "http://" + serverHost + ":" + serverPort + "/api/vote";
