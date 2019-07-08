@@ -26,6 +26,8 @@ spec:
         ports:
         - containerPort: 50052
           protocol: TCP
+        - containerPort: 8888
+          protocol: TCP
         imagePullPolicy: IfNotPresent
         env:
           - name: ZIPKIN_HOST

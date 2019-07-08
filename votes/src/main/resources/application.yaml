@@ -1,3 +1,17 @@
+server:
+  port : 8888
+
+management:
+  metrics:
+    enable:
+      jvm: true
+  endpoint:
+    metrics:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 grpc:
     port : 50052
     enableReflection: true

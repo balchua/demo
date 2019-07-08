@@ -26,6 +26,7 @@ public class RepositoryAspectTracer {
 
     @Around("execution(*  org.bal.vote.server.repository.VoteRepositoryImpl.*(..))")
     public Object traceRepository(ProceedingJoinPoint pjp) throws Throwable {
+
         log.debug("Tracing repository calls.");
         ScopedSpan span = tracer.startScopedSpan("redisRepository");
         MethodSignature signature = (MethodSignature) pjp.getSignature();

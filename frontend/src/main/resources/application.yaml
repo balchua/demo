@@ -2,6 +2,18 @@ spring:
   application:
     name: frontend-service
 
+management:
+  metrics:
+    enable:
+      jvm: true
+  endpoint:
+    metrics:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
 server:
   port : 9091
 

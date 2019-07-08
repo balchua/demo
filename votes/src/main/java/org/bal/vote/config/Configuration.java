@@ -57,5 +57,4 @@ public class Configuration {
         return grpcTracing().newServerInterceptor();
     }
 
-
 }
