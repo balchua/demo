@@ -4,13 +4,13 @@ spring:
     castVoteFixedRate: 2000
     listQuotesFixedRate: 1000
     tallyVotesFixedRate: 500
-server:
-  port : ${FRONTEND_PORT:31002}
-  host: ${FRONTEND_HOST:frontend}
+frontend-server:
+  port : ${FRONTEND_SERVER_PORT:31002}
+  host: ${FRONTEND_SERVER_HOST:frontend}
 
-zipkin:
-  host: ${ZIPKIN_HOST:127.0.0.1}
-  port: ${ZIPKIN_PORT:9411}
+zipkin-server:
+  host: ${ZIPKIN_SERVER_HOST:127.0.0.1}
+  port: ${ZIPKIN_SERVER_PORT:9411}
   samplingRate: ${ZIPKIN_SAMPLING_RATE:0.1}
 
 logging:

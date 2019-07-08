@@ -1,17 +1,17 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: frontend-ingress
+  name: zipkin
   namespace: my-project
 spec:
   backend:
     serviceName: default-http-backend
     servicePort: 80
   rules:
-  - host: frontend.example.local
+  - host: zipkin.example.local
     http:
       paths:
       - path: /
         backend:
-          serviceName: frontend
-          servicePort: 9091
+          serviceName: zipkin
+          servicePort: 9411

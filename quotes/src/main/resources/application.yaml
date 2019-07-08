@@ -6,9 +6,9 @@ logging:
   level:
     ROOT: INFO
 
-zipkin:
-  host: ${ZIPKIN_HOST:localhost}
-  port: ${ZIPKIN_PORT:9411}
+zipkin-server:
+  host: ${ZIPKIN_SERVER_HOST:localhost}
+  port: ${ZIPKIN_SERVER_PORT:9411}
 
 ## default connection pool
 spring:

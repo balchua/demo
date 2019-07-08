@@ -6,5 +6,5 @@ metadata:
 data:
   zipkin-host: zipkin
   zipkin-port: "9411"
-  quote-host: quote
+  quote-host: quotes
   quote-port: "50051"

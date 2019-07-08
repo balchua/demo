@@ -7,11 +7,10 @@ metadata:
   labels:
     app.kubernetes.io/name: votes
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
   - protocol: TCP
     port: 50052
     name: grpc
-    nodePort: 31001
   selector:
     app.kubernetes.io/name: votes

@@ -2,23 +2,23 @@
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: quote
+  name: quotes
   namespace: my-project
   labels:
-    app.kubernetes.io/name: quote
+    app.kubernetes.io/name: quotes
 spec:
   replicas: 2
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app.kubernetes.io/name: quote
+      app.kubernetes.io/name: quotes
   template:
     metadata:
       annotations:
         linkerd.io/inject: enabled
         kubernetes.io/change-cause: "Update to demo artifact version 1.1.0 test"
       labels:
-        app.kubernetes.io/name: quote
+        app.kubernetes.io/name: quotes
     spec:
       containers:
       - name: quote
@@ -28,12 +28,12 @@ spec:
           protocol: TCP
         imagePullPolicy: IfNotPresent
         env:
-          - name: ZIPKIN_HOST
+          - name: ZIPKIN_SERVER_HOST
             valueFrom:
               configMapKeyRef:
                 name: quote-config
                 key: zipkin-host
-          - name: ZIPKIN_PORT
+          - name: ZIPKIN_SERVER_PORT
             valueFrom:
               configMapKeyRef:
                 name: quote-config

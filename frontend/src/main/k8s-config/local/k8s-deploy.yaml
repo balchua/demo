@@ -28,32 +28,32 @@ spec:
           protocol: TCP
         imagePullPolicy: IfNotPresent
         env:
-          - name: ZIPKIN_HOST
+          - name: ZIPKIN_SVC_HOST
             valueFrom:
               configMapKeyRef:
                 name: frontend-config
                 key: zipkin-host
-          - name: ZIPKIN_PORT
+          - name: ZIPKIN_SVC_PORT
             valueFrom:
               configMapKeyRef:
                 name: frontend-config
                 key: zipkin-port
-          - name: QUOTE_HOST
+          - name: QUOTE_SVC_HOST
             valueFrom:
               configMapKeyRef:
                 name: frontend-config
                 key: quote-service-host
-          - name: QUOTE_PORT
+          - name: QUOTE_SVC_PORT
             valueFrom:
               configMapKeyRef:
                 name: frontend-config
                 key: quote-service-port
-          - name: VOTE_HOST
+          - name: VOTE_SVC_HOST
             valueFrom:
               configMapKeyRef:
                 name: frontend-config
                 key: vote-service-host
-          - name: VOTE_PORT
+          - name: VOTE_SVC_PORT
             valueFrom:
               configMapKeyRef:
                 name: frontend-config

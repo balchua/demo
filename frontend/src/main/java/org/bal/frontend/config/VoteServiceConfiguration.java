@@ -14,10 +14,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class VoteServiceConfiguration {
 
-    @Value("${vote-service.host:localhost}")
+    @Value("${vote-server.host}")
     private String voteServiceHost;
 
-    @Value("${vote-service.port:50052}")
+    @Value("${vote-server.port}")
     private int voteServicePort;
 
     @Autowired

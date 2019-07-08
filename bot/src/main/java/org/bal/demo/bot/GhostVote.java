@@ -14,10 +14,10 @@ import java.util.Random;
 @Slf4j
 public class GhostVote {
 
-    @Value("${server.host}")
+    @Value("${frontend-server.host}")
     private String serverHost;
 
-    @Value("${server.port}")
+    @Value("${frontend-server.port}")
     private int serverPort;
 
     private final OkHttpClient client = new OkHttpClient();

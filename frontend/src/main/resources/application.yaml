@@ -5,19 +5,19 @@ spring:
 server:
   port : 9091
 
-zipkin:
-  host: ${ZIPKIN_HOST:localhost}
-  port: ${ZIPKIN_PORT:9411}
+zipkin-server:
+  host: ${ZIPKIN_SVC_HOST:localhost}
+  port: ${ZIPKIN_SVC_PORT:9411}
   samplingRate: ${ZIPKIN_SAMPLING_RATE:0.1}
 
 #used by the client of grpc to connect to grpc server.
-quote-service:
-  host: ${QUOTE_HOST:quote}
-  port: ${QUOTE_PORT:50051}
+quote-server:
+  host: ${QUOTE_SVC_HOST:quotes}
+  port: ${QUOTE_SVC_PORT:50051}
 
-vote-service:
-  host: ${VOTE_HOST:votes}
-  port: ${VOTE_PORT:50052}
+vote-server:
+  host: ${VOTE_SVC_HOST:votes}
+  port: ${VOTE_SVC_PORT:50052}
 
 logging:
   level:

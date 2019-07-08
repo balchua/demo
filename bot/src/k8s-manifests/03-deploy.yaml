@@ -25,22 +25,22 @@ spec:
         image: localhost:32000/bot
         imagePullPolicy: IfNotPresent
         env:
-          - name: ZIPKIN_HOST
+          - name: ZIPKIN_SERVER_HOST
             valueFrom:
               configMapKeyRef:
                 name: bot-config
                 key: zipkin-host
-          - name: ZIPKIN_PORT
+          - name: ZIPKIN_SERVER_PORT
             valueFrom:
               configMapKeyRef:
                 name: bot-config
                 key: zipkin-port
-          - name: FRONTEND_HOST
+          - name: FRONTEND_SERVER_HOST
             valueFrom:
               configMapKeyRef:
                 name: bot-config
                 key: frontend-host
-          - name: FRONTEND_PORT
+          - name: FRONTEND_SERVER_PORT
             valueFrom:
               configMapKeyRef:
                 name: bot-config

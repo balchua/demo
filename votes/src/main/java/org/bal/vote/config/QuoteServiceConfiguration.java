@@ -13,10 +13,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class QuoteServiceConfiguration {
 
-    @Value("${quote-service.host:localhost}")
+    @Value("${quotes-server.host}")
     private String quoteServiceHost;
 
-    @Value("${quote-service.port:50051}")
+    @Value("${quotes-server.port}")
     private int quoteServicePort;
 
     @Autowired

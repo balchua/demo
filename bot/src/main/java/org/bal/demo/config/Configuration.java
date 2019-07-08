@@ -22,13 +22,13 @@ import zipkin2.reporter.okhttp3.OkHttpSender;
 @SpringBootConfiguration
 public class Configuration  {
 
-    @Value("${zipkin.host}")
+    @Value("${zipkin-server.host}")
     private String zipkinHost;
 
-    @Value("${zipkin.port}")
+    @Value("${zipkin-server.port}")
     private int zipkinPort;
 
-    @Value("${zipkin.samplingRate}")
+    @Value("${zipkin-server.samplingRate}")
     private float zipkinSamplingRate;
 
     /**

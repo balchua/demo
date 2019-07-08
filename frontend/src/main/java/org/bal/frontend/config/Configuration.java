@@ -37,13 +37,13 @@ import javax.servlet.Filter;
 @Import({SpanCustomizingAsyncHandlerInterceptor.class})
 public class Configuration extends WebMvcConfigurerAdapter {
 
-    @Value("${zipkin.host}")
+    @Value("${zipkin-server.host}")
     private String zipkinHost;
 
-    @Value("${zipkin.port}")
+    @Value("${zipkin-server.port}")
     private int zipkinPort;
 
-    @Value("${zipkin.samplingRate}")
+    @Value("${zipkin-server.samplingRate}")
     private float zipkinSamplingRate;
 
     @Autowired

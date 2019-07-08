@@ -19,10 +19,10 @@ import zipkin2.reporter.okhttp3.OkHttpSender;
 @SpringBootConfiguration
 public class Configuration {
 
-    @Value("${zipkin.host}")
+    @Value("${zipkin-server.host}")
     private String zipkinHost;
 
-    @Value("${zipkin.port:9411}")
+    @Value("${zipkin-server.port}")
     private int zipkinPort;
 
 
