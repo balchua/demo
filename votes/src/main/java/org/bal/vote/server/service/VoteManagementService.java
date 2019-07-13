@@ -30,7 +30,7 @@ public class VoteManagementService extends VoteManagementGrpc.VoteManagementImpl
         failVoteCasting(request.getQuoteId());
         voteRepository.castVote(request.getQuoteId());
         Quote q = quoteClient.getQuoteById(request.getQuoteId());
-        String message = String.format("You voted for '%s'", q.getQuote());
+        String message = String.format("'%s'", q.getQuote());
         responseObserver.onNext(VoteResponse.newBuilder().setStatusMessage(message).build());
         responseObserver.onCompleted();
     }

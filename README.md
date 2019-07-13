@@ -39,6 +39,8 @@ The frontend exposed these REST endpoints.
 * `/api/vote/castVote`
 * `/api/vote/tally`
 
+UI style is brought to you by [Material Kit](https://demos.creative-tim.com/material-kit/index.html)
+
 #### Build
 Go to the directory `frontend/`
 

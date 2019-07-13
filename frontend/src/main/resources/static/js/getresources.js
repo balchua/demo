@@ -95,12 +95,16 @@ $( document ).ready(function() {
         $.ajax({
             type : "POST",
             url : "/api/vote/castVote",
-            data: { "quoteId": quoteId }
-        }).done(function(data){
-           alert(data);
-        }).fail(function(data){
-           fillData(data.responseText);
-           openModel();
+            data: { "quoteId": quoteId },
+            dataType: 'text',
+            success: function(data){
+                fillData(data);
+                openModel();
+             },
+             error : function(e) {
+                fillData('BOOM!');
+                openModel();
+             }
         });
 
     }
@@ -132,8 +136,3 @@ $( document ).ready(function() {
 
 
 })
-
-function clickCastVote(quoteId) {
-   console.log(quoteId);
-   castVote(quoteId);
-}
