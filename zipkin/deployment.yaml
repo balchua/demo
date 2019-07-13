@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: zipkin
-        image: localhost:32000/zipkin
+        image: openzipkin/zipkin:2
         ports:
         - containerPort: 9411
           protocol: TCP

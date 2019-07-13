@@ -1,0 +1,10 @@
+apiVersion: skaffold/v1beta11
+kind: Config
+profiles:
+- name: local
+  deploy:
+    kubectl:
+      manifests:
+        - deployment.yaml
+        - ingress.yaml
+        - service.yaml

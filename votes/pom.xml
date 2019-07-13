@@ -86,7 +86,7 @@
         <!-- https://mvnrepository.com/artifact/io.micrometer/micrometer-registry-jmx -->
         <dependency>
             <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-registry-jmx</artifactId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
             <version>${micrometer.registry.version}</version>
         </dependency>
 

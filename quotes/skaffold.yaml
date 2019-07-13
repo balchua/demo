@@ -1,14 +1,17 @@
 apiVersion: skaffold/v1beta11
 kind: Config
-build:
-  artifacts:
-    - image: localhost:32000/quotes
-      context: .
-      jibMaven: {}
-  local:
-    push: true
-    useDockerCLI: true
-deploy:
-  kubectl:
-    manifests:
-      - src/k8s-manifests/*.yaml
+profiles:
+- name: local
+  build:
+    artifacts:
+      - image: localhost:32000/quotes
+        context: .
+        jibMaven: {}
+    local:
+      push: true
+      useDockerCLI: true
+  deploy:
+    kubectl:
+      manifests:
+        - src/k8s-manifests/local/*.yaml
+
