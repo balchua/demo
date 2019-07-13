@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: quote
-        image: balchu/quotes:2.0.0
+        image: balchu/quotes
         ports:
         - containerPort: 50051
           protocol: TCP

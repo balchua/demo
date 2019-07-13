@@ -216,7 +216,7 @@
                 <configuration>
                     <allowInsecureRegistries>true</allowInsecureRegistries>
                     <from>
-                        <image>adoptopenjdk/openjdk11:jdk-11.0.2.9</image>
+                        <image>adoptopenjdk/openjdk11:jdk-11.0.3_7-debian-slim</image>
                     </from>
                     <container>
                         <useCurrentTimestamp>true</useCurrentTimestamp>

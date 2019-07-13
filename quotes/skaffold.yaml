@@ -15,6 +15,14 @@ profiles:
       manifests:
         - src/k8s-manifests/local/*.yaml
 - name: do
+  build:
+    artifacts:
+      - image: balchu/quotes
+        context: .
+        jibMaven: {}
+    local:
+      push: true
+      useDockerCLI: true
   deploy:
     kubectl:
       manifests:

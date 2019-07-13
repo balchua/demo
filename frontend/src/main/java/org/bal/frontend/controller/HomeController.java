@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @CrossOrigin(origins = "http://demo.geek.per.sg/rightNow", maxAge = 3600)
 public class HomeController {
 
-    @RequestMapping("/home")
-    public String home() {
-        return "home";
+    @RequestMapping("/")
+    public String index() {
+        return "index";
     }
 
 

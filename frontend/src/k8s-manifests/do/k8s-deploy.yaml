@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        image: balchu/frontend:2.0.0
+        image: balchu/frontend
         ports:
         - containerPort: 9091
           protocol: TCP

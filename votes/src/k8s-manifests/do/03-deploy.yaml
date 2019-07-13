@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: vote
-        image: balchu/votes:2.0.0
+        image: balchu/votes
         ports:
         - containerPort: 50052
           protocol: TCP

@@ -4,8 +4,7 @@ $( document ).ready(function() {
 
    var url = window.location;
 
-
-   $(document).on("click", ".castVote", function(){
+   $(document).on("click",'.castVote', function(){
        var quoteId = $(this).attr('id');
        console.log(quoteId);
        castVote(quoteId);
@@ -37,11 +36,16 @@ $( document ).ready(function() {
     }
 
    function showQuotes(data) {
-        $.each(data, function(i, obj) {
+       var index = 0;
+       const cardClassMap = new Map();
+       cardClassMap.set(0, 'card-header-success');
+       cardClassMap.set(1, 'card-header-warning');
+       $.each(data, function(i, obj) {
+           console.log(cardClassMap.get(index%2));
             $("#quotes-container").append(
             "<div class='col-md-3'>" +
                  "<div class='card card-nav-tabs'>" +
-                    "<div class='card-header card-header-success'>" +
+                    "<div class='card-header " + cardClassMap.get(index%2) + "'>" +
                         "Quote" +
                      "</div>" +
                      "<div class='card-body'>" +
@@ -49,11 +53,14 @@ $( document ).ready(function() {
                            "<p>" + obj.quote + "</p>" +
                            "<footer class='blockquote-footer'>" + obj.name + "</footer>" +
                        "</blockquote>" +
-                       "<i class='material-icons castVote' id='" + obj.quoteId + "'>thumb_up</i>" +
+                       "<button class='btn castVote' id='"  + obj.quoteId + "'>" +
+                         "<i style='cursor:pointer' class='material-icons'>thumb_up</i>" +
+                       "</button>" +
                      "</div>" +
                   "</div>" +
             "</div>"
             );
+           index++;
         });
     }
 
@@ -125,3 +132,8 @@ $( document ).ready(function() {
 
 
 })
+
+function clickCastVote(quoteId) {
+   console.log(quoteId);
+   castVote(quoteId);
+}

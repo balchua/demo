@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: bot
-        image: balchu/bot:2.0.0
+        image: balchu/bot
         imagePullPolicy: Always
         env:
           - name: ZIPKIN_SERVER_HOST

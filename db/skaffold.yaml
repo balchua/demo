@@ -14,4 +14,4 @@ profiles:
       manifests:
         - postgres/postgres-do.yaml
         - redis/redis-do.yaml
-        - schema-migrate/*.yaml
+
