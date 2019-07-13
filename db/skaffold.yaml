@@ -5,6 +5,13 @@ profiles:
   deploy:
     kubectl:
       manifests:
-        - postgres/*.yaml
-        - redis/*.yaml
+        - postgres/postgres.yaml
+        - redis/redis.yaml
+        - schema-migrate/*.yaml
+- name: do
+  deploy:
+    kubectl:
+      manifests:
+        - postgres/postgres-do.yaml
+        - redis/redis-do.yaml
         - schema-migrate/*.yaml

@@ -14,4 +14,10 @@ profiles:
     kubectl:
       manifests:
         - src/k8s-manifests/local/*.yaml
+- name: do
+  deploy:
+    kubectl:
+      manifests:
+        - src/k8s-manifests/do/*.yaml
+
 

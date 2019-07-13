@@ -1,0 +1,16 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: quotes
+  namespace: my-project
+  labels:
+    app.kubernetes.io/name: quotes
+spec:
+  type: ClusterIP
+  ports:
+  - protocol: TCP
+    port: 50051
+    name: grpc
+  selector:
+    app.kubernetes.io/name: quotes

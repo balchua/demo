@@ -1,8 +1,10 @@
 kind: ConfigMap
 apiVersion: v1
 metadata:
-  name: grpc-config
+  name: votes-config
   namespace: my-project
 data:
   zipkin-host: zipkin
   zipkin-port: "9411"
+  quote-host: quotes
+  quote-port: "50051"

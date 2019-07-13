@@ -1,0 +1,18 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: frontend
+  namespace: my-project
+  labels:
+    app.kubernetes.io/name: frontend
+spec:
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 9091
+    targetPort: 9091
+    nodePort: 31002
+    name: http
+  selector:
+    app.kubernetes.io/name: frontend

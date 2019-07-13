@@ -5,6 +5,13 @@ profiles:
   deploy:
     kubectl:
       manifests:
-        - deployment.yaml
-        - ingress.yaml
-        - service.yaml
+        - local/deployment.yaml
+        - local/ingress.yaml
+        - local/service.yaml
+- name: do
+  deploy:
+    kubectl:
+      manifests:
+        - do/deployment.yaml
+        - do/ingress.yaml
+        - do/service.yaml

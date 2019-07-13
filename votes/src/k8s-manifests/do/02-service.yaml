@@ -1,0 +1,20 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: votes
+  namespace: my-project
+  labels:
+    app.kubernetes.io/name: votes
+spec:
+  type: NodePort
+  ports:
+  - protocol: TCP
+    port: 50052
+    name: grpc
+  - protocol: TCP
+    port: 8888
+    name: http
+
+  selector:
+    app.kubernetes.io/name: votes

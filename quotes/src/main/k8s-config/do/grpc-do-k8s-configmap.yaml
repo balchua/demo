@@ -1,8 +1,0 @@
-kind: ConfigMap
-apiVersion: v1
-metadata:
-  name: grpc-config
-  namespace: do-myproject
-data:
-  zipkin-host: zipkin
-  zipkin-port: "9411"

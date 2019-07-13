@@ -206,7 +206,7 @@
                         </jvmFlags>
                     </container>
                     <to>
-                        <image>localhost:32000/${project.artifactId}:${project.version}</image>
+                        <image>balchu/${project.artifactId}:${project.version}</image>
                     </to>
                 </configuration>
             </plugin>

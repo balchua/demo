@@ -1,0 +1,43 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: quotes
+  namespace: my-project
+  labels:
+    app.kubernetes.io/name: quotes
+spec:
+  replicas: 2
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: quotes
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+        kubernetes.io/change-cause: "Update to demo artifact version 1.1.0 test"
+      labels:
+        app.kubernetes.io/name: quotes
+    spec:
+      containers:
+      - name: quote
+        image: balchu/quotes:2.0.0
+        ports:
+        - containerPort: 50051
+          protocol: TCP
+        imagePullPolicy: Always
+        env:
+          - name: ZIPKIN_SERVER_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: quote-config
+                key: zipkin-server-host
+          - name: ZIPKIN_SERVER_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: quote-config
+                key: zipkin-server-port
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst

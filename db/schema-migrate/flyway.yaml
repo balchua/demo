@@ -54,7 +54,7 @@ metadata:
   name: demo-schema-migrate
   namespace: my-project
 spec:
-  backoffLimit: 0
+  backoffLimit: 10
   activeDeadlineSeconds: 100
   template:
     spec:
