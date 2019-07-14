@@ -5,10 +5,13 @@ import brave.CurrentSpanCustomizer;
 import brave.SpanCustomizer;
 import brave.Tracing;
 import brave.http.HttpTracing;
+import brave.okhttp3.TracingCallFactory;
 import brave.propagation.B3Propagation;
 import brave.propagation.ExtraFieldPropagation;
 import brave.propagation.ThreadLocalCurrentTraceContext;
 import brave.sampler.Sampler;
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -72,6 +75,16 @@ public class Configuration  {
         return CurrentSpanCustomizer.create(tracing);
     }
 
+
+    @Bean
+    public Call.Factory callFactory (Tracing tracing, OkHttpClient okHttpClient) {
+        return TracingCallFactory.create(tracing, okHttpClient);
+    }
+
+    @Bean
+    public OkHttpClient okhttp () {
+        return new OkHttpClient();
+    }
 
 
 }

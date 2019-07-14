@@ -2,6 +2,7 @@ package org.bal.demo.bot;
 
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -20,13 +21,16 @@ public class GhostVote {
     @Value("${frontend-server.port}")
     private int serverPort;
 
-    private final OkHttpClient client = new OkHttpClient();
+    @Autowired
+    private Call.Factory callFactory;
+
     private String VOTE_BASE_URL;
     private String QUOTE_BASE_URL;
     private Random rn = new Random();
 
     @Scheduled(fixedRateString = "${spring.application.castVoteFixedRate}")
     public void castGhostVote() {
+
         int randomQuoteId = rn.nextInt(16);
         log.debug("Casting vote {}", randomQuoteId);
 
@@ -39,7 +43,7 @@ public class GhostVote {
                 .post(formBody)
                 .build();
 
-        Call call = client.newCall(request);
+        Call call = callFactory.newCall(request);
         try {
             Response response = call.execute();
         } catch (IOException e) {
@@ -57,7 +61,7 @@ public class GhostVote {
                 .get()
                 .build();
 
-        Call call = client.newCall(request);
+        Call call = callFactory.newCall(request);
         try {
             Response response = call.execute();
         } catch (IOException e) {
@@ -76,7 +80,7 @@ public class GhostVote {
                 .get()
                 .build();
 
-        Call call = client.newCall(request);
+        Call call = callFactory.newCall(request);
         try {
             Response response = call.execute();
         } catch (IOException e) {

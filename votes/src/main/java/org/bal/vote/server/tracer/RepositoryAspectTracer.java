@@ -9,6 +9,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.bal.vote.annotation.Traced;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,11 +25,11 @@ public class RepositoryAspectTracer {
     }
 
 
-    @Around("execution(*  org.bal.vote.server.repository.VoteRepositoryImpl.*(..))")
-    public Object traceRepository(ProceedingJoinPoint pjp) throws Throwable {
+    @Around("@annotation(traced)")
+    public Object traceRepository(ProceedingJoinPoint pjp, Traced traced) throws Throwable {
 
         log.debug("Tracing repository calls.");
-        ScopedSpan span = tracer.startScopedSpan("redisRepository");
+        ScopedSpan span = tracer.startScopedSpan(traced.serviceName());
         MethodSignature signature = (MethodSignature) pjp.getSignature();
         span.tag("method", signature.getName());
         try {

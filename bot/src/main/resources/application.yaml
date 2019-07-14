@@ -11,7 +11,7 @@ frontend-server:
 zipkin-server:
   host: ${ZIPKIN_SERVER_HOST:127.0.0.1}
   port: ${ZIPKIN_SERVER_PORT:9411}
-  samplingRate: ${ZIPKIN_SAMPLING_RATE:0.1}
+  samplingRate: ${ZIPKIN_SAMPLING_RATE:0.8}
 
 logging:
   level:
