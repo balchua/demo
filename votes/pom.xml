@@ -27,6 +27,7 @@
         <mockito.version>2.24.0</mockito.version>
         <jedis.version>2.9.0</jedis.version>
         <micrometer.registry.version>1.2.0</micrometer.registry.version>
+        <grpc-micrometer.version>0.0.2</grpc-micrometer.version>
     </properties>
     <dependencies>
 
@@ -83,11 +84,18 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/io.micrometer/micrometer-registry-jmx -->
+
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
             <version>${micrometer.registry.version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.be-hase.grpc-micrometer</groupId>
+            <artifactId>grpc-micrometer</artifactId>
+            <version>${grpc-micrometer.version}</version>
         </dependency>
 
         <dependency>

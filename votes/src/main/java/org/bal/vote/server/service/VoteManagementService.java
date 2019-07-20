@@ -5,6 +5,7 @@ import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 import org.bal.quote.proto.internal.Quote;
 import org.bal.vote.proto.internal.*;
+import org.bal.vote.server.interceptor.MicrometerInterceptor;
 import org.bal.vote.server.interceptor.ZipkinServerInterceptor;
 import org.bal.vote.server.repository.VoteRepository;
 import org.bal.vote.server.service.client.QuoteClient;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@GRpcService(interceptors = {ZipkinServerInterceptor.class})
+@GRpcService(interceptors = {ZipkinServerInterceptor.class, MicrometerInterceptor.class})
 @Component
 @Slf4j
 public class VoteManagementService extends VoteManagementGrpc.VoteManagementImplBase {

@@ -6,6 +6,7 @@ import io.grpc.Server;
 import io.grpc.inprocess.InProcessChannelBuilder;
 import io.grpc.inprocess.InProcessServerBuilder;
 import io.grpc.testing.GrpcCleanupRule;
+import io.micrometer.core.instrument.MeterRegistry;
 import lombok.extern.slf4j.Slf4j;
 import org.bal.quote.proto.internal.Quote;
 import org.bal.vote.config.TestConfig;
@@ -52,6 +53,9 @@ public class VoteServerTest {
 
     @MockBean
     private QuoteClient quoteClient;
+
+    @MockBean
+    private MeterRegistry meterRegistry;
 
     @MockBean
     private VoteRepository voteRepository;

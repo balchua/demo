@@ -3,6 +3,7 @@ server:
 
 management:
   metrics:
+    use-global-registry: true
     enable:
       jvm: true
   endpoint:
@@ -12,6 +13,8 @@ management:
     web:
       exposure:
         include: '*'
+
+
 grpc:
     port : 50052
     enableReflection: true
@@ -31,4 +34,4 @@ quotes-server:
 redis-server:
   host: ${REDIS_SERVER_HOST:redis}
   port: ${REDIS_SERVER_PORT:6379}
-  password: ${REDIS_PASSWORD}
+  password: ${REDIS_PASSWORD:dummy}
