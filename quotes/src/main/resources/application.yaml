@@ -1,3 +1,17 @@
+server:
+  port : 8888
+
+management:
+  metrics:
+    enable:
+      jvm: true
+  endpoint:
+    metrics:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: '*'
 grpc:
     port : 50051
     enableReflection: true
@@ -17,8 +31,8 @@ spring:
       connectionTimeout: 20000
       maximumPoolSize: 5
     url: jdbc:postgresql://postgres:5432/quotesdb
-    username: postgresadmin
-    password: admin123
+    username: ${QUOTES_DB_USER:postgresadmin}
+    password: ${QUOTES_DB_PASSWORD:dummy}
   jpa:
     database: POSTGRESQL
     show-sql: true

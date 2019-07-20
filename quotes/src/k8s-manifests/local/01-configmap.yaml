@@ -4,5 +4,6 @@ metadata:
   name: quote-config
   namespace: my-project
 data:
-  zipkin-host: zipkin
-  zipkin-port: "9411"
+  zipkin-server-host: zipkin
+  zipkin-server-port: "9411"
+  quotes-db-user: "postgresadmin"

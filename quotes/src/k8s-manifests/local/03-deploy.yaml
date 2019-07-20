@@ -26,18 +26,38 @@ spec:
         ports:
         - containerPort: 50051
           protocol: TCP
+        - containerPort: 8888
+          protocol: TCP
         imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1024Mi"
+            cpu: "1000m"
         env:
           - name: ZIPKIN_SERVER_HOST
             valueFrom:
               configMapKeyRef:
                 name: quote-config
-                key: zipkin-host
+                key: zipkin-server-host
           - name: ZIPKIN_SERVER_PORT
             valueFrom:
               configMapKeyRef:
                 name: quote-config
-                key: zipkin-port
+                key: zipkin-server-port
+          - name: QUOTES_DB_USER
+            valueFrom:
+              configMapKeyRef:
+                name: quote-config
+                key: quotes-db-user
+          - name: QUOTES_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: quotes-secrets
+                key: quotes-db-password
+
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst

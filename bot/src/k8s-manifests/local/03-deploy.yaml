@@ -35,6 +35,11 @@ spec:
               configMapKeyRef:
                 name: bot-config
                 key: zipkin-port
+          - name: ZIPKIN_SAMPLING_RATE
+            valueFrom:
+              configMapKeyRef:
+                name: bot-config
+                key: zipkin-sampling-rate
           - name: FRONTEND_SERVER_HOST
             valueFrom:
               configMapKeyRef:

@@ -29,6 +29,13 @@ spec:
         - containerPort: 8888
           protocol: TCP
         imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1024Mi"
+            cpu: "1000m"
         env:
           - name: ZIPKIN_SERVER_HOST
             valueFrom:

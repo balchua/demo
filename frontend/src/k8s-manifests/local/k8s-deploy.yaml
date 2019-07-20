@@ -27,6 +27,13 @@ spec:
         - containerPort: 9091
           protocol: TCP
         imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1024Mi"
+            cpu: "1000m"
         env:
           - name: ZIPKIN_SVC_HOST
             valueFrom:

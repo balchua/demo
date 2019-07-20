@@ -6,8 +6,12 @@ metadata:
   namespace: my-project
   labels:
     app.kubernetes.io/name: votes
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8888"
+    prometheus.io/path: "/actuator/prometheus"
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
   - protocol: TCP
     port: 50052

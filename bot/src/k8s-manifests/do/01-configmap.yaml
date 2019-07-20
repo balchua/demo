@@ -6,5 +6,6 @@ metadata:
 data:
   zipkin-host: zipkin
   zipkin-port: "9411"
+  zipkin-sampling-rate: "0.1"
   frontend-host: frontend
   frontend-port: "9091"

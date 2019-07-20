@@ -6,3 +6,4 @@ metadata:
 data:
   zipkin-server-host: zipkin
   zipkin-server-port: "9411"
+  quotes-db-user: "postgresadmin"

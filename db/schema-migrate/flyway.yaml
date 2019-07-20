@@ -1,4 +1,13 @@
 apiVersion: v1
+kind: Secret
+metadata:
+  name: flyway-secrets
+  namespace: my-project
+type: Opaque
+data:
+  quotes-db-password: YWRtaW4xMjM=
+---
+apiVersion: v1
 kind: ConfigMap
 metadata:
   name: flyway-config
@@ -6,10 +15,8 @@ metadata:
   labels:
     app: flyway
 data:
-  flyway.conf: |-
-    flyway.url=jdbc:postgresql://postgres:5432/quotesdb
-    flyway.user=postgresadmin
-    flyway.password=admin123
+  quotes-db-url: jdbc:postgresql://postgres:5432/quotesdb
+  quotes-db-user: "postgresadmin"
 
 ---
 apiVersion: v1
@@ -59,14 +66,29 @@ spec:
   template:
     spec:
       containers:
-        - name: flyway
-          image: boxfuse/flyway:5
-          args: ["migrate"]
-          volumeMounts:
-          - name: flyway-config-volume
-            mountPath: /flyway/conf
-          - name: sql-config
-            mountPath: /flyway/sql
+      - name: flyway
+        image: boxfuse/flyway:5
+        args: ["migrate"]
+        env:
+          - name: FLYWAY_URL
+            valueFrom:
+              configMapKeyRef:
+                name: flyway-config
+                key: quotes-db-url
+          - name: FLYWAY_USER
+            valueFrom:
+              configMapKeyRef:
+                name: flyway-config
+                key: quotes-db-user
+          - name: FLYWAY_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: flyway-secrets
+                key: quotes-db-password
+
+        volumeMounts:
+        - name: sql-config
+          mountPath: /flyway/sql
       volumes:
       - name: flyway-config-volume
         configMap:

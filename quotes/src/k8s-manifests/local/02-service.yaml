@@ -4,6 +4,10 @@ apiVersion: v1
 metadata:
   name: quotes
   namespace: my-project
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "8888"
+    prometheus.io/path: "/actuator/prometheus"
   labels:
     app.kubernetes.io/name: quotes
 spec:
@@ -12,5 +16,8 @@ spec:
   - protocol: TCP
     port: 50051
     name: grpc
+  - protocol: TCP
+    port: 8888
+    name: http
   selector:
     app.kubernetes.io/name: quotes

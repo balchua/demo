@@ -32,6 +32,7 @@
         <webjars.bootstrap.version>4.3.1</webjars.bootstrap.version>
         <webjars.jquery.version>3.4.1</webjars.jquery.version>
         <webjars.fontawesome.version>5.8.2</webjars.fontawesome.version>
+        <micrometer.registry.version>1.2.0</micrometer.registry.version>
     </properties>
 
     <dependencyManagement>
@@ -78,7 +79,12 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
+        <!-- https://mvnrepository.com/artifact/io.micrometer/micrometer-registry-jmx -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+            <version>${micrometer.registry.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.bal.app</groupId>
             <artifactId>protos</artifactId>
