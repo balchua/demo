@@ -7,6 +7,8 @@ import io.grpc.Server;
 import io.grpc.inprocess.InProcessChannelBuilder;
 import io.grpc.inprocess.InProcessServerBuilder;
 import io.grpc.stub.StreamObserver;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.simple.SimpleMeterRegistry;
 import org.bal.quote.proto.internal.Quote;
 import org.bal.quote.proto.internal.QuoteById;
 import org.bal.quote.proto.internal.QuoteList;
@@ -63,5 +65,10 @@ public class TestConfig {
     @Bean("quoteManagementBlockingStub")
     public QuoteManagementGrpc.QuoteManagementBlockingStub quoteManagementBlockingStub() {
         return QuoteManagementGrpc.newBlockingStub(channelBuilder());
+    }
+
+    @Bean
+    public MeterRegistry simpleMeterRegistry() {
+        return new SimpleMeterRegistry();
     }
 }

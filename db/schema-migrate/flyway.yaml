@@ -90,9 +90,6 @@ spec:
         - name: sql-config
           mountPath: /flyway/sql
       volumes:
-      - name: flyway-config-volume
-        configMap:
-          name: flyway-config
       - name: sql-config
         configMap:
           name: flyway-sql

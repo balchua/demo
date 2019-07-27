@@ -3,11 +3,7 @@ package org.bal.vote.config;
 
 import brave.Tracing;
 import brave.grpc.GrpcTracing;
-import com.be_hase.grpc.micrometer.GrpcMetricsConfigure;
-import com.be_hase.grpc.micrometer.MicrometerServerInterceptor;
 import io.grpc.ServerInterceptor;
-import io.micrometer.core.instrument.MeterRegistry;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -57,20 +53,9 @@ public class Configuration {
 
     @Bean(name = "grpcServerInterceptor")
     public ServerInterceptor grpcServerInterceptor() {
-
         return grpcTracing().newServerInterceptor();
     }
 
 
-    @Bean(name = "micrometerServerInterceptor")
-    public ServerInterceptor micrometerServerInterceptor(MeterRegistry meterRegistry) {
-        final GrpcMetricsConfigure configure =
-                GrpcMetricsConfigure.create()
-                        .withLatencyTimerConfigure(builder -> {
-                            builder.publishPercentiles(0.5, 0.75, 0.95, 0.99);
-                        });
-
-        return new MicrometerServerInterceptor(meterRegistry, configure);
-    }
 
 }
