@@ -45,6 +45,11 @@ spec:
               configMapKeyRef:
                 name: frontend-config
                 key: zipkin-port
+          - name: ZIPKIN_SAMPLING_RATE
+            valueFrom:
+              configMapKeyRef:
+                name: frontend-config
+                key: zipkin-sampling-rate
           - name: QUOTE_SVC_HOST
             valueFrom:
               configMapKeyRef:

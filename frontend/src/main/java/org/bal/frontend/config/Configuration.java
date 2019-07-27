@@ -123,7 +123,7 @@ public class Configuration extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(serverInterceptor).excludePathPatterns("/healthz")
+        registry.addInterceptor(serverInterceptor).excludePathPatterns("/healthz").excludePathPatterns("/actuator/*")
                 .excludePathPatterns("/webjars/*");
     }
 }
