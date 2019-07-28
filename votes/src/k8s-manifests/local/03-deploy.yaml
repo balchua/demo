@@ -28,6 +28,14 @@ spec:
           protocol: TCP
         - containerPort: 8888
           protocol: TCP
+        readinessProbe:
+          exec:
+            command: ["/tools/grpc_health_probe", "-addr=:50052"]
+          initialDelaySeconds: 5
+        livenessProbe:
+          exec:
+            command: ["/tools/grpc_health_probe", "-addr=:50052"]
+          initialDelaySeconds: 10
         imagePullPolicy: IfNotPresent
         resources:
           requests:

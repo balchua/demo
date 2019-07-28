@@ -3,6 +3,7 @@ package org.bal.frontend.config;
 import brave.grpc.GrpcTracing;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.health.v1.HealthGrpc;
 import org.bal.quote.proto.internal.QuoteManagementGrpc;
 import org.bal.vote.proto.internal.VoteManagementGrpc;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,5 +40,9 @@ public class VoteServiceConfiguration {
         return VoteManagementGrpc.newBlockingStub(voteServiceManagedChannel());
     }
 
+    @Bean("voteHealthBlockingStub")
+    public HealthGrpc.HealthBlockingStub voteHealthBlockingStub() {
+        return HealthGrpc.newBlockingStub(voteServiceManagedChannel());
+    }
 
 }

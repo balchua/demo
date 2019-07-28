@@ -2,6 +2,9 @@ package org.bal.frontend.grpc.client;
 
 
 import com.google.protobuf.Empty;
+import io.grpc.health.v1.HealthCheckRequest;
+import io.grpc.health.v1.HealthCheckResponse;
+import io.grpc.health.v1.HealthGrpc;
 import lombok.extern.slf4j.Slf4j;
 import org.bal.frontend.dto.VoteDTO;
 import org.bal.quote.proto.internal.Quote;
@@ -25,6 +28,9 @@ public class VoteClient {
     @Qualifier("voteManagementBlockingStub")
     private VoteManagementGrpc.VoteManagementBlockingStub blockingStub;
 
+    @Autowired
+    @Qualifier("voteHealthBlockingStub")
+    private HealthGrpc.HealthBlockingStub healthBlockingStub;
     /**
      * @param quoteId, the quote id
      */
@@ -55,4 +61,8 @@ public class VoteClient {
     }
 
 
+    public HealthCheckResponse.ServingStatus health() {
+        HealthCheckResponse response = healthBlockingStub.check(HealthCheckRequest.newBuilder().build());
+        return response.getStatus();
+    }
 }

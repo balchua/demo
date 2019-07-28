@@ -35,9 +35,8 @@ public class QuoteManagementService extends QuoteManagementGrpc.QuoteManagementI
         Optional<QuoteEntity> quoteResponse = quoteRepository.findById(request.getId());
         QuoteEntity reply = quoteResponse.get();
         log.info("Hi {}", reply.getName());
-
-        Quote response = Quote.newBuilder().setQuote(reply.getQuote()).setId(reply.getId()).setName(reply.getName()).build();
-        responseObserver.onNext(response);
+        Quote quote = Quote.newBuilder().setName(reply.getName()).setId(reply.getId()).setQuote(reply.getQuote()).build();
+        responseObserver.onNext(quote);
         responseObserver.onCompleted();
     }
 
@@ -45,11 +44,11 @@ public class QuoteManagementService extends QuoteManagementGrpc.QuoteManagementI
     public void allQuotes(Empty request, StreamObserver<QuoteList> responseObserver) {
 
         List<QuoteEntity> quotes = quoteRepository.findAll();
-        log.info ("allQuotes size: {}", quotes.size());
+        log.info("allQuotes size: {}", quotes.size());
 
         QuoteList.Builder builder = QuoteList.newBuilder();
 
-        for (QuoteEntity quote : quotes){
+        for (QuoteEntity quote : quotes) {
             builder.addQuotes(Quote.newBuilder().setQuote(quote.getQuote()).setId(quote.getId()).setName(quote.getName()).build());
         }
 

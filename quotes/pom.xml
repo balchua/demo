@@ -5,13 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>quotes</artifactId>
     <groupId>org.bal.app</groupId>
-    <version>2.0.0</version>
+    <version>2.0.1</version>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.1.6.RELEASE</version>
     </parent>
     <properties>
+        <base-image>balchu/grpc-base:1.0.0</base-image>
         <java.version>11</java.version>
         <springboot-grpc-version>3.3.0</springboot-grpc-version>
         <grpc.version>1.21.0</grpc.version>
@@ -37,7 +38,7 @@
         <dependency>
             <groupId>org.bal.app</groupId>
             <artifactId>protos</artifactId>
-            <version>2.0.0</version>
+            <version>2.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -223,7 +224,7 @@
                 <configuration>
                     <allowInsecureRegistries>true</allowInsecureRegistries>
                     <from>
-                        <image>adoptopenjdk/openjdk11:jdk-11.0.3_7-debian-slim</image>
+                        <image>${base-image}</image>
                     </from>
                     <container>
                         <useCurrentTimestamp>true</useCurrentTimestamp>
