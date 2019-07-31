@@ -2,6 +2,7 @@ package org.bal.quote.server.tracer;
 
 
 import brave.ScopedSpan;
+import brave.Span;
 import brave.Tracer;
 import brave.Tracing;
 import lombok.extern.slf4j.Slf4j;
@@ -29,20 +30,47 @@ public class RepositoryAspectTracer {
     public Object traceRepository(ProceedingJoinPoint pjp, Traced traced) throws Throwable {
 
         log.debug("Tracing repository calls.");
-        ScopedSpan span = tracer.startScopedSpan(traced.serviceName());
+        ScopedSpan span = getSpan(traced);
         MethodSignature signature = (MethodSignature) pjp.getSignature();
-        span.tag("method", signature.getName());
+        traceMethodName(span, traced, signature);
         try {
             return pjp.proceed();
         } catch (RuntimeException | Error e) {
-            span.error(e); // Unless you handle exceptions, you might not know the operation failed!
+            logErrorToSpan(e, span);
             throw e;
         } finally {
             log.debug("After");
-            span.finish(); // always finish the span
+            completeSpan(span);
         }
 
 
+    }
+
+    private void traceMethodName(ScopedSpan span, Traced traced, MethodSignature signature) {
+        if (span != null) {
+            span.tag("method", signature.getName());
+        }
+    }
+
+    private void completeSpan(ScopedSpan span) {
+        if (span != null) {
+            span.finish();
+        }
+    }
+
+    private void logErrorToSpan(Throwable e, ScopedSpan span) {
+        if (span != null) {
+            span.error(e);
+        }
+    }
+
+    private ScopedSpan getSpan(Traced traced) {
+        ScopedSpan span = null;
+        if (tracer.currentSpan() != null) {
+            span = tracer.startScopedSpan(traced.serviceName());
+        }
+
+        return span;
     }
 
 }

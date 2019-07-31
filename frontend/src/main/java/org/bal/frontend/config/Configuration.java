@@ -17,7 +17,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
@@ -33,9 +35,8 @@ import javax.servlet.Filter;
 
 @org.springframework.context.annotation.Configuration
 @ComponentScan("org.bal.app.client")
-// Importing these classes is effectively the same as declaring bean methods
 @Import({SpanCustomizingAsyncHandlerInterceptor.class})
-public class Configuration extends WebMvcConfigurerAdapter {
+public class Configuration implements WebMvcConfigurer {
 
     @Value("${zipkin-server.host}")
     private String zipkinHost;
@@ -58,8 +59,11 @@ public class Configuration extends WebMvcConfigurerAdapter {
     }
 
 
-    /** Controls aspects of tracing such as the service name that shows up in the UI */
-    @Bean Tracing tracing(@Value("${spring.application.name}") String serviceName) {
+    /**
+     * Controls aspects of tracing such as the service name that shows up in the UI
+     */
+    @Bean
+    Tracing tracing(@Value("${spring.application.name}") String serviceName) {
         return Tracing.newBuilder()
                 .localServiceName(serviceName)
                 .propagationFactory(ExtraFieldPropagation.newFactory(B3Propagation.FACTORY, "user-name"))
@@ -69,6 +73,7 @@ public class Configuration extends WebMvcConfigurerAdapter {
                 )
                 .spanReporter(spanReporter()).build();
     }
+
     // decides how to name and tag spans. By default they are named the same as the http method.
     @Bean
     public HttpTracing httpTracing(Tracing tracing) {
@@ -88,14 +93,18 @@ public class Configuration extends WebMvcConfigurerAdapter {
         return GrpcTracing.create(tracing);
     }
 
-    /** Allows someone to add tags to a span if a trace is in progress */
+    /**
+     * Allows someone to add tags to a span if a trace is in progress
+     */
     @Bean
     public SpanCustomizer spanCustomizer(Tracing tracing) {
         return CurrentSpanCustomizer.create(tracing);
     }
 
 
-    /** Creates server spans for http requests */
+    /**
+     * Creates server spans for http requests
+     */
     @Bean
     public Filter tracingFilter(HttpTracing httpTracing) {
         return TracingFilter.create(httpTracing);
@@ -123,7 +132,6 @@ public class Configuration extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(serverInterceptor).excludePathPatterns("/healthz").excludePathPatterns("/actuator/*")
-                .excludePathPatterns("/webjars/*");
+        registry.addInterceptor(serverInterceptor).addPathPatterns("/**").excludePathPatterns("/actuator/**", "/","/webjars/**","/ping","/*.ico");
     }
 }

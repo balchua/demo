@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 
-@GRpcService(interceptors = {ZipkinServerInterceptor.class})
+@GRpcService
 @Component
 @Slf4j
 public class HealthService extends HealthGrpc.HealthImplBase {

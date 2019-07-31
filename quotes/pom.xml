@@ -140,7 +140,6 @@
             <version>${google-common-protos.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/io.zipkin.brave/brave-grpc -->
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-grpc</artifactId>
@@ -151,6 +150,11 @@
                     <artifactId>grpc-all</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.zipkin.brave</groupId>
+            <artifactId>brave-context-slf4j</artifactId>
+            <version>${brave.grpc.version}</version>
         </dependency>
         <dependency>
             <groupId>io.zipkin.reporter2</groupId>

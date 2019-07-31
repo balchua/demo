@@ -6,7 +6,7 @@ metadata:
 data:
   zipkin-host: zipkin
   zipkin-port: "9411"
-  zipkin-sampling-rate: "0.1"
+  zipkin-sampling-rate: "1"
   quote-service-host: quotes
   quote-service-port: "50051"
   vote-service-host: votes

@@ -2,9 +2,10 @@ package org.bal.quote.config;
 
 
 import brave.Tracing;
+import brave.context.slf4j.MDCScopeDecorator;
 import brave.grpc.GrpcTracing;
+import brave.propagation.ThreadLocalCurrentTraceContext;
 import io.grpc.ServerInterceptor;
-import org.bal.quote.server.repository.QuoteRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +16,7 @@ import zipkin2.reporter.Reporter;
 import zipkin2.reporter.Sender;
 import zipkin2.reporter.okhttp3.OkHttpSender;
 
-@ComponentScan(basePackages={"org.bal.quote.server","org.bal.quote.repository"})
+@ComponentScan(basePackages = {"org.bal.quote.server", "org.bal.quote.repository"})
 @SpringBootConfiguration
 public class Configuration {
 
@@ -37,6 +38,9 @@ public class Configuration {
     @Bean
     public Tracing tracing() {
         return Tracing.newBuilder()
+                .currentTraceContext(ThreadLocalCurrentTraceContext.newBuilder()
+                        .addScopeDecorator(MDCScopeDecorator.create())
+                        .build())
                 .localServiceName("quote-service")
                 .spanReporter(reporter()).build();
     }
@@ -59,7 +63,6 @@ public class Configuration {
 
         return grpcTracing().newServerInterceptor();
     }
-
 
 
 }

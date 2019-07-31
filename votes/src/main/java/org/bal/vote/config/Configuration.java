@@ -2,7 +2,9 @@ package org.bal.vote.config;
 
 
 import brave.Tracing;
+import brave.context.slf4j.MDCScopeDecorator;
 import brave.grpc.GrpcTracing;
+import brave.propagation.ThreadLocalCurrentTraceContext;
 import io.grpc.ServerInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringBootConfiguration;
@@ -34,6 +36,9 @@ public class Configuration {
     @Bean
     public Tracing tracing() {
         return Tracing.newBuilder()
+                .currentTraceContext(ThreadLocalCurrentTraceContext.newBuilder()
+                        .addScopeDecorator(MDCScopeDecorator.create())
+                        .build())
                 .localServiceName("vote-service")
                 .spanReporter(reporter()).build();
     }

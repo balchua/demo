@@ -1,10 +1,8 @@
 package org.bal.frontend.controller;
 
 
-import io.grpc.health.v1.HealthCheckRequest;
 import io.grpc.health.v1.HealthCheckResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.bal.frontend.dto.QuoteDTO;
 import org.bal.frontend.grpc.client.QuoteClient;
 import org.bal.frontend.grpc.client.VoteClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 @RestController
@@ -30,9 +25,8 @@ public class HealthController {
     private VoteClient voteClient;
 
 
-    @RequestMapping(value = "/healthz", method = {RequestMethod.GET})
-    @ResponseBody
-    public ResponseEntity healthz() {
+    @RequestMapping(value = "/ping", method = {RequestMethod.GET})
+    public ResponseEntity ping() {
         HealthCheckResponse.ServingStatus quoteResponse = quoteClient.health();
         HealthCheckResponse.ServingStatus voteResponse = voteClient.health();
 

@@ -5,10 +5,11 @@ import io.grpc.health.v1.HealthCheckResponse;
 import io.grpc.health.v1.HealthGrpc;
 import lombok.extern.slf4j.Slf4j;
 import org.bal.vote.server.repository.VoteRepository;
+import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-
+@GRpcService
 @Component
 @Slf4j
 public class HealthService extends HealthGrpc.HealthImplBase {

@@ -17,8 +17,10 @@ grpc:
     enableReflection: true
 
 logging:
+  pattern:
+    console: "%d [%X{traceId}/%X{spanId}] [%thread] %-5level %logger{36} - %msg%n"
   level:
-    ROOT: INFO
+    org.bal: DEBUG
 
 zipkin-server:
   host: ${ZIPKIN_SERVER_HOST:localhost}
