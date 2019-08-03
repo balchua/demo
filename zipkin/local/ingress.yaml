@@ -7,7 +7,7 @@ metadata:
     kubernetes.io/ingress.class: "public"
 spec:
   rules:
-  - host: zipkin.10.152.183.83..xip.io
+  - host: zipkin.10.152.183.83.xip.io
     http:
       paths:
       - backend:
