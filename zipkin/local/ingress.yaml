@@ -10,6 +10,6 @@ spec:
   - host: zipkin.10.152.183.83..xip.io
     http:
       paths:
-        backend:
+      - backend:
           serviceName: zipkin
           servicePort: 9411
