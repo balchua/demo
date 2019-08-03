@@ -1,17 +1,15 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: frontend-ingress
   namespace: my-project
+  annotations:
+    kubernetes.io/ingress.class: "public"
 spec:
-  backend:
-    serviceName: default-http-backend
-    servicePort: 80
   rules:
-  - host: frontend.example.local
+  - host: frontend.10.152.183.83..xip.io
     http:
       paths:
-      - path: /
-        backend:
+      - backend:
           serviceName: frontend
           servicePort: 9091

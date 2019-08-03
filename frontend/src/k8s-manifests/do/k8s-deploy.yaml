@@ -26,16 +26,16 @@ spec:
         ports:
         - containerPort: 9091
           protocol: TCP
-#        readinessProbe:
-#          httpGet:
-#            path: "/ping"
-#            port: 9091
-#          initialDelaySeconds: 5
-#        livenessProbe:
-#          httpGet:
-#            path: "/ping"
-#            port: 9091
-#          initialDelaySeconds: 10
+        readinessProbe:
+          httpGet:
+            path: "/healthz"
+            port: 9091
+          initialDelaySeconds: 5
+        livenessProbe:
+          httpGet:
+            path: "/healthz"
+            port: 9091
+          initialDelaySeconds: 10
         imagePullPolicy: Always
         resources:
           requests:

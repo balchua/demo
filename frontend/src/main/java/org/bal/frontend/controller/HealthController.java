@@ -25,8 +25,8 @@ public class HealthController {
     private VoteClient voteClient;
 
 
-    @RequestMapping(value = "/ping", method = {RequestMethod.GET})
-    public ResponseEntity ping() {
+    @RequestMapping(value = "/healthz", method = {RequestMethod.GET})
+    public ResponseEntity healthz() {
         HealthCheckResponse.ServingStatus quoteResponse = quoteClient.health();
         HealthCheckResponse.ServingStatus voteResponse = voteClient.health();
 

@@ -5,6 +5,8 @@ import brave.CurrentSpanCustomizer;
 import brave.SpanCustomizer;
 import brave.Tracing;
 import brave.grpc.GrpcTracing;
+import brave.http.HttpAdapter;
+import brave.http.HttpSampler;
 import brave.http.HttpTracing;
 import brave.propagation.B3Propagation;
 import brave.propagation.ExtraFieldPropagation;
@@ -74,10 +76,19 @@ public class Configuration implements WebMvcConfigurer {
                 .spanReporter(spanReporter()).build();
     }
 
-    // decides how to name and tag spans. By default they are named the same as the http method.
+    // Exclude certain paths from being traced.
     @Bean
     public HttpTracing httpTracing(Tracing tracing) {
-        return HttpTracing.create(tracing);
+        return HttpTracing.create(tracing).toBuilder().serverSampler(new HttpSampler() {
+            @Override
+            public <Req> Boolean trySample(HttpAdapter<Req, ?> httpAdapter, Req request) {
+                String path = httpAdapter.path(request);
+                if (path.startsWith("/favicon") || path.startsWith("/actuator") || path.startsWith("/healthz")) {
+                    return false;
+                }
+                return null; // defer decision to probabilistic on trace ID
+            }
+        }).build();
     }
 
     /**
@@ -132,6 +143,6 @@ public class Configuration implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(serverInterceptor).addPathPatterns("/**").excludePathPatterns("/actuator/**", "/","/webjars/**","/ping","/*.ico");
+        registry.addInterceptor(serverInterceptor);
     }
 }
