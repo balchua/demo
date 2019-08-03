@@ -1,13 +1,13 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: frontend-ingress
+  name: zipkin-ingress
   namespace: my-project
   annotations:
     kubernetes.io/ingress.class: "public"
 spec:
   rules:
-  - host: zipkin.10.152.183.83.xip.io
+  - host: zipkin.10.152.183.83.nip.io
     http:
       paths:
       - backend:
