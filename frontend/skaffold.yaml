@@ -18,9 +18,9 @@ profiles:
 - name: local
   build:
     artifacts:
-      - image: localhost:32000/frontend
-        context: .
-        jibMaven: {}
+    - image: localhost:32000/frontend
+      context: .
+      jibMaven: {}
     local:
       push: true
       useDockerCLI: true
@@ -32,8 +32,29 @@ profiles:
         namespace: my-project
         wait: true
         valuesFiles:
-          - frontend-charts/values-default.yaml
-          - frontend-charts/values-local.yaml
+        - frontend-charts/values-default.yaml
+        - frontend-charts/values-local.yaml
         values:
           image.repository: localhost:32000/frontend
 
+- name: do-helm
+  build:
+    artifacts:
+    - image: balchu/frontend
+      context: .
+      jibMaven: {}
+    local:
+      push: true
+      useDockerCLI: true
+  deploy:
+    helm:
+      releases:
+      - name: frontend
+        chartPath: frontend-charts
+        namespace: my-project
+        wait: true
+        valuesFiles:
+        - frontend-charts/values-default.yaml
+        - frontend-charts/values-do.yaml
+        values:
+          image.repository: balchu/frontend

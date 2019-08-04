@@ -1,39 +1,47 @@
 apiVersion: skaffold/v1beta13
 kind: Config
 profiles:
-- name: do
-  build:
-    artifacts:
-      - image: balchu/votes
-        context: .
-        jibMaven: {}
-    local:
-      push: true
-      useDockerCLI: true
-  deploy:
-    kubectl:
-      manifests:
-        - src/k8s-manifests/do/*.yaml
-        -
 - name: local
   build:
     artifacts:
-      - image: localhost:32000/votes
-        context: .
-        jibMaven: {}
+    - image: localhost:32000/votes
+      context: .
+      jibMaven: {}
     local:
       push: true
       useDockerCLI: true
   deploy:
     helm:
       releases:
-        - name: votes
-          chartPath: vote-charts
-          namespace: my-project
-          wait: true
-          valuesFiles:
-            - vote-charts/values-default.yaml
-            - vote-charts/values-local.yaml
-          values:
-            image.repository: localhost:32000/votes
+      - name: votes
+        chartPath: vote-charts
+        namespace: my-project
+        wait: true
+        valuesFiles:
+        - vote-charts/values-default.yaml
+        - vote-charts/values-local.yaml
+        values:
+          image.repository: localhost:32000/votes
+
+- name: do-helm
+  build:
+    artifacts:
+    - image: balchu/votes
+      context: .
+      jibMaven: {}
+    local:
+      push: true
+      useDockerCLI: true
+  deploy:
+    helm:
+      releases:
+      - name: votes
+        chartPath: vote-charts
+        namespace: my-project
+        wait: true
+        valuesFiles:
+        - vote-charts/values-default.yaml
+        - vote-charts/values-do.yaml
+        values:
+          image.repository: balchu/votes
 

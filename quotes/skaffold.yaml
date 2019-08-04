@@ -1,26 +1,12 @@
 apiVersion: skaffold/v1beta13
 kind: Config
 profiles:
-- name: do
-  build:
-    artifacts:
-      - image: balchu/quotes
-        context: .
-        jibMaven: {}
-    local:
-      push: true
-      useDockerCLI: true
-  deploy:
-    kubectl:
-      manifests:
-        - src/k8s-manifests/do/*.yaml
-
 - name: local
   build:
     artifacts:
-      - image: localhost:32000/quotes
-        context: .
-        jibMaven: {}
+    - image: localhost:32000/quotes
+      context: .
+      jibMaven: {}
     local:
       push: true
       useDockerCLI: true
@@ -32,7 +18,29 @@ profiles:
         namespace: my-project
         wait: true
         valuesFiles:
+        - quote-charts/values-default.yaml
         - quote-charts/values-local.yaml
         values:
           image.repository: localhost:32000/quotes
 
+- name: do
+  build:
+    artifacts:
+    - image: balchu/quotes
+      context: .
+      jibMaven: {}
+    local:
+      push: true
+      useDockerCLI: true
+  deploy:
+    helm:
+      releases:
+      - name: quotes
+        chartPath: quote-charts
+        namespace: my-project
+        wait: true
+        valuesFiles:
+        - quote-charts/values-default.yaml
+        - quote-charts/values-do.yaml
+        values:
+          image.repository: balchu/quotes
