@@ -1,0 +1,32 @@
+namespace: my-project
+replicaCount: 1
+
+service:
+  grpc:
+    port: 50052
+    protocol: TCP
+  http:
+    port: 8888
+    protocol: TCP
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1024Mi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+zipkin:
+  host: zipkin
+  port: 9411
+
+quotes:
+  host: quotes
+  port: 50051
+
+prometheus:
+  enabled: true
+
+redis:
+  password: admin

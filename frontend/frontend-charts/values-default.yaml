@@ -1,0 +1,31 @@
+namespace: my-project
+replicaCount: 1
+
+service:
+  port: 9091
+  protocol: TCP
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1024Mi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+zipkin:
+  host: zipkin
+  port: 9411
+  sampling: "1"
+
+quotes:
+  host: quotes
+  port: 50051
+
+votes:
+  host: votes
+  port: 50052
+
+prometheus:
+  enabled: true
+

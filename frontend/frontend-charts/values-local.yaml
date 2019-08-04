@@ -1,0 +1,11 @@
+image:
+  repository: localhost:32000/frontend
+  pullPolicy: IfNotPresent
+
+zipkin:
+  host: zipkin
+  port: 9411
+  sampling: "1"
+
+ingress:
+  host: "frontend.10.152.183.83.nip.io"

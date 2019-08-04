@@ -1,0 +1,84 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ template "votes.name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ template "votes.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ template "votes.name" . }}
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        app.kubernetes.io/name: {{ template "votes.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}"
+        ports:
+        - containerPort: {{ .Values.service.grpc.port }}
+          protocol: {{ .Values.service.grpc.protocol }}
+        - containerPort: {{ .Values.service.http.port }}
+          protocol: {{ .Values.service.http.protocol }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources:
+          requests:
+            memory: "{{ .Values.resources.requests.memory }}"
+            cpu: "{{ .Values.resources.requests.cpu }}"
+          limits:
+            memory: "{{ .Values.resources.limits.memory }}"
+            cpu: "{{ .Values.resources.limits.cpu }}"
+
+        readinessProbe:
+          exec:
+            command: ["/tools/grpc_health_probe", "-addr=:{{ .Values.service.grpc.port }}"]
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        livenessProbe:
+          exec:
+            command: ["/tools/grpc_health_probe", "-addr=:{{ .Values.service.grpc.port }}"]
+          initialDelaySeconds: 10
+          periodSeconds: 60
+          timeoutSeconds: 5
+          failureThreshold: 3
+        env:
+          - name: ZIPKIN_SERVER_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "votes.name" . }}
+                key: zipkin-host
+          - name: ZIPKIN_SERVER_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "votes.name" . }}
+                key: zipkin-port
+          - name: QUOTE_SERVER_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "votes.name" . }}
+                key: quote-host
+          - name: QUOTE_SERVER_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "votes.name" . }}
+                key: quote-port
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "votes.name" . }}
+                key: redis_password
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst

@@ -1,0 +1,28 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ template "votes.name" . }}
+  namespace: {{ .Release.Namespace }}
+
+  {{ if  .Values.prometheus.enabled }}
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: {{ .Values.service.http.port | quote}}
+    prometheus.io/path: "/actuator/prometheus"
+  {{ end }}
+  labels:
+    app.kubernetes.io/name: {{ template "votes.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+  - protocol: {{ .Values.service.grpc.protocol }}
+    port: {{ .Values.service.grpc.port }}
+    name: grpc
+  - protocol: {{ .Values.service.http.protocol }}
+    port: {{ .Values.service.http.port }}
+    name: http
+  selector:
+    app.kubernetes.io/name: {{ template "votes.name" . }}

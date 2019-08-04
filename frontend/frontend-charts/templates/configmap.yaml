@@ -1,0 +1,13 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name:  {{ template "frontend.name" . }}
+  namespace: {{.Release.Namespace}}
+data:
+  zipkin-host: {{ .Values.zipkin.host }}
+  zipkin-port: {{ .Values.zipkin.port | quote }}
+  quote-service-host: {{ .Values.quotes.host }}
+  quote-service-port: {{ .Values.quotes.port | quote }}
+  zipkin-sampling-rate: {{ .Values.zipkin.sampling | quote }}
+  vote-service-host: {{ .Values.votes.host }}
+  vote-service-port: {{ .Values.votes.port | quote }}

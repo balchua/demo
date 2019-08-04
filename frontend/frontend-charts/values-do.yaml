@@ -1,0 +1,11 @@
+image:
+  repository: balchu/frontend
+  pullPolicy: Always
+
+zipkin:
+  host: zipkin
+  port: 9411
+  sampling: "0.8"
+
+ingress:
+  host: "frontend.geek.per.sg"

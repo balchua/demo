@@ -1,0 +1,89 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ template "frontend.name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: {{ template "frontend.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ template "frontend.name" . }}
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        app.kubernetes.io/name: {{ template "frontend.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.image.repository }}"
+        ports:
+        - containerPort: {{ .Values.service.port }}
+          protocol: {{ .Values.service.protocol }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        resources:
+          requests:
+            memory: "{{ .Values.resources.requests.memory }}"
+            cpu: "{{ .Values.resources.requests.cpu }}"
+          limits:
+            memory: "{{ .Values.resources.limits.memory }}"
+            cpu: "{{ .Values.resources.limits.cpu }}"
+
+        readinessProbe:
+          httpGet:
+            path: "/healthz"
+            port: {{ .Values.service.port }}
+          initialDelaySeconds: 5
+        livenessProbe:
+          httpGet:
+            path: "/healthz"
+            port: {{ .Values.service.port }}
+          initialDelaySeconds: 10
+
+        env:
+          - name: ZIPKIN_SVC_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "frontend.name" . }}
+                key: zipkin-host
+          - name: ZIPKIN_SVC_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "frontend.name" . }}
+                key: zipkin-port
+          - name: ZIPKIN_SAMPLING_RATE
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "frontend.name" . }}
+                key: zipkin-sampling-rate
+          - name: QUOTE_SVC_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "frontend.name" . }}
+                key: quote-service-host
+          - name: QUOTE_SVC_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "frontend.name" . }}
+                key: quote-service-port
+          - name: VOTE_SVC_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "frontend.name" . }}
+                key: vote-service-host
+          - name: VOTE_SVC_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "frontend.name" . }}
+                key: vote-service-port
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst

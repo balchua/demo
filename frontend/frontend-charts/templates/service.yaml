@@ -1,0 +1,25 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ template "frontend.name" . }}
+  namespace: {{ .Release.Namespace }}
+
+  {{ if  .Values.prometheus.enabled }}
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: {{ .Values.service.port | quote }}
+    prometheus.io/path: "/actuator/prometheus"
+  {{ end }}
+  labels:
+    app.kubernetes.io/name: {{ template "frontend.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+  - protocol: {{ .Values.service.protocol }}
+    port: {{ .Values.service.port }}
+    name: http
+  selector:
+    app.kubernetes.io/name: {{ template "frontend.name" . }}
