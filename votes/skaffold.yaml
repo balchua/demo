@@ -23,7 +23,7 @@ profiles:
         values:
           image.repository: localhost:32000/votes
 
-- name: do-helm
+- name: do
   build:
     artifacts:
     - image: balchu/votes

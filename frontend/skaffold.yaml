@@ -1,20 +1,6 @@
 apiVersion: skaffold/v1beta13
 kind: Config
 profiles:
-- name: do
-  build:
-    artifacts:
-      - image: balchu/frontend
-        context: .
-        jibMaven: {}
-    local:
-      push: true
-      useDockerCLI: true
-  deploy:
-    kubectl:
-      manifests:
-        - src/k8s-manifests/do/*.yaml
-
 - name: local
   build:
     artifacts:
@@ -37,7 +23,7 @@ profiles:
         values:
           image.repository: localhost:32000/frontend
 
-- name: do-helm
+- name: do
   build:
     artifacts:
     - image: balchu/frontend
