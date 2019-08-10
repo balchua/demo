@@ -84,6 +84,22 @@ spec:
               configMapKeyRef:
                 name: {{ template "frontend.name" . }}
                 key: vote-service-port
+          - name: OKTA_OIDC_ISSUER_URI
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "frontend.name" . }}
+                key: oauth2-issuer
+          - name: OKTA_CLIENT_ID
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "frontend.name" . }}
+                key: oauth2-client-id
+          - name: OKTA_CLIENT_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "frontend.name" . }}
+                key: oauth2-client-secret
+
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst

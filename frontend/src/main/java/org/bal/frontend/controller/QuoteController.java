@@ -5,10 +5,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.bal.frontend.dto.QuoteDTO;
 import org.bal.frontend.grpc.client.QuoteClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +26,10 @@ public class QuoteController {
 
 
     @RequestMapping(value = "/list", method = {RequestMethod.GET},produces = "application/json")
-    public List<QuoteDTO> quotes() {
+    public List<QuoteDTO> quotes(Principal principal) {
+        if (principal != null ){
+            log.debug("Principal: " + principal.getName());
+        }
         List<QuoteDTO> quotes = new ArrayList<>();
         log.debug("Retrieving all the quotes");
         quoteClient.allQuotes().forEach(q -> {

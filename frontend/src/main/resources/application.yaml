@@ -2,6 +2,12 @@ spring:
   application:
     name: frontend-service
 
+okta:
+  oauth2:
+    issuer: ${OKTA_OIDC_ISSUER_URI}
+    client-id: ${OKTA_CLIENT_ID}
+    client-secret: ${OKTA_CLIENT_SECRET}
+
 management:
   metrics:
     enable:
@@ -13,6 +19,7 @@ management:
     web:
       exposure:
         include: '*'
+
 
 server:
   port : 9091
@@ -34,6 +41,8 @@ vote-server:
 logging:
   level:
     org.bal: DEBUG
-    org.springframework: INFO
+    org.springframework: DEBUG
+    com.okta: DEBUG
+    root: INFO
 
 

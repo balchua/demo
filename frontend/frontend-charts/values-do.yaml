@@ -6,7 +6,7 @@ image:
 zipkin:
   host: zipkin
   port: 9411
-  sampling: "0.8"
+  sampling: "0.5"
 
 ingress:
   host: "frontend.geek.per.sg"

@@ -5,6 +5,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.bal.frontend.dto.VoteDTO;
 import org.bal.frontend.grpc.client.VoteClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,7 +27,7 @@ public class VoteController {
 
 
     @RequestMapping(value = "/castVote", method = {RequestMethod.POST},produces = "application/json")
-    public String castVote(@RequestParam String quoteId) {
+    public String castVote(@RequestParam String quoteId, @AuthenticationPrincipal OidcUser user) {
         log.info("Casting vote for Quote id {}", quoteId);
         String message = voteClient.castVote(Integer.parseInt(quoteId));
         log.info("Voted for the quote {}", message);

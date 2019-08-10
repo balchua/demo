@@ -92,10 +92,16 @@ $( document ).ready(function() {
 
 
     function castVote(quoteId, callback){
+      //add the csrf tokens to prevent cross site resource forgery.
+      var token = $("meta[name='_csrf']").attr("content");
+      var header = $("meta[name='_csrf_header']").attr("content");
         $.ajax({
             type : "POST",
             url : "/api/vote/castVote",
             data: { "quoteId": quoteId },
+            beforeSend: function(xhr) {
+              xhr.setRequestHeader(header, token);
+            },
             dataType: 'text',
             success: function(data){
                 fillData(data);

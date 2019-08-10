@@ -1,9 +1,13 @@
 <!DOCTYPE HTML>
 <META HTTP-EQUIV="CACHE-CONTROL" CONTENT="NO-CACHE">
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Demo</title>
+    <title>DemoKit</title>
     <meta charset="utf-8"/>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
     <link href="/assets/css/material-kit.min.css?v=2.0.5" rel="stylesheet"/>
