@@ -19,8 +19,8 @@ zipkin:
   sampling: "1"
 
 oauth2:
-  clientId: 0oa13exwlsUfF18Sa357
-  clientSecret: NgddfaGhiD_peI7dgHgRLaxc_u21Bgu3yzeH15KJ
+  clientId:
+  clientSecret:
   issuer: https://dev-287626.okta.com/oauth2/default
 
 quotes:
