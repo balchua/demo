@@ -1,3 +1,4 @@
 image:
   repository: balchu/quotes
   pullPolicy: Always
+replicaCount: 2

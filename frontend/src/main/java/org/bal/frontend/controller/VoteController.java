@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -25,15 +26,16 @@ public class VoteController {
 
     @RequestMapping(value = "/castVote", method = {RequestMethod.POST},produces = "application/json")
     public String castVote(@RequestParam String quoteId) {
-        log.debug("Casting votes");
+        log.info("Casting vote for Quote id {}", quoteId);
         String message = voteClient.castVote(Integer.parseInt(quoteId));
+        log.info("Voted for the quote {}", message);
         return message;
     }
 
     @RequestMapping(value = "/tally", method = {RequestMethod.GET},produces = "application/json")
     public List<VoteDTO> tally() {
         List<VoteDTO> votes = new ArrayList<>();
-        log.debug("Retrieving all the votes");
+        log.info("Retrieving all the votes");
         voteClient.voteResult().forEach(v -> {
             VoteDTO vDTO = new VoteDTO();
             vDTO.setQuote(v.getQuote());
@@ -41,6 +43,9 @@ public class VoteController {
             vDTO.setQuoteId(v.getQuoteId());
             votes.add(vDTO);
         });
+        log.info("Sorting votes from one with the highest vote to one with the lowest vote.");
+
+        Collections.sort(votes);
         return votes;
     }
 
