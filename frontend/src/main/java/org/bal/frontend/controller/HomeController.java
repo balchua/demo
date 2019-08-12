@@ -26,8 +26,9 @@ public class HomeController {
     private KeycloakSecurityContext securityContext;
 
     @GetMapping("/admin")
+
     public String admin(Principal principal) {
-        log.debug("Principal: {} ", principal.getName());
+        log.debug("Access Token: {} ", securityContext.getIdTokenString());
 
         AccessToken accessToken = securityContext.getToken();
         String username = accessToken.getPreferredUsername();

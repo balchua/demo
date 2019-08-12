@@ -111,5 +111,10 @@ To cast a vote:
 
 `grpcurl -plaintext -d '{"quoteId":"0"}' localhost:50052 org.bal.vote.proto.internal.VoteManagement/CastVote`
 
+#### Enabling Grafana Loki and Promtail
+
+`helm upgrade --install loki loki/loki --namespace monitoring`
+
+`helm upgrade --install promtail loki/promtail --set "loki.serviceName=loki --namespace monitoring"`
 
 

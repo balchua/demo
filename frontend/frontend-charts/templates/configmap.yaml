@@ -11,6 +11,7 @@ data:
   zipkin-sampling-rate: {{ .Values.zipkin.sampling | quote }}
   vote-service-host: {{ .Values.votes.host }}
   vote-service-port: {{ .Values.votes.port | quote }}
-  oauth2-client-id: {{ .Values.oauth2.clientId | quote }}
+  keycloak-client-id: {{ .Values.keycloak.clientId | quote }}
+  keycloak-auth-server-url: {{ .Values.keycloak.auth_server_url | quote }}
 
-  oauth2-issuer: {{ .Values.oauth2.issuer | quote }}
+  keycloak-realm: {{ .Values.keycloak.realm | quote }}

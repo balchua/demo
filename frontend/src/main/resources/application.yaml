@@ -7,13 +7,13 @@ spring:
 
 keycloak:
   enabled: false
-  realm: demo
-  auth-server-url: http://keycloak.10.152.183.83.nip.io/auth
+  realm: ${KEYCLOAK_REALM}
+  auth-server-url: ${KEYCLOAK_AUTH_SERVER_URI}
   # The client-id
-  resource: frontend
+  resource: ${KEYCLOAK_CLIENT_ID}
   ssl-required: external
   credentials:
-      secret: b6ea155f-e521-4add-a2a6-885d23b8e2a8
+      secret: ${KEYCLOAK_CLIENT_SECRET}
   confidential-port: 0
   use-resource-role-mappings: true
   principal-attribute: preferred_username
@@ -54,9 +54,9 @@ vote-server:
   port: ${VOTE_SVC_PORT:50052}
 
 logging:
+  pattern:
+    console: "%d [%X{traceId}/%X{spanId}] [%thread] %-5level %logger{36} - %m %replace(%xException){'\n','\u2028'}%nopex%n"
   level:
     org.bal: DEBUG
     org.springframework: INFO
     root: INFO
-
-

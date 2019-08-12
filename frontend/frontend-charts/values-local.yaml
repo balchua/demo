@@ -9,3 +9,9 @@ zipkin:
 
 ingress:
   host: "frontend.10.152.183.83.nip.io"
+
+keycloak:
+  auth_server_url: http://keycloak.10.152.183.83.nip.io/auth
+  clientSecret: b6ea155f-e521-4add-a2a6-885d23b8e2a8
+  clientId: frontend
+  realm: demo

@@ -10,3 +10,8 @@ zipkin:
 
 ingress:
   host: "frontend.geek.per.sg"
+
+keycloak:
+  auth_server_url: http://keycloak.geek.per.sg/auth
+  clientSecret: b6ea155f-e521-4add-a2a6-885d23b8e2a8
+  clientId: frontend

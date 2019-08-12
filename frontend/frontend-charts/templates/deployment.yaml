@@ -37,16 +37,16 @@ spec:
             memory: "{{ .Values.resources.limits.memory }}"
             cpu: "{{ .Values.resources.limits.cpu }}"
 
-#        readinessProbe:
-#          httpGet:
-#            path: "/healthz"
-#            port: {{ .Values.service.port }}
-#          initialDelaySeconds: 5
-#        livenessProbe:
-#          httpGet:
-#            path: "/healthz"
-#            port: {{ .Values.service.port }}
-#          initialDelaySeconds: 10
+        readinessProbe:
+          httpGet:
+            path: "/healthz"
+            port: {{ .Values.service.port }}
+          initialDelaySeconds: 5
+        livenessProbe:
+          httpGet:
+            path: "/healthz"
+            port: {{ .Values.service.port }}
+          initialDelaySeconds: 10
 
         env:
           - name: ZIPKIN_SVC_HOST
@@ -84,21 +84,26 @@ spec:
               configMapKeyRef:
                 name: {{ template "frontend.name" . }}
                 key: vote-service-port
-          - name: OKTA_OIDC_ISSUER_URI
+          - name: KEYCLOAK_AUTH_SERVER_URI
             valueFrom:
               configMapKeyRef:
                 name: {{ template "frontend.name" . }}
-                key: oauth2-issuer
-          - name: OKTA_CLIENT_ID
+                key: keycloak-auth-server-url
+          - name: KEYCLOAK_REALM
             valueFrom:
               configMapKeyRef:
                 name: {{ template "frontend.name" . }}
-                key: oauth2-client-id
-          - name: OKTA_CLIENT_SECRET
+                key: keycloak-realm
+          - name: KEYCLOAK_CLIENT_ID
+            valueFrom:
+              configMapKeyRef:
+                name: {{ template "frontend.name" . }}
+                key: keycloak-client-id
+          - name: KEYCLOAK_CLIENT_SECRET
             valueFrom:
               secretKeyRef:
                 name: {{ template "frontend.name" . }}
-                key: oauth2-client-secret
+                key: keycloak-client-secret
 
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
