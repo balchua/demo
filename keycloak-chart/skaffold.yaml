@@ -1,0 +1,13 @@
+apiVersion: skaffold/v1beta13
+kind: Config
+profiles:
+- name: local
+  deploy:
+    helm:
+      releases:
+      - name: keycloak-helm
+        remote: true
+        chartPath: codecentric/keycloak
+        namespace: keycloak
+        valuesFiles:
+        - values-local.yaml

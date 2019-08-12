@@ -1,12 +1,27 @@
 spring:
   application:
     name: frontend-service
+  main:
+    allow-bean-definition-overriding: true
 
-okta:
-  oauth2:
-    issuer: ${OKTA_OIDC_ISSUER_URI}
-    client-id: ${OKTA_CLIENT_ID}
-    client-secret: ${OKTA_CLIENT_SECRET}
+
+keycloak:
+  enabled: false
+  realm: demo
+  auth-server-url: http://keycloak.10.152.183.83.nip.io/auth
+  # The client-id
+  resource: frontend
+  ssl-required: external
+  credentials:
+      secret: b6ea155f-e521-4add-a2a6-885d23b8e2a8
+  confidential-port: 0
+  use-resource-role-mappings: true
+  principal-attribute: preferred_username
+  security-constraints:
+    - auth-roles: [user]
+      security-collections:
+      - name: Admin page
+        patterns: ["/admin"]
 
 management:
   metrics:
@@ -41,8 +56,7 @@ vote-server:
 logging:
   level:
     org.bal: DEBUG
-    org.springframework: DEBUG
-    com.okta: DEBUG
+    org.springframework: INFO
     root: INFO
 
 

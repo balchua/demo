@@ -1,0 +1,17 @@
+keycloak:
+  username: keycloak
+  password: admin
+  ingress:
+    enabled: true
+    hosts: ["keycloak.10.152.183.83.nip.io"]
+    annotations: {kubernetes.io/ingress.class: "public"}
+  extraVolumes: |
+    - name: realm-secret
+      secret:
+        secretName: realm-secret
+  extraVolumeMounts: |
+    - name: realm-secret
+      mountPath: "/realm/"
+      readOnly: true
+
+  extraArgs: -Dkeycloak.import=/realm/keycloak-demo-realm.json
