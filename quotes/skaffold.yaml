@@ -50,12 +50,12 @@ profiles:
     helm:
       releases:
         - name: quotes-db
-          chartPath: quote-db-charts
+          chartPath: quotes-db-charts
           namespace: my-project
           wait: true
           valuesFiles:
-            - quote-db-charts/values-default.yaml
-            - quote-db-charts/values-local.yaml
+            - quotes-db-charts/values-default.yaml
+            - quotes-db-charts/values-local.yaml
 
 - name: quotes-db-do
   deploy:
