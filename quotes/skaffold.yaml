@@ -44,3 +44,27 @@ profiles:
         - quote-charts/values-do.yaml
         values:
           image.repository: balchu/quotes
+
+- name: quotes-db-local
+  deploy:
+    helm:
+      releases:
+        - name: quotes-db
+          chartPath: quote-db-charts
+          namespace: my-project
+          wait: true
+          valuesFiles:
+            - quote-db-charts/values-default.yaml
+            - quote-db-charts/values-local.yaml
+
+- name: quotes-db-do
+  deploy:
+    helm:
+      releases:
+        - name: quotes-db
+          chartPath: quotes-db-charts
+          namespace: my-project
+          wait: true
+          valuesFiles:
+            - quotes-db-charts/values-default.yaml
+            - quotes-db-charts/values-do.yaml

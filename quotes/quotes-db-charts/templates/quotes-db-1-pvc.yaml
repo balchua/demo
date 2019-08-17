@@ -1,0 +1,16 @@
+{{ if  .Values.db.pvc.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: quotes-db-pv-claim
+  namespace: {{.Release.Namespace}}
+  labels:
+    app.kubernetes.io/name: quotes-db-pv-claim
+spec:
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 5Gi
+{{ end }}

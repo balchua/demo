@@ -18,7 +18,7 @@ grpc:
 
 logging:
   pattern:
-    console: "%d [%X{traceId}/%X{spanId}] [%thread] %-5level %logger{36} - %msg%n"
+    console: "%d [%X{traceId}/%X{spanId}] [%thread] %-5level %logger{36} - %m %replace(%xException){'\n','\u2028'}%nopex%n"
   level:
     org.bal: DEBUG
 
@@ -32,7 +32,7 @@ spring:
     hikari:
       connectionTimeout: 20000
       maximumPoolSize: 5
-    url: jdbc:postgresql://postgres:5432/quotesdb
+    url: jdbc:postgresql://quotes-db-service:5432/quotesdb
     username: ${QUOTES_DB_USER:postgresadmin}
     password: ${QUOTES_DB_PASSWORD:dummy}
   jpa:

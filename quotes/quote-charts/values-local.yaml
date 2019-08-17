@@ -1,3 +1,7 @@
 image:
   repository: localhost:32000/quotes
   pullPolicy: IfNotPresent
+
+db:
+  pvc:
+    enabled: true

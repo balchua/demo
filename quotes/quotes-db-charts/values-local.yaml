@@ -1,0 +1,3 @@
+db:
+  pvc:
+    enabled: true

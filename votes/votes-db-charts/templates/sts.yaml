@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: votes-db
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: votes-db # has to match .spec.template.metadata.labels
+  serviceName: votes-db-service
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        app.kubernetes.io/name: votes-db # has to match .spec.selector.matchLabels
+    spec:
+      containers:
+        - name: redis
+          image: redis:5.0.5-alpine
+          imagePullPolicy: Always
+          args: ["--requirepass", "$(REDIS_PASS)", "--appendonly", "yes", "--save", "900", "1", "--save", "30", "1"]
+          ports:
+            - containerPort: 6379
+              name: redis
+          env:
+            - name: REDIS_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: votes-db-secret
+                  key: redis_password
+          volumeMounts:
+            - name: redis-volume
+              mountPath: /data
+  {{ if  .Values.redis.pvc.enabled }}
+  volumeClaimTemplates:
+    - metadata:
+        name: redis-volume
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi
+  {{ else }}
+      volumes:
+      - name: redis-volume
+        emptyDir: {}
+   {{ end }}
+

@@ -45,3 +45,27 @@ profiles:
         values:
           image.repository: balchu/votes
 
+- name: votes-db-local
+  deploy:
+    helm:
+      releases:
+        - name: votes-db
+          chartPath: votes-db-charts
+          namespace: my-project
+          wait: true
+          valuesFiles:
+            - votes-db-charts/values-default.yaml
+            - votes-db-charts/values-local.yaml
+
+- name: votes-db-do
+  deploy:
+    helm:
+      releases:
+        - name: votes-db
+          chartPath: votes-db-charts
+          namespace: my-project
+          wait: true
+          valuesFiles:
+            - votes-db-charts/values-default.yaml
+            - votes-db-charts/values-do.yaml
+

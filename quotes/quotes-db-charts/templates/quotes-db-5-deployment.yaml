@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quotes-db
+  namespace: {{.Release.Namespace}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: quotes-db
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: quotes-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:10.4
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: quotes-db-config
+            - secretRef:
+                name: quotes-db-secrets
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: quotes-db
+      volumes:
+      {{ if  .Values.db.pvc.enabled }}
+        - name: quotes-db
+          persistentVolumeClaim:
+            claimName: quotes-db-pv-claim
+      {{ else }}
+        - name: quotes-db
+          emptyDir: {}
+      {{ end }}

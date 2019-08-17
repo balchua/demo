@@ -1,0 +1,10 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: quotes-db-config
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernets.io/name: quotes-db-config
+data:
+  POSTGRES_DB: quotesdb
+  POSTGRES_USER: {{ .Values.db.user }}

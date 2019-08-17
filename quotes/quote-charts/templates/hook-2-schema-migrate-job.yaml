@@ -1,0 +1,42 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: quotes-db-schema-migrate
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": pre-install, pre-upgrade
+    "helm.sh/hook-weight": "1"
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  backoffLimit: 10
+  activeDeadlineSeconds: 600
+  template:
+    spec:
+      containers:
+      - name: flyway
+        image: boxfuse/flyway:5
+        args: ["migrate"]
+        env:
+          - name: FLYWAY_URL
+            value: "jdbc:postgresql://quotes-db-service:5432/quotesdb"
+
+          - name: FLYWAY_USER
+            valueFrom:
+              configMapKeyRef:
+                name: quotes-db-config
+                key: POSTGRES_USER
+          - name: FLYWAY_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: quotes-db-secrets
+                key: POSTGRES_PASSWORD
+
+        volumeMounts:
+          - name: sql-config
+            mountPath: /flyway/sql
+      volumes:
+        - name: sql-config
+          configMap:
+            name: quotes-db-sql
+
+      restartPolicy: Never

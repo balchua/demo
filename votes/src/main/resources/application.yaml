@@ -21,7 +21,7 @@ grpc:
 
 logging:
   pattern:
-    console: "%d [%X{traceId}/%X{spanId}] [%thread] %-5level %logger{36} - %msg%n"
+    console: "%d [%X{traceId}/%X{spanId}] [%thread] %-5level %logger{36} - %m %replace(%xException){'\n','\u2028'}%nopex%n"
   level:
     org.bal: DEBUG
 
@@ -34,6 +34,6 @@ quotes-server:
   port: ${QUOTE_SERVER_PORT:50051}
 
 redis-server:
-  host: ${REDIS_SERVER_HOST:redis}
+  host: ${REDIS_SERVER_HOST:votes-db-service}
   port: ${REDIS_SERVER_PORT:6379}
   password: ${REDIS_PASSWORD:dummy}
