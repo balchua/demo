@@ -9,15 +9,15 @@ The application then tally the votes.
 
 1. Kubernetes cluster (ex. [microk8s](https://microk8s.io/) ) 
 2. Docker
-3. [Skaffold](https://skaffold.dev/) - Optional
+3. [Skaffold](https://skaffold.dev/)
+4. [Helm](https://helm.sh/)
 4. [Maven](https://maven.apache.org/)
 5. [jib-maven-plugin](https://github.com/GoogleContainerTools/jib/tree/master/jib-maven-plugin)
 
 ## Project structure
+  
 
-There are 4 components in this kit.  
-
-These are:
+Main components are:
 * `frontend/` - Hosts the web pages as well as RESTful access to backend services.
 * `quotes/` - This component retrieves the Marvel character quotes data stored PostgresSQL.
 * `votes/` - This component keeps track of the votes on each quote.
@@ -47,6 +47,7 @@ Go to the directory `frontend/`
 To build the project, do a `mvn clean install jib:dockerBuild`
 For simplicity, you can also use the provided `skaffold.yaml` and run `skaffold run -p local` or `skaffold dev -p local` if you want continuous build and deploy to you local cluster.
 
+
 #### Test
 You can use Postman to test the frontend's RESTFul endpoints.
 
@@ -64,7 +65,23 @@ Stacks:
 Go to directory `quotes`
 
 To build the project, do a `mvn clean install jib:dockerBuild`
-For simplicity, you can also use the provided `skaffold.yaml` and run `skaffold run -p local` or `skaffold dev -p local` if you want continuous build and deploy to you local cluster.
+
+#### Run
+
+In order to run the `quotes` service, you need to have the *Quotes DB* up and running.
+
+Use skaffold:
+1.  Start the quotes DB (postgres)
+
+`skaffold run -p quotes-db-local`
+
+2.  Start the quotes service
+
+`skaffold run -p local`
+
+Checkout the [`skaffold.yaml`](quotes/skaffold.yaml).
+
+
 
 #### Test
 You can use [grpcurl](https://github.com/fullstorydev/grpcurl) to test it from command line.
@@ -98,6 +115,23 @@ Stacks:
 To build the project, do a `mvn clean install jib:dockerBuild`
 For simplicity, you can also use the provided `skaffold.yaml` and run `skaffold run -p local` or `skaffold dev -p local` if you want continuous build and deploy to you local cluster.
 
+
+#### Run
+
+In order to run the `votes` service, you need to have the *Quotes DB* up and running.
+
+Use skaffold:
+1.  Start the Votes DB (Redis)
+
+`skaffold run -p votes-db-local`
+
+2.  Start the vote service
+
+`skaffold run -p local`
+
+Checkout the [`skaffold.yaml`](votes/skaffold.yaml).
+
+
 #### Test
 You can use [grpcurl](https://github.com/fullstorydev/grpcurl) to test it from command line.
 
@@ -116,5 +150,19 @@ To cast a vote:
 `helm upgrade --install loki loki/loki --namespace monitoring`
 
 `helm upgrade --install promtail loki/promtail --set "loki.serviceName=loki --namespace monitoring"`
+
+
+## Zipkin
+
+To start Zipkin
+
+`skaffold run -p local`
+
+To stop Zipkin
+
+`skaffold delete -p local`
+
+Checkout the [`skaffold.yaml`](zipkin/skaffold.yaml).
+
 
 

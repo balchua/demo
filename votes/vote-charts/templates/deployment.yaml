@@ -80,5 +80,5 @@ spec:
                 name: {{ template "votes.name" . }}
                 key: redis_password
       restartPolicy: Always
-      terminationGracePeriodSeconds: 30
+      terminationGracePeriodSeconds: 10
       dnsPolicy: ClusterFirst

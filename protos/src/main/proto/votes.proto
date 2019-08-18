@@ -33,5 +33,7 @@ service VoteManagement {
 
     rpc GetAllVotes (google.protobuf.Empty) returns (VotesList) {}
 
+    rpc GetAllVotesWithMultiget (google.protobuf.Empty) returns (VotesList) {}
+
     rpc CastVote(VoteRequest) returns (VoteResponse) {}
 }

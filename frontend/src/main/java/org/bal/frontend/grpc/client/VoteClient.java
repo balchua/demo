@@ -61,6 +61,23 @@ public class VoteClient {
     }
 
 
+    public List<VoteDTO> voteResultWithMultiget() {
+        List<VoteDTO> voteDTOList = new ArrayList<>();
+        VotesList list = blockingStub.getAllVotesWithMultiget(Empty.newBuilder().build());
+        list.getVotesList().forEach (vote -> {
+            VoteDTO voteDTO = new VoteDTO();
+
+            voteDTO.setCount(vote.getCount());
+            voteDTO.setQuote(vote.getQuote());
+            voteDTO.setQuoteId(vote.getQuoteId());
+
+            voteDTOList.add(voteDTO);
+        });
+
+        return voteDTOList;
+    }
+
+
     public HealthCheckResponse.ServingStatus health() {
         HealthCheckResponse response = healthBlockingStub.check(HealthCheckRequest.newBuilder().build());
         return response.getStatus();

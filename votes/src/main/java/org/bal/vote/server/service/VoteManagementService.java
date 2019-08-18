@@ -54,6 +54,25 @@ public class VoteManagementService extends VoteManagementGrpc.VoteManagementImpl
 
     }
 
+    @Override
+    public void getAllVotesWithMultiget(Empty request, StreamObserver<VotesList> responseObserver) {
+        VotesList.Builder builder = VotesList.newBuilder();
+
+        List<Quote> quotes = quoteClient.allQuotes();
+
+        List<Vote> votes = voteRepository.getAllVotes(quotes);
+
+        votes.forEach(vote -> {
+            log.debug("Quotes Id {}, quote: {} - with votes {}", vote.getQuoteId(), vote.getQuote(), vote.getCount());
+            builder.addVotes(vote);
+
+        });
+
+        responseObserver.onNext(builder.build());
+        responseObserver.onCompleted();
+
+    }
+
     private void failVoteCasting(int quoteId) {
         if (quoteId == 2) {
             throw new IllegalArgumentException("Unable to cast vote to Hulk Smash.");

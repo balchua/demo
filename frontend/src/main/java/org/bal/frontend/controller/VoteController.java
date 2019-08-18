@@ -49,4 +49,22 @@ public class VoteController {
         return votes;
     }
 
+
+    @RequestMapping(value = "/tallyWithMultiget", method = {RequestMethod.GET},produces = "application/json")
+    public List<VoteDTO> tallyWithPipeline() {
+        List<VoteDTO> votes = new ArrayList<>();
+        log.info("Retrieving all the votes");
+        voteClient.voteResultWithMultiget().forEach(v -> {
+            VoteDTO vDTO = new VoteDTO();
+            vDTO.setQuote(v.getQuote());
+            vDTO.setCount(v.getCount());
+            vDTO.setQuoteId(v.getQuoteId());
+            votes.add(vDTO);
+        });
+        log.info("Sorting votes from one with the highest vote to one with the lowest vote.");
+
+        Collections.sort(votes);
+        return votes;
+    }
+
 }
