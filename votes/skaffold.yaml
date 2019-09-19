@@ -9,7 +9,7 @@ profiles:
       jibMaven: {}
     local:
       push: true
-      useDockerCLI: true
+      useDockerCLI: false
   deploy:
     helm:
       releases:
@@ -31,7 +31,7 @@ profiles:
       jibMaven: {}
     local:
       push: true
-      useDockerCLI: true
+      useDockerCLI: false
   deploy:
     helm:
       releases:

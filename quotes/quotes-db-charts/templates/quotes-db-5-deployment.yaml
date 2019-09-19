@@ -10,6 +10,8 @@ spec:
       app.kubernetes.io/name: quotes-db
   template:
     metadata:
+      annotations:
+        linkerd.io/inject: enabled
       labels:
         app.kubernetes.io/name: quotes-db
     spec:

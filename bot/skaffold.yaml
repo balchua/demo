@@ -23,7 +23,7 @@ profiles:
         jibMaven: {}
     local:
       push: true
-      useDockerCLI: true
+      useDockerCLI: false
   deploy:
     kubectl:
       manifests:
