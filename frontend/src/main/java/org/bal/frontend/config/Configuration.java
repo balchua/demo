@@ -4,6 +4,7 @@ package org.bal.frontend.config;
 import brave.CurrentSpanCustomizer;
 import brave.SpanCustomizer;
 import brave.Tracing;
+import brave.context.slf4j.MDCScopeDecorator;
 import brave.grpc.GrpcTracing;
 import brave.http.HttpAdapter;
 import brave.http.HttpSampler;
@@ -70,7 +71,7 @@ public class Configuration implements WebMvcConfigurer {
                 .localServiceName(serviceName)
                 .propagationFactory(ExtraFieldPropagation.newFactory(B3Propagation.FACTORY, "user-name"))
                 .sampler(Sampler.create(zipkinSamplingRate))
-                .currentTraceContext(ThreadLocalCurrentTraceContext.newBuilder()
+                .currentTraceContext(ThreadLocalCurrentTraceContext.newBuilder().addScopeDecorator(MDCScopeDecorator.create())
                         .build()
                 )
                 .spanReporter(spanReporter()).build();
