@@ -4,4 +4,4 @@ image:
 
 db:
   pvc:
-    enabled: true
+    enabled: false

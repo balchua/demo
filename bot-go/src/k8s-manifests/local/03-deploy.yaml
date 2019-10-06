@@ -1,0 +1,55 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: bot-go
+  namespace: my-project
+  labels:
+    app.kubernetes.io/name: bot-go
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bot-go
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+        kubernetes.io/change-cause: "Update to bot-go artifact version 2.0.0 test"
+      labels:
+        app.kubernetes.io/name: bot-go
+    spec:
+      containers:
+      - name: bot-go
+        image: localhost:32000/bot-go
+        imagePullPolicy: IfNotPresent
+        env:
+          - name: ZIPKIN_SERVER_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: bot-config
+                key: zipkin-host
+          - name: ZIPKIN_SERVER_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: bot-config
+                key: zipkin-port
+          - name: ZIPKIN_SAMPLING_RATE
+            valueFrom:
+              configMapKeyRef:
+                name: bot-config
+                key: zipkin-sampling-rate
+          - name: FRONTEND_SERVER_HOST
+            valueFrom:
+              configMapKeyRef:
+                name: bot-config
+                key: frontend-host
+          - name: FRONTEND_SERVER_PORT
+            valueFrom:
+              configMapKeyRef:
+                name: bot-config
+                key: frontend-port
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
