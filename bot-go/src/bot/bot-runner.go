@@ -46,22 +46,8 @@ func main() {
 		}
 	}()
 
-	var intTallyVotesFixedRate int64
-	intTallyVotesFixedRate, err2 := strconv.ParseInt(cfg.Application.TallyVotesFixedRate, 10, 64)
-	if err2 != nil {
-		util.ProcessError(err2)
-	}
-	tickerTallyVotes := time.NewTicker(time.Duration(intTallyVotesFixedRate) * time.Millisecond)
-	go func() {
-		for t := range tickerTallyVotes.C {
-			_ = t // we don't print the ticker time, so assign this `t` variable to underscore `_` to avoid error
-			votes.TallyVotes()
-		}
-	}()
-
 	// wait for 10 seconds
 	time.Sleep(20 * time.Second)
 	tickerCastVote.Stop()
 	tickerListQuotes.Stop()
-	tickerTallyVotes.Stop()
 }

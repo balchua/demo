@@ -4,58 +4,48 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/kelseyhightower/envconfig"
-	"gopkg.in/yaml.v2"
+	"github.com/spf13/viper"
 )
 
+//Cfg Structure to hold application configuration
 var Cfg Config
 
+//Config template for application configuration
 type Config struct {
 	Application struct {
-		CastVoteFixedRate   string `yaml:"castVoteFixedRate"`
-		ListQuotesFixedRate string `yaml:"listQuotesFixedRate"`
-		TallyVotesFixedRate string `yaml:"tallyVotesFixedRate"`
-	} `yaml:"application"`
+		CastVoteFixedRate   string `mapstructure:"castVoteFixedRate"`
+		ListQuotesFixedRate string `mapstructure:"listQuotesFixedRate"`
+		TallyVotesFixedRate string `mapstructure:"tallyVotesFixedRate"`
+	} `mapstructure:"application"`
 
 	Frontend struct {
-		Port string `yaml:"port" envconfig:"FRONTEND_SERVER_PORT"`
-		Host string `yaml:"host" envconfig:"FRONTEND_SERVER_HOST"`
-	} `yaml:"frontend-server"`
+		Port string `mapstructure:"port" envconfig:"FRONTEND_SERVER_PORT"`
+		Host string `mapstructure:"host" envconfig:"FRONTEND_SERVER_HOST"`
+	} `mapstructure:"frontend-server"`
 
 	Zipkin struct {
-		Port         string `yaml:"port" envconfig:"ZIPKIN_SERVER_PORT"`
-		Host         string `yaml:"host" envconfig:"ZIPKIN_SERVER_HOST"`
-		samplingRate string `yaml:"samplingRate"`
-	} `yaml:"zipkin-server"`
-}
-
-func readFile(cfg *Config) {
-	f, err := os.Open("config/application.yaml")
-	if err != nil {
-		ProcessError(err)
-	}
-
-	decoder := yaml.NewDecoder(f)
-	err = decoder.Decode(cfg)
-	if err != nil {
-		ProcessError(err)
-	}
-}
-
-func readEnv(cfg *Config) {
-	err := envconfig.Process("", cfg)
-	if err != nil {
-		ProcessError(err)
-	}
+		Port         string `mapstructure:"port" envconfig:"ZIPKIN_SERVER_PORT"`
+		Host         string `mapstructure:"host" envconfig:"ZIPKIN_SERVER_HOST"`
+		samplingRate string `mapstructure:"samplingRate"`
+	} `mapstructure:"zipkin-server"`
 }
 
 func init() {
-	readFile(&Cfg)
-	readEnv(&Cfg)
-	fmt.Printf("From init %+v", Cfg)
+	viper.SetConfigName("application") // name of config file (without extension)
+	viper.SetConfigType("yaml")
+	viper.AddConfigPath("./src/config/") // optionally look for config in the working directory
+	err := viper.ReadInConfig()          // Find and read the config file
+	if err != nil {                      // Handle errors reading the config file
+		panic(fmt.Errorf("fatal error config file: %s \n", err))
+	}
+
+	viper.Unmarshal(&Cfg)
+
+	fmt.Printf("From init %+v  ", Cfg)
 
 }
 
+//function to process and error
 func ProcessError(err error) {
 	fmt.Println(err)
 	os.Exit(2)
