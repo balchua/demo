@@ -6,4 +6,5 @@ bin/*
 *~/*
 bot-go/bot
 *.a
-bot-go-proto/bin/*
+**/bin/*
+**/*.exe
