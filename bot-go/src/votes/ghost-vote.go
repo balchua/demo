@@ -4,31 +4,40 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"math/rand"
 	"net/http"
+	"net/url"
+	"strconv"
 	"util"
 )
 
 func CastGhostVote() {
 	fmt.Println("casting vote")
-	var url string = vote_base_url + "/castVote"
-	makeRequest(url)
-
+	var urlStr string = vote_base_url + "/castVote"
+	quoteId := strconv.Itoa(rand.Intn(16))
+	strconv.Itoa(97)
+	formData := url.Values{
+		"quoteId": {quoteId},
+	}
+	makePostRequest(urlStr, formData)
 }
 
 func ListQuotes() {
 	fmt.Println("listing quotes")
-	var url string = quote_base_url + "/list"
-	makeRequest(url)
+	var urlStr string = quote_base_url + "/list"
+	makeGetRequest(urlStr)
 
 }
 
 func TallyVotes() {
 	fmt.Println("tally votes'")
-	var url string = vote_base_url + "/tallyVote"
-	makeRequest(url)
+	var urlStr string = vote_base_url + "/tallyVote"
+
+	makeGetRequest(urlStr)
+
 }
 
-func makeRequest(url string) {
+func makeGetRequest(url string) {
 	resp, err := http.Get(url)
 	if err != nil {
 		log.Fatalln(err)
@@ -39,6 +48,21 @@ func makeRequest(url string) {
 		log.Fatalln(err)
 	}
 	log.Println(string(body))
+}
+
+func makePostRequest(url string, formData url.Values) {
+
+	resp, err := http.PostForm(url, formData)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	log.Println(string(body))
+
 }
 
 var vote_base_url string
