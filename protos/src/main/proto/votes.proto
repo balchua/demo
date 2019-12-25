@@ -7,7 +7,7 @@ option java_outer_classname = "VotesProto";
 
 import "google/protobuf/empty.proto";
 
-package org.bal.vote.proto.internal;
+option go_package = "bot-go/src/proto";
 
 message VoteRequest {
    int32 quoteId = 1;
