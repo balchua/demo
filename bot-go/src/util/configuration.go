@@ -33,10 +33,12 @@ type Config struct {
 func init() {
 	viper.SetConfigName("application") // name of config file (without extension)
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath("./src/config/") // optionally look for config in the working directory
-	err := viper.ReadInConfig()          // Find and read the config file
-	if err != nil {                      // Handle errors reading the config file
-		panic(fmt.Errorf("fatal error config file: %s \n", err))
+	viper.AddConfigPath(".") // optionally look for config in the working directory
+	viper.AddConfigPath("config/")
+	viper.AddConfigPath("./src/config/")
+	err := viper.ReadInConfig() // Find and read the config file
+	if err != nil {             // Handle errors reading the config file
+		panic(fmt.Errorf("fatal error config file: %s", err))
 	}
 
 	viper.Unmarshal(&Cfg)
@@ -45,7 +47,7 @@ func init() {
 
 }
 
-//function to process and error
+//ProcessError function to process and error
 func ProcessError(err error) {
 	fmt.Println(err)
 	os.Exit(2)
