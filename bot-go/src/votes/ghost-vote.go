@@ -11,6 +11,7 @@ import (
 	"util"
 )
 
+//CastGhostVote ...
 func CastGhostVote() {
 	fmt.Println("casting vote")
 	var urlStr string = vote_base_url + "/castVote"
@@ -22,6 +23,7 @@ func CastGhostVote() {
 	makePostRequest(urlStr, formData)
 }
 
+//ListQuotes ...
 func ListQuotes() {
 	fmt.Println("listing quotes")
 	var urlStr string = quote_base_url + "/list"
@@ -29,6 +31,7 @@ func ListQuotes() {
 
 }
 
+//TallyVotes ...
 func TallyVotes() {
 	fmt.Println("tally votes'")
 	var urlStr string = vote_base_url + "/tallyVote"
@@ -65,10 +68,10 @@ func makePostRequest(url string, formData url.Values) {
 
 }
 
-var vote_base_url string
-var quote_base_url string
+var voteBaseURL string
+var quoteBaseURL string
 
 func init() {
-	vote_base_url = "http://" + util.Cfg.Frontend.Host + ":" + util.Cfg.Frontend.Port + "/api/vote"
-	quote_base_url = "http://" + util.Cfg.Frontend.Host + ":" + util.Cfg.Frontend.Port + "/api/quote"
+	voteBaseURL = "http://" + util.Cfg.Frontend.Host + ":" + util.Cfg.Frontend.Port + "/api/vote"
+	quoteBaseURL = "http://" + util.Cfg.Frontend.Host + ":" + util.Cfg.Frontend.Port + "/api/quote"
 }
