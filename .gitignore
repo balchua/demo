@@ -1,6 +1,5 @@
 **/*.iml
 **/target/*
-*.settings/*
 bin/*
 **/.idea/*
 *~/*
@@ -8,6 +7,8 @@ bot-go/bot
 *.a
 **/bin/*
 **/*.exe
-bot/.classpath
-bot/.factorypath
-bot/.settings/org.eclipse.core.resources.prefs
+**/.classpath
+**/.factorypath
+**/.project
+**/.settings
+
