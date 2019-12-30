@@ -14,7 +14,7 @@ import (
 //CastGhostVote ...
 func CastGhostVote() {
 	fmt.Println("casting vote")
-	var urlStr string = vote_base_url + "/castVote"
+	var urlStr string = voteBaseURL + "/castVote"
 	quoteId := strconv.Itoa(rand.Intn(16))
 	strconv.Itoa(97)
 	formData := url.Values{
@@ -26,7 +26,7 @@ func CastGhostVote() {
 //ListQuotes ...
 func ListQuotes() {
 	fmt.Println("listing quotes")
-	var urlStr string = quote_base_url + "/list"
+	var urlStr string = quoteBaseURL + "/list"
 	makeGetRequest(urlStr)
 
 }
@@ -34,7 +34,7 @@ func ListQuotes() {
 //TallyVotes ...
 func TallyVotes() {
 	fmt.Println("tally votes'")
-	var urlStr string = vote_base_url + "/tallyVote"
+	var urlStr string = voteBaseURL + "/tallyVote"
 
 	makeGetRequest(urlStr)
 
