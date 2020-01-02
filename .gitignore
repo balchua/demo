@@ -1,9 +1,14 @@
 **/*.iml
 **/target/*
-*.settings/*
 bin/*
 **/.idea/*
 *~/*
 bot-go/bot
 *.a
-bot-go-proto/bin/*
+**/bin/*
+**/*.exe
+**/.classpath
+**/.factorypath
+**/.project
+**/.settings
+

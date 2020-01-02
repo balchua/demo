@@ -11,9 +11,10 @@ import (
 	"util"
 )
 
+//CastGhostVote ...
 func CastGhostVote() {
 	fmt.Println("casting vote")
-	var urlStr string = vote_base_url + "/castVote"
+	var urlStr string = voteBaseURL + "/castVote"
 	quoteId := strconv.Itoa(rand.Intn(16))
 	strconv.Itoa(97)
 	formData := url.Values{
@@ -22,16 +23,18 @@ func CastGhostVote() {
 	makePostRequest(urlStr, formData)
 }
 
+//ListQuotes ...
 func ListQuotes() {
 	fmt.Println("listing quotes")
-	var urlStr string = quote_base_url + "/list"
+	var urlStr string = quoteBaseURL + "/list"
 	makeGetRequest(urlStr)
 
 }
 
+//TallyVotes ...
 func TallyVotes() {
 	fmt.Println("tally votes'")
-	var urlStr string = vote_base_url + "/tallyVote"
+	var urlStr string = voteBaseURL + "/tallyVote"
 
 	makeGetRequest(urlStr)
 
@@ -65,10 +68,10 @@ func makePostRequest(url string, formData url.Values) {
 
 }
 
-var vote_base_url string
-var quote_base_url string
+var voteBaseURL string
+var quoteBaseURL string
 
 func init() {
-	vote_base_url = "http://" + util.Cfg.Frontend.Host + ":" + util.Cfg.Frontend.Port + "/api/vote"
-	quote_base_url = "http://" + util.Cfg.Frontend.Host + ":" + util.Cfg.Frontend.Port + "/api/quote"
+	voteBaseURL = "http://" + util.Cfg.Frontend.Host + ":" + util.Cfg.Frontend.Port + "/api/vote"
+	quoteBaseURL = "http://" + util.Cfg.Frontend.Host + ":" + util.Cfg.Frontend.Port + "/api/quote"
 }

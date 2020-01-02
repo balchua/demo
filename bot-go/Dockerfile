@@ -8,8 +8,7 @@ ENV SRC_DIR=/go/src
 ADD ./src/ $SRC_DIR
 # Build it:
 RUN cd $SRC_DIR; ls -ltr
-RUN go get github.com/kelseyhightower/envconfig
-RUN go get gopkg.in/yaml.v2
+RUN go get github.com/spf13/viper
 RUN cd $SRC_DIR; go build -o bot ./bot; 
 RUN cp $SRC_DIR/bot/bot /app
 RUN cp -r $SRC_DIR/config/ /app

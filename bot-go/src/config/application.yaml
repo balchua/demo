@@ -4,7 +4,7 @@ application:
   listQuotesFixedRate: 1000
   tallyVotesFixedRate: 500
 frontend-server:
-  port : 31002
+  port: 31002
   host: frontend
 
 zipkin-server:
