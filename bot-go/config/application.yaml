@@ -1,0 +1,13 @@
+application:
+  name: bot-voter
+  castVoteFixedRate: 2000
+  listQuotesFixedRate: 1000
+  tallyVotesFixedRate: 500
+frontend-server:
+  port: 31002
+  host: frontend
+
+zipkin-server:
+  host: 127.0.0.1
+  port: 9411
+  samplingRate: 0.8
