@@ -2,6 +2,7 @@ package org.bal.vote.server.service;
 
 import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
+import io.grpc.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.bal.quote.proto.internal.Quote;
 import org.bal.vote.proto.internal.*;
@@ -27,7 +28,17 @@ public class VoteManagementService extends VoteManagementGrpc.VoteManagementImpl
 
     @Override
     public void castVote(VoteRequest request, StreamObserver<VoteResponse> responseObserver) {
-        failVoteCasting(request.getQuoteId());
+        try {
+            failVoteCasting(request.getQuoteId());
+        } catch (IllegalArgumentException iae) {
+            log.error("Invalid Quote {} to vote.", request.getQuoteId(), iae);
+            responseObserver.onError(Status.INVALID_ARGUMENT
+                    .withDescription(iae.getMessage())
+                    .augmentDescription("illegal argument")
+                    .withCause(iae)
+                    .asRuntimeException());
+            return;
+        }
         voteRepository.castVote(request.getQuoteId());
         Quote q = quoteClient.getQuoteById(request.getQuoteId());
         String message = String.format("'%s'", q.getQuote());

@@ -51,42 +51,42 @@ public class GhostVote {
         }
     }
 
-    @Scheduled(fixedRateString = "${spring.application.listQuotesFixedRate}")
-    public void listQuotes() {
-        log.debug("listing quotes ... ");
-
-
-        Request request = new Request.Builder()
-                .url(QUOTE_BASE_URL + "/list")
-                .get()
-                .build();
-
-        Call call = callFactory.newCall(request);
-        try {
-            Response response = call.execute();
-        } catch (IOException e) {
-            log.error("Unable to list quotes", e);
-        }
-    }
-
-
-    @Scheduled(fixedRateString = "${spring.application.tallyVotesFixedRate}")
-    public void tallyVotes() {
-        log.debug("talying votes ... ");
-
-
-        Request request = new Request.Builder()
-                .url(VOTE_BASE_URL + "/tally")
-                .get()
-                .build();
-
-        Call call = callFactory.newCall(request);
-        try {
-            Response response = call.execute();
-        } catch (IOException e) {
-            log.error("Unable to list quotes", e);
-        }
-    }
+//    @Scheduled(fixedRateString = "${spring.application.listQuotesFixedRate}")
+//    public void listQuotes() {
+//        log.debug("listing quotes ... ");
+//
+//
+//        Request request = new Request.Builder()
+//                .url(QUOTE_BASE_URL + "/list")
+//                .get()
+//                .build();
+//
+//        Call call = callFactory.newCall(request);
+//        try {
+//            Response response = call.execute();
+//        } catch (IOException e) {
+//            log.error("Unable to list quotes", e);
+//        }
+//    }
+//
+//
+//    @Scheduled(fixedRateString = "${spring.application.tallyVotesFixedRate}")
+//    public void tallyVotes() {
+//        log.debug("talying votes ... ");
+//
+//
+//        Request request = new Request.Builder()
+//                .url(VOTE_BASE_URL + "/tally")
+//                .get()
+//                .build();
+//
+//        Call call = callFactory.newCall(request);
+//        try {
+//            Response response = call.execute();
+//        } catch (IOException e) {
+//            log.error("Unable to list quotes", e);
+//        }
+//    }
 
     @PostConstruct
     private void init() {

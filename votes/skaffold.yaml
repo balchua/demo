@@ -1,4 +1,4 @@
-apiVersion: skaffold/v1beta13
+apiVersion: skaffold/v1
 kind: Config
 profiles:
 - name: local
@@ -6,10 +6,10 @@ profiles:
     artifacts:
     - image: localhost:32000/votes
       context: .
-      jibMaven: {}
+      jib: {}
     local:
       push: true
-      useDockerCLI: true
+      useDockerCLI: false
   deploy:
     helm:
       releases:
@@ -28,10 +28,10 @@ profiles:
     artifacts:
     - image: balchu/votes
       context: .
-      jibMaven: {}
+      jib: {}
     local:
       push: true
-      useDockerCLI: true
+      useDockerCLI: false
   deploy:
     helm:
       releases:
