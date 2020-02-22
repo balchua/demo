@@ -11,4 +11,4 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file bot-go/Dockerfile --tag demo-bot-go:$(date +%s)
+      run: docker build ./bot-go --file Dockerfile --tag demo-bot-go:$(date +%s)
