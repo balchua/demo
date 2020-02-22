@@ -5,7 +5,7 @@ WORKDIR /app
 # Set an env var 
 ENV SRC_DIR=/go/src
 # Add the source code:
-ADD src/ $SRC_DIR
+ADD . $SRC_DIR
 # Build it:
 RUN cd $SRC_DIR; ls -ltr
 RUN go get github.com/spf13/viper
