@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/sandeep-mishra/demo/bot-go/util"
-	"github.com/sandeep-mishra/demo/bot-go/
+	"github.com/sandeep-mishra/demo/bot-go/votes"
 )
 
 var cfg util.Config
