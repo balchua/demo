@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"strconv"
 	"time"
-	"util"
-	"votes"
+
+	"github.com/sandeep-mishra/demo/bot-go/util"
+	"github.com/sandeep-mishra/demo/bot-go/votes"
 )
 
 var cfg util.Config

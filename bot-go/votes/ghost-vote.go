@@ -8,7 +8,8 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
-	"util"
+
+	"github.com/sandeep-mishra/demo/bot-go/util"
 )
 
 //CastGhostVote ...

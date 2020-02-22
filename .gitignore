@@ -3,7 +3,6 @@
 bin/*
 **/.idea/*
 *~/*
-bot-go/bot
 *.a
 **/bin/*
 **/*.exe
