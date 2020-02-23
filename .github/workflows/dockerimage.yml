@@ -18,4 +18,4 @@ jobs:
           # Artifact name
           name: demo-bot-go:$(date +%s)
           # Directory containing files to upload
-          path: ./bot-go/demo-bot-go:$(date +%s)
+          path: ./bot-go/demo-bot-go
