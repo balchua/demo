@@ -16,6 +16,6 @@ jobs:
       uses: actions/upload-artifact@v1.0.0
       with:
           # Artifact name
-          name: demo-bot-go:$(date +%s)
+          name: demo-bot-go
           # Directory containing files to upload
-          path: ./bot-go/bot/bot
+          path: /go/src/bot/bot
