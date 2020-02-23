@@ -14,7 +14,6 @@ RUN cd $SRC_DIR; go build -o bot ./bot;
 FROM alpine:latest
 WORKDIR /app
 COPY --from=builder /go/src/bot/bot /app
-COPY --from=builder /go/src/bot/config /app
-
+COPY --from=builder /go/src/config /app
 
 ENTRYPOINT ["./bot"]
