@@ -21,8 +21,8 @@ Main components are:
 * `frontend/` - Hosts the web pages as well as RESTful access to backend services.
 * `quotes/` - This component retrieves the Marvel character quotes data stored PostgresSQL.
 * `votes/` - This component keeps track of the votes on each quote.
-* `bot/' - The bot will randomly vote quotes to simmulate traffic into the kit.
-* `bot-go/' - Golang version of bot.
+* `bot/` - The bot will randomly vote quotes to simmulate traffic into the kit.
+* `bot-go/` - Golang version of bot.
 * `protos/` - Keeps all `proto` files in one location.  
 * `db/` - Contains all infrastructure related components such as PostgreSQL, Redis and flyway (to perform schema migrate).
    * `db/postgres` - Postgres kubernetes manifests.
