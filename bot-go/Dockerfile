@@ -1,5 +1,5 @@
 # Start from the latest golang base image
-FROM golang:latest
+FROM golang:latest AS builder
 
 WORKDIR /app
 # Set an env var 
@@ -10,7 +10,10 @@ ADD . $SRC_DIR
 RUN cd $SRC_DIR; ls -ltr
 RUN go get github.com/spf13/viper
 RUN cd $SRC_DIR; go build -o bot ./bot; 
-RUN cp $SRC_DIR/bot/bot /app
+
+FROM alpine:latest
+WORKDIR /app
+COPY --from=builder /go/src/bot/bot dest
 RUN cp -r $SRC_DIR/config/ /app
 
 ENTRYPOINT ["./bot"]
