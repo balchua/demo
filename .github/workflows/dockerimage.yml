@@ -12,3 +12,10 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build the Docker image
       run: docker build ./bot-go/ --file bot-go/Dockerfile --tag demo-bot-go:$(date +%s)
+    - name: Upload artifact
+      uses: actions/upload-artifact@v1.0.0
+      with:
+          # Artifact name
+          name: demo-bot-go:$(date +%s)
+          # Directory containing files to upload
+          path: ./bot-go/
