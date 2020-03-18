@@ -8,7 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-  - name: Docker login
+    - name: Docker login
       run: echo '${{ secrets.DOCKERHUB_PASS }}' | docker login --username balchu --password-stdin
 
     - name: Get Skaffold
