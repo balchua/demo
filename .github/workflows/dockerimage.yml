@@ -7,8 +7,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build ./bot-go/ --file bot-go/Dockerfile --tag demo-bot-go:$(date +%s) > build-log.txt   
+
+    - name: Get Skaffold
+      run: |
+        curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && chmod uo+x skaffold && sudo mv skaffold /usr/local/bin
+        skaffold version
+
+    - name: Build the bot-go
+      run: |
+        cd bot-go
+        skaffold build -p local  > build-log.txt
           
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
