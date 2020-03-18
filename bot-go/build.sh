@@ -13,5 +13,5 @@ then
       IMAGE_TAG="latest"
 fi
 
-output=$(ko publish -B -t $IMAGE_TAG --insecure-registry=true ./bot | tee)
+output=$(ko publish -B -t $IMAGE_TAG --insecure-registry=true ./bot-go | tee)
 ref=$(echo $output | tail -n1)

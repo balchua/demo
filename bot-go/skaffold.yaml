@@ -8,7 +8,7 @@ profiles:
         envTemplate:
           template: "{{.IMAGE_NAME}}:{{.IMAGE_TAG}}"    
     artifacts:
-    - image: localhost:32000/bot
+    - image: localhost:32000/bot-go
       custom:
         buildCommand: ./build.sh
         dependencies:
