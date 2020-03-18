@@ -4,21 +4,19 @@ profiles:
 - name: local
   build:
     insecureRegistries: ["localhost:32000"]
+    tagPolicy:
+        envTemplate:
+          template: "{{.IMAGE_NAME}}:{{.IMAGE_TAG}}"    
     artifacts:
-      - image: localhost:32000/bot-go
-        context: .
-        docker:
-          dockerfile: Dockerfile
-        
-        # custom:
-        #   buildCommand: make
-        #   dependencies:
-        #     dockerfile:
-        #       path: Dockerfile
+    - image: localhost:32000/bot
+      custom:
+        buildCommand: ./build.sh
+        dependencies:
+          paths:
+          - .
     local:
       push: true
-      useDockerCLI: true
-      
+    
   deploy:
     kubectl:
       manifests:

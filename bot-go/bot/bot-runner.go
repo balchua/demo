@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/sandeep-mishra/demo/bot-go/util"
-	"github.com/sandeep-mishra/demo/bot-go/votes"
+	"github.com/balchua/demo/bot-go/util"
+	"github.com/balchua/demo/bot-go/votes"
 )
 
 var cfg util.Config
@@ -16,7 +16,7 @@ func init() {
 }
 
 func main() {
-	fmt.Println("Go version of Bot starting...")
+	fmt.Println("Go version of Bot starting....")
 	var intCastVoteFixedRate int64
 	intCastVoteFixedRate, err := strconv.ParseInt(cfg.Application.CastVoteFixedRate, 10, 64)
 

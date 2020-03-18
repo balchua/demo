@@ -9,7 +9,7 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/sandeep-mishra/demo/bot-go/util"
+	"github.com/balchua/demo/bot-go/util"
 )
 
 //CastGhostVote ...
