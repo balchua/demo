@@ -16,7 +16,20 @@ profiles:
           - .
     local:
       push: true
-    
+- name: remote
+  build:
+    tagPolicy:
+        envTemplate:
+          template: "{{.IMAGE_NAME}}:{{.IMAGE_TAG}}"    
+    artifacts:
+    - image: balchu/bot-go
+      custom:
+        buildCommand: ./build.sh
+        dependencies:
+          paths:
+          - .
+    local:
+      push: true    
   deploy:
     kubectl:
       manifests:

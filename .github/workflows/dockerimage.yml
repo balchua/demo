@@ -8,6 +8,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+  - name: Docker login
+      run: echo '${{ secrets.DOCKERHUB_PASS }}' | docker login --username balchu --password-stdin
+
     - name: Get Skaffold
       run: |
         curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && chmod uo+x skaffold && sudo mv skaffold /usr/local/bin
@@ -15,8 +18,9 @@ jobs:
 
     - name: Build the bot-go
       run: |
+        export KO_DOCKER_REPO=docker.io/balchu/
         cd bot-go
-        skaffold build -p local  > build-log.txt
+        skaffold build -p remote  > build-log.txt
           
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
