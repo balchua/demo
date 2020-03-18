@@ -19,6 +19,7 @@ jobs:
     - name: Build the bot-go
       run: |
         export KO_DOCKER_REPO=docker.io/balchu/
+        export IMAGE_TAG=latest
         cd bot-go
         skaffold build -p remote  > build-log.txt
           
