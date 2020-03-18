@@ -21,7 +21,7 @@ jobs:
         export KO_DOCKER_REPO=docker.io/balchu/
         export IMAGE_TAG=latest
         cd bot-go
-        skaffold build -p remote  > build-log.txt
+        skaffold build -p remote  | tee build-log.txt
           
     - name: Upload artifact
       uses: actions/upload-artifact@v1.0.0
