@@ -1,3 +1,4 @@
+{{ if eq .Values.linkerd.enabled true }}
 apiVersion: linkerd.io/v1alpha1
 kind: ServiceProfile
 metadata:
@@ -17,3 +18,4 @@ spec:
         method: POST
         pathRegex: /api/vote/castVote
       name: POST /api/vote/castVote
+{{ end }}

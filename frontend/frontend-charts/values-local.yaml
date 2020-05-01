@@ -2,6 +2,9 @@ image:
   repository: localhost:32000/frontend
   pullPolicy: IfNotPresent
 
+linkerd:
+  enabled: false
+  
 zipkin:
   host: zipkin
   port: 9411

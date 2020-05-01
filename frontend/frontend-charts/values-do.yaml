@@ -3,6 +3,9 @@ image:
   repository: balchu/frontend
   pullPolicy: Always
 
+linkerd:
+  enabled: true
+
 zipkin:
   host: zipkin
   port: 9411
