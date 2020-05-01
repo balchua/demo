@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: bot-go
-        image: github.com/balchua/demo/bot-go
+        image: localhost:32000/bot-go
         imagePullPolicy: IfNotPresent
         env:
           - name: ZIPKIN_SERVER_HOST

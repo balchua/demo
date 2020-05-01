@@ -14,3 +14,4 @@ then
 fi
 
 ko publish -B -t $IMAGE_TAG --insecure-registry=true ./bot-go 
+echo $IMAGE
