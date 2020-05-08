@@ -1,5 +1,7 @@
 # Demo Kit
 
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fbalchua%2Fdemo.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fbalchua%2Fdemo?ref=badge_shield)
+
 This project is a simple demonstration of microservices using Springboot integrated with Zipkin.
 It is a simple project that lists quotes from Marvel movies and users can vote which one of them they like.
 
