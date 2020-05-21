@@ -1,5 +1,5 @@
 # Start from the latest golang base image
-FROM golang:latest AS builder
+FROM golang:1.13.6-alpine3.10 AS builder
 
 WORKDIR /app
 # Set an env var 
