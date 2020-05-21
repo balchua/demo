@@ -1,4 +1,6 @@
 # Demo Kit
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fbalchua%2Fdemo.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fbalchua%2Fdemo?ref=badge_shield)
+
 
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fbalchua%2Fdemo.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fbalchua%2Fdemo?ref=badge_shield)
 
@@ -170,3 +172,7 @@ Checkout the [`skaffold.yaml`](zipkin/skaffold.yaml).
 ## bot-go
 The build uses a Dockerfile. Hence, docker daemon setup is required. 
 
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fbalchua%2Fdemo.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fbalchua%2Fdemo?ref=badge_large)
