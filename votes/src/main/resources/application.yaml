@@ -42,3 +42,6 @@ redis-server:
   host: ${REDIS_SERVER_HOST:votes-db-service}
   port: ${REDIS_SERVER_PORT:6379}
   password: ${REDIS_PASSWORD:dummy}
+
+sentry:
+  dsn: https://caf6e96f48f646daa151b14d1cbb90f0@o487195.ingest.sentry.io/5545720
