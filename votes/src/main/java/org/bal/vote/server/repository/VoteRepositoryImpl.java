@@ -2,12 +2,9 @@ package org.bal.vote.server.repository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.bal.quote.proto.internal.Quote;
-import org.bal.vote.annotation.Traced;
 import org.bal.vote.proto.internal.Vote;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.connection.RedisConnection;
-import org.springframework.data.redis.connection.StringRedisConnection;
-import org.springframework.data.redis.core.RedisCallback;
+import org.springframework.cloud.sleuth.SpanName;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
@@ -30,14 +27,14 @@ public class VoteRepositoryImpl implements VoteRepository {
     private static final String KEY_PREFIX = "quote:";
 
     @Override
-    @Traced(serviceName = "redis-cast-vote")
+    @SpanName("redis-cast-vote")
     public void castVote(int quoteId) {
         Long votesCasted = valueOps.increment(KEY_PREFIX + String.valueOf(quoteId), 1l);
         log.info("Quote id: {} has {} many votes", String.valueOf(quoteId), votesCasted);
     }
 
     @Override
-    @Traced(serviceName = "redis-get-vote")
+    @SpanName("redis-get-vote")
     public Integer getVote(int quoteId) {
         Integer votesCasted = valueOps.get(KEY_PREFIX + String.valueOf(quoteId));
         if (votesCasted == null) {
@@ -48,7 +45,7 @@ public class VoteRepositoryImpl implements VoteRepository {
     }
 
     @Override
-    @Traced(serviceName = "redis-get-votes-multiget")
+    @SpanName("redis-get-votes-multiget")
     public List<Vote> getAllVotes(List<Quote> quotes) {
 
         List<String> keys = new ArrayList<>();

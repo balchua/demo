@@ -1,12 +1,11 @@
 package org.bal.vote.server.service;
 
 import com.google.protobuf.Empty;
-import io.grpc.stub.StreamObserver;
 import io.grpc.Status;
+import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 import org.bal.quote.proto.internal.Quote;
 import org.bal.vote.proto.internal.*;
-import org.bal.vote.server.interceptor.ZipkinServerInterceptor;
 import org.bal.vote.server.repository.VoteRepository;
 import org.bal.vote.server.service.client.QuoteClient;
 import org.lognet.springboot.grpc.GRpcService;
@@ -15,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@GRpcService(interceptors = {ZipkinServerInterceptor.class})
+@GRpcService
 @Component
 @Slf4j
 public class VoteManagementService extends VoteManagementGrpc.VoteManagementImplBase {

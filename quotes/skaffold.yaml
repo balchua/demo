@@ -59,6 +59,7 @@ profiles:
 
 - name: quotes-db-do
   deploy:
+
     helm:
       releases:
         - name: quotes-db
