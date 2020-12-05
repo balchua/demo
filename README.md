@@ -11,8 +11,8 @@ The application then tally the votes.
 
 1. Kubernetes cluster (ex. [microk8s](https://microk8s.io/) ) 
 2. Docker
-3. [Skaffold](https://skaffold.dev/)
-4. [Helm](https://helm.sh/)
+3. [Skaffold](https://skaffold.dev/) version 1.17.1
+4. [Helm](https://helm.sh/), version 3
 4. [Maven](https://maven.apache.org/)
 5. [jib-maven-plugin](https://github.com/GoogleContainerTools/jib/tree/master/jib-maven-plugin)
 

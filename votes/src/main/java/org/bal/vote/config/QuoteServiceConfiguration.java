@@ -2,7 +2,6 @@ package org.bal.vote.config;
 
 
 import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
 import org.bal.quote.proto.internal.QuoteManagementGrpc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,14 +22,8 @@ public class QuoteServiceConfiguration {
     private SpringAwareManagedChannelBuilder clientManagedChannelBuilder;
 
     @Bean
-    public ManagedChannelBuilder managedChannelBuilder() {
-
-        return clientManagedChannelBuilder.forAddress(quoteServiceHost, quoteServicePort).usePlaintext();
-    }
-
-    @Bean
     public ManagedChannel managedChannel() {
-        return managedChannelBuilder().build();
+        return this.clientManagedChannelBuilder.forAddress(quoteServiceHost, quoteServicePort).usePlaintext().build();
     }
 
     @Bean("quoteManagementBlockingStub")

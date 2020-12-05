@@ -1,71 +1,65 @@
-apiVersion: skaffold/v1
+apiVersion: skaffold/v2beta10
 kind: Config
 profiles:
-- name: local
-  build:
-    artifacts:
-    - image: localhost:32000/votes
-      context: .
-      jib: {}
-    local:
-      push: true
-      useDockerCLI: false
-  deploy:
-    helm:
-      releases:
-      - name: votes
-        chartPath: vote-charts
-        namespace: my-project
-        wait: true
-        valuesFiles:
-        - vote-charts/values-default.yaml
-        - vote-charts/values-local.yaml
-        values:
-          image.repository: localhost:32000/votes
-
-- name: do
-  build:
-    artifacts:
-    - image: balchu/votes
-      context: .
-      jib: {}
-    local:
-      push: true
-      useDockerCLI: false
-  deploy:
-    helm:
-      releases:
-      - name: votes
-        chartPath: vote-charts
-        namespace: my-project
-        wait: true
-        valuesFiles:
-        - vote-charts/values-default.yaml
-        - vote-charts/values-do.yaml
-        values:
-          image.repository: balchu/votes
-
-- name: votes-db-local
-  deploy:
-    helm:
-      releases:
-        - name: votes-db
-          chartPath: votes-db-charts
-          namespace: my-project
-          wait: true
-          valuesFiles:
-            - votes-db-charts/values-default.yaml
-            - votes-db-charts/values-local.yaml
-
-- name: votes-db-do
-  deploy:
-    helm:
-      releases:
-        - name: votes-db
-          chartPath: votes-db-charts
-          namespace: my-project
-          wait: true
-          valuesFiles:
-            - votes-db-charts/values-default.yaml
-            - votes-db-charts/values-do.yaml
-
+  - name: local
+    build:
+      artifacts:
+        - image: localhost:32000/votes
+          context: .
+          jib: {}
+      local:
+        push: true
+    deploy:
+      helm:
+        releases:
+          - name: votes
+            chartPath: vote-charts
+            valuesFiles:
+              - vote-charts/values-default.yaml
+              - vote-charts/values-local.yaml
+            artifactOverrides:
+              image.repository: localhost:32000/votes
+            namespace: my-project
+            wait: true
+  - name: do
+    build:
+      artifacts:
+        - image: balchu/votes
+          context: .
+          jib: {}
+      local:
+        push: true
+    deploy:
+      helm:
+        releases:
+          - name: votes
+            chartPath: vote-charts
+            valuesFiles:
+              - vote-charts/values-default.yaml
+              - vote-charts/values-do.yaml
+            artifactOverrides:
+              image.repository: balchu/votes
+            namespace: my-project
+            wait: true
+  - name: votes-db-local
+    deploy:
+      helm:
+        releases:
+          - name: votes-db
+            chartPath: votes-db-charts
+            valuesFiles:
+              - votes-db-charts/values-default.yaml
+              - votes-db-charts/values-local.yaml
+            namespace: my-project
+            wait: true
+  - name: votes-db-do
+    deploy:
+      helm:
+        releases:
+          - name: votes-db
+            chartPath: votes-db-charts
+            valuesFiles:
+              - votes-db-charts/values-default.yaml
+              - votes-db-charts/values-do.yaml
+            namespace: my-project
+            wait: true

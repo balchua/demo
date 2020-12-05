@@ -1,17 +1,17 @@
-apiVersion: skaffold/v1beta15
+apiVersion: skaffold/v2beta10
 kind: Config
 profiles:
-- name: local
-  deploy:
-    kubectl:
-      manifests:
-        - local/deployment.yaml
-        - local/ingress.yaml
-        - local/service.yaml
-- name: do
-  deploy:
-    kubectl:
-      manifests:
-        - do/deployment.yaml
-        - do/ingress.yaml
-        - do/service.yaml
+  - name: local
+    deploy:
+      kubectl:
+        manifests:
+          - local/deployment.yaml
+          - local/ingress.yaml
+          - local/service.yaml
+  - name: do
+    deploy:
+      kubectl:
+        manifests:
+          - do/deployment.yaml
+          - do/ingress.yaml
+          - do/service.yaml

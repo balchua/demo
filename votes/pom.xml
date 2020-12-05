@@ -21,7 +21,7 @@
         <logback.version>1.2.3</logback.version>
         <image-registry-host>localhost</image-registry-host>
         <image-registry-port>32000</image-registry-port>
-        <jib.version>2.6.0</jib.version>
+        <jib.version>2.7.0</jib.version>
         <lombok.version>1.18.16</lombok.version>
         <junit-jupiter.version>5.7.0</junit-jupiter.version>
         <mockito.version>3.6.28</mockito.version>
