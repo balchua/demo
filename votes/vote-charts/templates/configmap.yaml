@@ -5,7 +5,6 @@ metadata:
   namespace: {{.Release.Namespace}}
 data:
   zipkin-host: {{ .Values.zipkin.host }}
-  zipkin-port: {{ .Values.zipkin.port | quote }}
   quote-host: {{ .Values.quotes.host }}
   quote-port: {{ .Values.quotes.port | quote }}
 
