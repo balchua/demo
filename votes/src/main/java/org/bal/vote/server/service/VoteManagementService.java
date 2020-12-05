@@ -85,7 +85,9 @@ public class VoteManagementService extends VoteManagementGrpc.VoteManagementImpl
 
     private void failVoteCasting(int quoteId) {
         if (quoteId == 2) {
-            throw new IllegalArgumentException("Unable to cast vote to Hulk Smash.");
+            IllegalArgumentException ex = new IllegalArgumentException("Unable to cast vote to Hulk Smash.");
+            log.error("Invalid Vote", ex);
+            throw ex;
         }
     }
 }
