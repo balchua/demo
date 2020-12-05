@@ -2,6 +2,8 @@ server:
   port : 8888
 
 spring:
+  application:
+    name: vote-service
   zipkin:
     baseUrl: ${ZIPKIN_SERVER_HOST:"http://localhost:9411"}
   main:

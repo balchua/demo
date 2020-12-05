@@ -22,12 +22,10 @@ logging:
   level:
     org.bal: DEBUG
 
-zipkin-server:
-  host: ${ZIPKIN_SERVER_HOST:localhost}
-  port: ${ZIPKIN_SERVER_PORT:9411}
-
 ## default connection pool
 spring:
+  application:
+    name: quote-service
   datasource:
     hikari:
       connectionTimeout: 20000
@@ -37,10 +35,12 @@ spring:
     password: ${QUOTES_DB_PASSWORD:dummy}
   jpa:
     database: POSTGRESQL
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         jdbc:
           lob:
             non_contextual_creation: true
+  zipkin:
+    baseUrl: ${ZIPKIN_SERVER_HOST:"http://localhost:9411"}
 

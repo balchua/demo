@@ -59,11 +59,6 @@ spec:
               configMapKeyRef:
                 name: {{ template "quotes.name" . }}
                 key: zipkin-server-host
-          - name: ZIPKIN_SERVER_PORT
-            valueFrom:
-              configMapKeyRef:
-                name: {{ template "quotes.name" . }}
-                key: zipkin-server-port
           - name: QUOTES_DB_USER
             valueFrom:
               configMapKeyRef:

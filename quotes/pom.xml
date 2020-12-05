@@ -14,30 +14,48 @@
     <properties>
         <base-image>balchu/grpc-base:1.0.0</base-image>
         <java.version>11</java.version>
-        <springboot-grpc-version>4.0.0</springboot-grpc-version>
-        <grpc.version>1.21.0</grpc.version>
-        <slf4j.version>1.7.25</slf4j.version>
+        <springboot-grpc-version>4.2.3</springboot-grpc-version>
+        <release.train.version>Hoxton.SR8</release.train.version>
+        <grpc.version>1.33.1</grpc.version>
+        <slf4j.version>1.7.30</slf4j.version>
         <logback.version>1.2.3</logback.version>
-        <brave.grpc.version>5.12.6</brave.grpc.version>
-        <zipkin-reporter.version>2.15.2</zipkin-reporter.version>
         <image-registry-host>localhost</image-registry-host>
         <image-registry-port>32000</image-registry-port>
-        <jib.version>2.6.0</jib.version>
-        <lombok.version>1.18.8</lombok.version>
-        <junit-jupiter.version>5.3.2</junit-jupiter.version>
-        <mockito.version>2.24.0</mockito.version>
-        <micrometer.registry.version>1.5.1</micrometer.registry.version>
-        <assertj-version>3.6.1</assertj-version>
-        <google-common-protos.version>0.1.9</google-common-protos.version>
+        <jib.version>2.7.0</jib.version>
+        <lombok.version>1.18.16</lombok.version>
+        <junit-jupiter.version>5.7.0</junit-jupiter.version>
+        <mockito.version>3.6.28</mockito.version>
+        <jedis.version>3.3.0</jedis.version>
+        <micrometer.registry.version>1.6.0</micrometer.registry.version>
+        <assertj-version>3.18.1</assertj-version>
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
         <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
-        <os-maven-plugin.version>1.4.1.Final</os-maven-plugin.version>
+        <os-maven-plugin.version>1.6.2</os-maven-plugin.version>
     </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${release.train.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
     <dependencies>
         <dependency>
             <groupId>org.bal.app</groupId>
             <artifactId>protos</artifactId>
-            <version>2.0.1</version>
+            <version>2.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -132,32 +150,10 @@
             <version>${junit-jupiter.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.google.api.grpc</groupId>
-            <artifactId>proto-google-common-protos</artifactId>
-            <version>${google-common-protos.version}</version>
-        </dependency>
 
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-grpc</artifactId>
-            <version>${brave.grpc.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.grpc</groupId>
-                    <artifactId>grpc-all</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.zipkin.brave</groupId>
-            <artifactId>brave-context-slf4j</artifactId>
-            <version>${brave.grpc.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.zipkin.reporter2</groupId>
-            <artifactId>zipkin-sender-okhttp3</artifactId>
-            <version>${zipkin-reporter.version}</version>
         </dependency>
 
         <dependency>

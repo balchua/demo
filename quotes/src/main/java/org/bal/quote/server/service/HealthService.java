@@ -4,13 +4,10 @@ package org.bal.quote.server.service;
 import io.grpc.health.v1.HealthCheckResponse;
 import io.grpc.health.v1.HealthGrpc;
 import lombok.extern.slf4j.Slf4j;
-import org.bal.quote.proto.internal.Quote;
-import org.bal.quote.server.interceptor.ZipkinServerInterceptor;
 import org.bal.quote.server.repository.QuoteEntity;
 import org.bal.quote.server.repository.QuoteRepository;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.health.Health;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;

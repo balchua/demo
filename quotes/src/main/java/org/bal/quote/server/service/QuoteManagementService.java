@@ -8,7 +8,6 @@ import org.bal.quote.proto.internal.Quote;
 import org.bal.quote.proto.internal.QuoteById;
 import org.bal.quote.proto.internal.QuoteList;
 import org.bal.quote.proto.internal.QuoteManagementGrpc;
-import org.bal.quote.server.interceptor.ZipkinServerInterceptor;
 import org.bal.quote.server.repository.QuoteEntity;
 import org.bal.quote.server.repository.QuoteRepository;
 import org.lognet.springboot.grpc.GRpcService;
@@ -19,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-@GRpcService(interceptors = {ZipkinServerInterceptor.class})
+@GRpcService
 @Component
 @Slf4j
 public class QuoteManagementService extends QuoteManagementGrpc.QuoteManagementImplBase {

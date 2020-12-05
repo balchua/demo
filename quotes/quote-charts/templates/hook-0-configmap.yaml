@@ -9,5 +9,4 @@ metadata:
     "helm.sh/hook-delete-policy": before-hook-creation
 data:
   zipkin-server-host: {{ .Values.zipkin.host }}
-  zipkin-server-port: {{ .Values.zipkin.port | quote }}
   quotes-db-user: {{ .Values.db.user }}

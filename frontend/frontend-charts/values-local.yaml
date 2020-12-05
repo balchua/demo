@@ -5,11 +5,6 @@ image:
 linkerd:
   enabled: false
 
-zipkin:
-  host: zipkin
-  port: 9411
-  sampling: "1"
-
 ingress:
   host: "frontend.10.152.183.83.nip.io"
 

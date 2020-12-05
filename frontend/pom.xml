@@ -5,7 +5,7 @@
 
     <groupId>org.bal.apps</groupId>
     <artifactId>frontend</artifactId>
-    <version>2.0.1</version>
+    <version>2.0.2</version>
     <name>demo</name>
 
     <parent>
@@ -15,38 +15,41 @@
     </parent>
 
     <properties>
+        <base-image>balchu/grpc-base:1.0.0</base-image>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>11</java.version>
-        <zipkin-reporter.version>2.15.2</zipkin-reporter.version>
-        <brave.version>5.12.6</brave.version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
-        <prometheus.springboot-client.version>0.2.0</prometheus.springboot-client.version>
-        <grpc.version>1.21.0</grpc.version>
-        <slf4j.version>1.7.25</slf4j.version>
+        <springboot-grpc-version>4.2.3</springboot-grpc-version>
+        <release.train.version>Hoxton.SR8</release.train.version>
+        <grpc.version>1.33.1</grpc.version>
+        <slf4j.version>1.7.30</slf4j.version>
         <logback.version>1.2.3</logback.version>
-        <jib-version>2.6.0</jib-version>
-        <lombok.version>1.18.8</lombok.version>
+        <image-registry-host>localhost</image-registry-host>
+        <image-registry-port>32000</image-registry-port>
+        <jib.version>2.7.0</jib.version>
+        <lombok.version>1.18.16</lombok.version>
+        <junit-jupiter.version>5.7.0</junit-jupiter.version>
+        <mockito.version>3.6.28</mockito.version>
+        <jedis.version>3.3.0</jedis.version>
+        <micrometer.registry.version>1.6.0</micrometer.registry.version>
+        <assertj-version>3.18.1</assertj-version>
+        <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+        <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
+
+        <prometheus.springboot-client.version>0.2.0</prometheus.springboot-client.version>
         <webjars.bootstrap.version>4.3.1</webjars.bootstrap.version>
         <webjars.jquery.version>3.4.1</webjars.jquery.version>
         <webjars.fontawesome.version>5.8.2</webjars.fontawesome.version>
         <micrometer.registry.version>1.5.1</micrometer.registry.version>
-        <keycloak.version>4.8.3.Final</keycloak.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>io.zipkin.brave</groupId>
-                <artifactId>brave-bom</artifactId>
-                <version>${brave.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>org.keycloak.bom</groupId>
-                <artifactId>keycloak-adapter-bom</artifactId>
-                <version>${keycloak.version}</version>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${release.train.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -55,12 +58,36 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.bal.app</groupId>
+            <artifactId>protos</artifactId>
+            <version>2.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-zipkin</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.github.lognet</groupId>
+            <artifactId>grpc-spring-boot-starter</artifactId>
+            <version>${springboot-grpc-version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.grpc</groupId>
+                    <artifactId>grpc-netty</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -95,27 +122,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.keycloak</groupId>
-            <artifactId>keycloak-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
             <version>${micrometer.registry.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.bal.app</groupId>
-            <artifactId>protos</artifactId>
-            <version>2.0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>io.zipkin.brave</groupId>
-            <artifactId>brave-instrumentation-spring-webmvc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.zipkin.brave</groupId>
-            <artifactId>brave-instrumentation-spring-web</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>io.zipkin.brave</groupId>
             <artifactId>brave-instrumentation-grpc</artifactId>
@@ -125,15 +136,6 @@
                     <artifactId>grpc-all</artifactId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.zipkin.brave</groupId>
-            <artifactId>brave-context-slf4j</artifactId>
-            <version>${brave.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.zipkin.reporter2</groupId>
-            <artifactId>zipkin-sender-okhttp3</artifactId>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -168,7 +170,7 @@
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
-                <version>${jib-version}</version>
+                <version>${jib.version}</version>
                 <configuration>
                     <allowInsecureRegistries>true</allowInsecureRegistries>
                     <from>
