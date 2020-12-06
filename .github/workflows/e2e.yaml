@@ -1,0 +1,56 @@
+name: Build Demo project
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build-external-scaler:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - uses: balchua/microk8s-actions@v0.2.1
+        with:
+          channel: 'latest/edge'
+          addons: '["dns", "rbac", "registry"]'
+
+      - name: Get Skaffold
+        env:
+          KUBECONFIG: /tmp/config
+        run: |
+          curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64 && chmod uo+x skaffold && sudo mv skaffold /usr/local/bin
+          skaffold version
+
+      - name: Enable Helm addon
+        run: |
+          sudo snap install helm --classic
+
+      - name: Build and install the votes service
+        run: |
+          kubectl create ns myproject
+          cd votes
+          skaffold run -p votes-db-local
+          skaffold run -p local
+          kubectl -n my-project wait --for=condition=available --timeout=600s deployment/votes
+
+      - name: Build and install the quotes service
+        run: |
+          cd quotes
+          skaffold run -p quotes-db-local
+          skaffold run -p local
+          kubectl -n my-project wait --for=condition=available --timeout=600s deployment/quotes
+
+      - name: Build and install the frontend service
+        run: |
+          cd frontend
+          skaffold run -p local
+          kubectl -n my-project wait --for=condition=available --timeout=600s deployment/frontend
+
+      - name: Show all
+        run: |
+          kubectl -n my-project get all -o wide
