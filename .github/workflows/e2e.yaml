@@ -63,6 +63,8 @@ jobs:
           kubectl -n my-project wait --for=condition=available --timeout=600s deployment/votes
 
       - name: Build and install the quotes service
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
         run: |
           cd quotes
           yq w -i quote-charts/values-default.yaml sentry.client_dsn $SENTRY_DSN
@@ -71,6 +73,8 @@ jobs:
           kubectl -n my-project wait --for=condition=available --timeout=600s deployment/quotes
 
       - name: Build and install the frontend service
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
         run: |
           cd frontend
           yq w -i frontend-charts/values-default.yaml sentry.client_dsn $SENTRY_DSN
