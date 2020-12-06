@@ -70,7 +70,7 @@ jobs:
         run: |
           sudo snap install jq
           export CLUSTER_IP=`kubectl -n my-project get svc/frontend -o=jsonpath='{.spec.clusterIP}'`
-          curl -X POST http://$CLUSTER_IP:9091/api/quote/list | jq '.'
+          curl http://$CLUSTER_IP:9091/api/quote/list | jq '.'
 
       - name: Cast vote
         run: |
