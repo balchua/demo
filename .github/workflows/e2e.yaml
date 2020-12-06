@@ -32,7 +32,7 @@ jobs:
 
       - name: Build and install the votes service
         run: |
-          kubectl create ns myproject
+          kubectl create ns my-project
           cd votes
           skaffold run -p votes-db-local
           skaffold run -p local
