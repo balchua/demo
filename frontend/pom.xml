@@ -36,7 +36,7 @@
         <assertj-version>3.18.1</assertj-version>
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
         <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
-        <sentry.springboot.version>3.2.0</sentry.springboot.version>
+        <sentry.version>3.2.0</sentry.version>
 
         <prometheus.springboot-client.version>0.2.0</prometheus.springboot-client.version>
         <webjars.bootstrap.version>4.3.1</webjars.bootstrap.version>
@@ -159,10 +159,16 @@
             <artifactId>font-awesome</artifactId>
             <version>${webjars.fontawesome.version}</version>
         </dependency>
+        <!-- sentry -->
         <dependency>
             <groupId>io.sentry</groupId>
             <artifactId>sentry-spring-boot-starter</artifactId>
-            <version>${sentry.springboot.version}</version>
+            <version>${sentry.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.sentry</groupId>
+            <artifactId>sentry-logback</artifactId>
+            <version>${sentry.version}</version>
         </dependency>
     </dependencies>
     <build>

@@ -7,6 +7,8 @@ It is a simple project that lists quotes from Marvel movies and users can vote w
 
 The application then tally the votes.
 
+The demo also presents better observability with Prometheus, Grafana, Loki and Sentry
+
 ## Prerequisites:
 
 1. Kubernetes cluster (ex. [microk8s](https://microk8s.io/) ) 
@@ -15,10 +17,102 @@ The application then tally the votes.
 4. [Helm](https://helm.sh/), version 3
 4. [Maven](https://maven.apache.org/)
 5. [jib-maven-plugin](https://github.com/GoogleContainerTools/jib/tree/master/jib-maven-plugin)
+6. Observability tools - Prometheus, Grafana, Loki and Sentry
 
+## Install Infrastructure
+
+### Install MicroK8s
+
+Install MicroK8s to easily bootstrap a Kubernetes cluster.  For simplicity we will use a single node MicroK8s.
+
+```shell script
+$ sudo snap install microk8s --channel 1.19/stable
+$ microk8s config > $HOME/.kube/config #Export the kubeconfig to the default location
+```
+
+### Install kubectl
+
+```
+$ sudo snap install kubectl --classic
+```
+
+### Create your application namespace
+
+We will be installing your application to `my-projecct` namespace.
+
+```
+$ kubectl create ns my-project
+```
+
+### Enable Prometheus addon
+
+```shell script
+$ microk8s enable prometheus
+```
+
+### Install Loki
+
+```
+$ helm repo add loki https://grafana.github.io/loki/charts # Add Grafana helm chart repo
+$ helm upgrade --install loki --namespace=monitoring loki/loki-stack # Install the loki stack (loki and promtail) to monitoring namespace
+```
+
+Add `Loki` datasource, go to `Settings`.  Follow the screenshots below.
+
+![Add datasource](assets/grafana-add-ds.png)
+
+Select the Loki data.
+![Loki DS](assets/grafana-add-ds-loki.png)
+
+Make sure that you set the http url to `http://loki:3100`
+
+![Loki url](assets/grafana-add-loki-detail.png)
+
+After that click ***Save and Test***
+
+### Sign up to Sentry
+
+#### What is Sentry
+
+*Sentry is a service that helps you monitor and fix crashes in realtime. The server is in Python, but it contains a full API for sending events from any language, in any application.*
+
+You can sign up for free [here](https://sentry.io/welcome/)
+
+The java source codes already comes with Sentry Java SDK.
+
+Sample screenshot from the application.
+
+![Sentry issues page](assets/sentry-1.png)
+
+![Sentry drill down](assets/sentry-2.png)
+
+### Zipkin
+
+To start Zipkin
+
+`skaffold run -p local`
+
+To stop Zipkin
+
+`skaffold delete -p local`
+
+Checkout the [`skaffold.yaml`](zipkin/skaffold.yaml).
+
+In order to access zipkin, you can use `port-forwarding`
+
+```
+$ kubectl -n my-project port-forward svc/zipkin 9411:9411
+```
+
+You can now use your browser and point to `http://localhost:9411` to access zipkin
+
+Sample screenshot
+
+![Zipkin](assets/zipkin-1.png)
+
+![Zipkin Drill Down](assets/zipkin-2.png)
 ## Project structure
   
-
 Main components are:
 * `frontend/` - Hosts the web pages as well as RESTful access to backend services.
 * `quotes/` - This component retrieves the Marvel character quotes data stored PostgresSQL.
@@ -61,7 +155,7 @@ It uses [gRPC java](https://grpc.io/docs/tutorials/basic/java/) for communicatio
 
 Stacks:
 
-* Springboot - 2.1.5.RELEASE
+* Springboot - 2.3.4.RELEASE
 * [Lognet grpc-springboot-starter](https://github.com/LogNet/grpc-spring-boot-starter)
 
 #### Build
@@ -83,7 +177,6 @@ Use skaffold:
 `skaffold run -p local`
 
 Checkout the [`skaffold.yaml`](quotes/skaffold.yaml).
-
 
 
 #### Test
@@ -110,7 +203,7 @@ It stores its data in Redis.
 
 Stacks:
 
-* Springboot - 2.1.5.RELEASE
+* Springboot - 2.3.4.RELEASE
 * [Lognet grpc-springboot-starter](https://github.com/LogNet/grpc-spring-boot-starter)
 * Redis
 
@@ -148,24 +241,6 @@ To cast a vote:
 
 `grpcurl -plaintext -d '{"quoteId":"0"}' localhost:50052 org.bal.vote.proto.internal.VoteManagement/CastVote`
 
-#### Enabling Grafana Loki and Promtail
-
-`helm upgrade --install loki loki/loki --namespace monitoring`
-
-`helm upgrade --install promtail loki/promtail --set "loki.serviceName=loki --namespace monitoring"`
-
-
-## Zipkin
-
-To start Zipkin
-
-`skaffold run -p local`
-
-To stop Zipkin
-
-`skaffold delete -p local`
-
-Checkout the [`skaffold.yaml`](zipkin/skaffold.yaml).
 
 ## bot-go
 The build uses a Dockerfile. Hence, docker daemon setup is required. 

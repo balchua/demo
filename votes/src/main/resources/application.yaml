@@ -46,5 +46,5 @@ redis-server:
 sentry:
   dsn: https://caf6e96f48f646daa151b14d1cbb90f0@o487195.ingest.sentry.io/5545720
   logging:
-    minimum-event-level: info
+    minimum-event-level: warn
     minimum-breadcrumb-level: debug

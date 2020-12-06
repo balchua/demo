@@ -27,14 +27,12 @@ public class VoteRepositoryImpl implements VoteRepository {
     private static final String KEY_PREFIX = "quote:";
 
     @Override
-    @SpanName("redis-cast-vote")
     public void castVote(int quoteId) {
         Long votesCasted = valueOps.increment(KEY_PREFIX + String.valueOf(quoteId), 1l);
         log.info("Quote id: {} has {} many votes", String.valueOf(quoteId), votesCasted);
     }
 
     @Override
-    @SpanName("redis-get-vote")
     public Integer getVote(int quoteId) {
         Integer votesCasted = valueOps.get(KEY_PREFIX + String.valueOf(quoteId));
         if (votesCasted == null) {
@@ -45,7 +43,6 @@ public class VoteRepositoryImpl implements VoteRepository {
     }
 
     @Override
-    @SpanName("redis-get-votes-multiget")
     public List<Vote> getAllVotes(List<Quote> quotes) {
 
         List<String> keys = new ArrayList<>();
