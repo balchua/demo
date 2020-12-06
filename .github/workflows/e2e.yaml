@@ -13,7 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-
+      - uses: actions/setup-java@v1
+        with:
+          java-version: 11
       - uses: balchua/microk8s-actions@v0.2.1
         with:
           channel: 'latest/edge'
@@ -29,6 +31,11 @@ jobs:
       - name: Enable Helm addon
         run: |
           sudo snap install helm --classic
+
+      - name: Build protos
+        run: |
+          cd protos
+          mvn clean install
 
       - name: Build and install the votes service
         run: |
