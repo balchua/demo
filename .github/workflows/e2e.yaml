@@ -65,3 +65,9 @@ jobs:
       - name: Show all
         run: |
           kubectl -n my-project get all -o wide
+
+      - name: Cast failing vote
+        run: |
+          sudo snap install jq
+          export CLUSTER_IP=`kubectl -n my-project get svc/frontend -o=jsonpath='{.spec.clusterIP}'`
+          curl -X POST http://$CLUSTER_IP:9091/api/vote/castVote?quoteId=2 | jq '.error | test("Internal Server Error")' | grep true
