@@ -69,6 +69,11 @@ spec:
               secretKeyRef:
                 name: {{ template "quotes.name" . }}
                 key: quotes-db-password
+          - name: SENTRY_DSN
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "quotes.name" . }}
+                key: sentry-dsn
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst

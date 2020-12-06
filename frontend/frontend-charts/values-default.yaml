@@ -30,3 +30,6 @@ votes:
 prometheus:
   enabled: true
 
+sentry:
+  client_dsn: http://somevalue@sentry-web.sentry:9000
+

@@ -27,3 +27,6 @@ db:
     type: ClusterIP
   user: postgresadmin
   password: admin123
+
+sentry:
+  client_dsn: http://somevalue@sentry-web.sentry:9000

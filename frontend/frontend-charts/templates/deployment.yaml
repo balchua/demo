@@ -79,27 +79,11 @@ spec:
               configMapKeyRef:
                 name: {{ template "frontend.name" . }}
                 key: vote-service-port
-          - name: KEYCLOAK_AUTH_SERVER_URI
-            valueFrom:
-              configMapKeyRef:
-                name: {{ template "frontend.name" . }}
-                key: keycloak-auth-server-url
-          - name: KEYCLOAK_REALM
-            valueFrom:
-              configMapKeyRef:
-                name: {{ template "frontend.name" . }}
-                key: keycloak-realm
-          - name: KEYCLOAK_CLIENT_ID
-            valueFrom:
-              configMapKeyRef:
-                name: {{ template "frontend.name" . }}
-                key: keycloak-client-id
-          - name: KEYCLOAK_CLIENT_SECRET
+          - name: SENTRY_DSN
             valueFrom:
               secretKeyRef:
                 name: {{ template "frontend.name" . }}
-                key: keycloak-client-secret
-
+                key: sentry-dsn
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst

@@ -21,6 +21,10 @@ jobs:
           channel: 'latest/edge'
           addons: '["dns", "rbac", "registry", "ingress"]'
 
+      - name: Install yq
+        run: |
+          sudo snap install yq
+
       - name: Get Skaffold
         env:
           KUBECONFIG: /tmp/config
@@ -49,8 +53,11 @@ jobs:
           mvn clean install
 
       - name: Build and install the votes service
+        env:
+          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
         run: |
           cd votes
+          yq w -i vote-charts/values-default.yaml sentry.client_dsn $SENTRY_DSN
           skaffold run -p votes-db-local
           skaffold run -p local
           kubectl -n my-project wait --for=condition=available --timeout=600s deployment/votes
@@ -58,6 +65,7 @@ jobs:
       - name: Build and install the quotes service
         run: |
           cd quotes
+          yq w -i quote-charts/values-default.yaml sentry.client_dsn $SENTRY_DSN
           skaffold run -p quotes-db-local
           skaffold run -p local
           kubectl -n my-project wait --for=condition=available --timeout=600s deployment/quotes
@@ -65,6 +73,7 @@ jobs:
       - name: Build and install the frontend service
         run: |
           cd frontend
+          yq w -i frontend-charts/values-default.yaml sentry.client_dsn $SENTRY_DSN
           skaffold run -p local
           kubectl -n my-project wait --for=condition=available --timeout=600s deployment/frontend
 

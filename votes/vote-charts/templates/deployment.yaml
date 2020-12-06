@@ -74,6 +74,11 @@ spec:
               secretKeyRef:
                 name: {{ template "votes.name" . }}
                 key: redis_password
+          - name: SENTRY_DSN
+            valueFrom:
+              secretKeyRef:
+                name: {{ template "votes.name" . }}
+                key: sentry-dsn
       restartPolicy: Always
       terminationGracePeriodSeconds: 10
       dnsPolicy: ClusterFirst

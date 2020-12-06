@@ -29,3 +29,6 @@ prometheus:
 
 redis:
   password: admin
+
+sentry:
+  client_dsn: http://somevalue@sentry-web.sentry:9000
