@@ -1,6 +1,7 @@
 package org.bal.quote.server.repository;
 
 import org.springframework.cloud.sleuth.SpanName;
+import org.springframework.cloud.sleuth.annotation.NewSpan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,10 +11,10 @@ import java.util.Optional;
 @Repository
 public interface QuoteRepository extends JpaRepository<QuoteEntity, Integer> {
 
-    @SpanName("quote-find-by-id")
+    @NewSpan("quote-find-by-id")
     Optional<QuoteEntity> findById(Integer id);
 
-    @SpanName("quote-find-all")
+    @NewSpan("quote-find-all")
     List<QuoteEntity> findAll();
 
 
