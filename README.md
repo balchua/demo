@@ -111,13 +111,14 @@ Sample screenshot
 ![Zipkin](assets/zipkin-1.png)
 
 ![Zipkin Drill Down](assets/zipkin-2.png)
+
 ## Project structure
   
 Main components are:
 * `frontend/` - Hosts the web pages as well as RESTful access to backend services.
 * `quotes/` - This component retrieves the Marvel character quotes data stored PostgresSQL.
 * `votes/` - This component keeps track of the votes on each quote.
-* `bot/` - The bot will randomly vote quotes to simmulate traffic into the kit.
+* `bot/` - The bot will randomly vote quotes to simulate traffic into the kit.
 * `bot-go/` - Golang version of bot.
 * `protos/` - Keeps all `proto` files in one location.  
 * `db/` - Contains all infrastructure related components such as PostgreSQL, Redis and flyway (to perform schema migrate).
@@ -243,9 +244,7 @@ To cast a vote:
 
 
 ## bot-go
-The build uses a Dockerfile. Hence, docker daemon setup is required. 
-
-
+To build the `bot-go` project refer to [here](bot-go/README.md)
 
 ## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fbalchua%2Fdemo.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fbalchua%2Fdemo?ref=badge_large)
