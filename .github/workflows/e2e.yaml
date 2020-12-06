@@ -19,7 +19,7 @@ jobs:
       - uses: balchua/microk8s-actions@v0.2.1
         with:
           channel: 'latest/edge'
-          addons: '["dns", "rbac", "registry"]'
+          addons: '["dns", "rbac", "registry", "ingress"]'
 
       - name: Get Skaffold
         env:
@@ -36,6 +36,13 @@ jobs:
         run: |
           kubectl -n container-registry wait --for=condition=available --timeout=600s deployment/registry
 
+      - name: Install zipkin
+        run: |
+          kubectl create ns my-project
+          cd zipkin
+          skaffold run -p local
+          kubectl -n my-project wait --for=condition=available --timeout=600s deployment/zipkin
+
       - name: Build protos
         run: |
           cd protos
@@ -43,7 +50,6 @@ jobs:
 
       - name: Build and install the votes service
         run: |
-          kubectl create ns my-project
           cd votes
           skaffold run -p votes-db-local
           skaffold run -p local
@@ -75,7 +81,7 @@ jobs:
       - name: Cast vote
         run: |
           export CLUSTER_IP=`kubectl -n my-project get svc/frontend -o=jsonpath='{.spec.clusterIP}'`
-          curl -X POST http://$CLUSTER_IP:9091/api/vote/castVote?quoteId=5
+          curl -X POST http://$CLUSTER_IP:9091/api/vote/castVote?quoteId=5 | grep 'If you cage the beast, the beast will get angry.'
 
       - name: Cast failing vote
         run: |
