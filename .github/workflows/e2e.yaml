@@ -32,6 +32,10 @@ jobs:
         run: |
           sudo snap install helm --classic
 
+      - name: Wait for registry to be up
+        run: |
+          kubectl -n container-registry wait --for=condition=available --timeout=600s deployment/registry
+
       - name: Build protos
         run: |
           cd protos
