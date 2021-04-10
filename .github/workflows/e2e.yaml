@@ -16,7 +16,7 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: 11
-      - uses: balchua/microk8s-actions@v0.2.1
+      - uses: balchua/microk8s-actions@v0.2.2
         with:
           channel: 'latest/edge'
           addons: '["dns", "rbac", "registry", "ingress"]'
@@ -53,8 +53,6 @@ jobs:
           mvn clean install
 
       - name: Build and install the votes service
-        env:
-          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
         run: |
           cd votes
           yq w -i vote-charts/values-default.yaml sentry.client_dsn $SENTRY_DSN
@@ -63,21 +61,15 @@ jobs:
           kubectl -n my-project wait --for=condition=available --timeout=600s deployment/votes
 
       - name: Build and install the quotes service
-        env:
-          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
         run: |
           cd quotes
-          yq w -i quote-charts/values-default.yaml sentry.client_dsn $SENTRY_DSN
           skaffold run -p quotes-db-local
           skaffold run -p local
           kubectl -n my-project wait --for=condition=available --timeout=600s deployment/quotes
 
       - name: Build and install the frontend service
-        env:
-          SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
         run: |
           cd frontend
-          yq w -i frontend-charts/values-default.yaml sentry.client_dsn $SENTRY_DSN
           skaffold run -p local
           kubectl -n my-project wait --for=condition=available --timeout=600s deployment/frontend
 
