@@ -2,3 +2,5 @@ image:
   repository: localhost:32000/votes
   pullPolicy: IfNotPresent
 
+zipkin:
+  host: "http://simplest-collector.default:9411"

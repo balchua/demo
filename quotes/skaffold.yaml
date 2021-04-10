@@ -1,67 +1,66 @@
-apiVersion: skaffold/v2beta10
+apiVersion: skaffold/v2beta13
 kind: Config
 profiles:
-  - name: local
-    build:
-      artifacts:
-        - image: localhost:32000/quotes
-          context: .
-          jib: {}
-      local:
-        push: true
-        useDockerCLI: true
-    deploy:
-      helm:
-        releases:
-          - name: quotes
-            chartPath: quote-charts
-            valuesFiles:
-              - quote-charts/values-default.yaml
-              - quote-charts/values-local.yaml
-            artifactOverrides:
-              image.repository: localhost:32000/quotes
-            namespace: my-project
-            wait: true
-  - name: do
-    build:
-      artifacts:
-        - image: balchu/quotes
-          context: .
-          jib: {}
-      local:
-        push: true
-        useDockerCLI: true
-    deploy:
-      helm:
-        releases:
-          - name: quotes
-            chartPath: quote-charts
-            valuesFiles:
-              - quote-charts/values-default.yaml
-              - quote-charts/values-do.yaml
-            artifactOverrides:
-              image.repository: balchu/quotes
-            namespace: my-project
-            wait: true
-  - name: quotes-db-local
-    deploy:
-      helm:
-        releases:
-          - name: quotes-db
-            chartPath: quotes-db-charts
-            valuesFiles:
-              - quotes-db-charts/values-default.yaml
-              - quotes-db-charts/values-local.yaml
-            namespace: my-project
-            wait: true
-  - name: quotes-db-do
-    deploy:
-      helm:
-        releases:
-          - name: quotes-db
-            chartPath: quotes-db-charts
-            valuesFiles:
-              - quotes-db-charts/values-default.yaml
-              - quotes-db-charts/values-do.yaml
-            namespace: my-project
-            wait: true
+- name: local
+  build:
+    artifacts:
+    - image: localhost:32000/quotes
+      context: .
+      jib: {}
+    local:
+      push: true
+  deploy:
+    helm:
+      releases:
+      - name: quotes
+        chartPath: quote-charts
+        valuesFiles:
+        - quote-charts/values-default.yaml
+        - quote-charts/values-local.yaml
+        artifactOverrides:
+          image.repository: localhost:32000/quotes
+        namespace: my-project
+        wait: true
+- name: do
+  build:
+    artifacts:
+    - image: balchu/quotes
+      context: .
+      jib: {}
+    local:
+      push: true
+      useDockerCLI: true
+  deploy:
+    helm:
+      releases:
+      - name: quotes
+        chartPath: quote-charts
+        valuesFiles:
+        - quote-charts/values-default.yaml
+        - quote-charts/values-do.yaml
+        artifactOverrides:
+          image.repository: balchu/quotes
+        namespace: my-project
+        wait: true
+- name: quotes-db-local
+  deploy:
+    helm:
+      releases:
+      - name: quotes-db
+        chartPath: quotes-db-charts
+        valuesFiles:
+        - quotes-db-charts/values-default.yaml
+        - quotes-db-charts/values-local.yaml
+        namespace: my-project
+        wait: true
+- name: quotes-db-do
+  deploy:
+    helm:
+      releases:
+      - name: quotes-db
+        chartPath: quotes-db-charts
+        valuesFiles:
+        - quotes-db-charts/values-default.yaml
+        - quotes-db-charts/values-do.yaml
+        namespace: my-project
+        wait: true

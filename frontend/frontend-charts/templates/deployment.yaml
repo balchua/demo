@@ -79,11 +79,6 @@ spec:
               configMapKeyRef:
                 name: {{ template "frontend.name" . }}
                 key: vote-service-port
-          - name: SENTRY_DSN
-            valueFrom:
-              secretKeyRef:
-                name: {{ template "frontend.name" . }}
-                key: sentry-dsn
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
       dnsPolicy: ClusterFirst

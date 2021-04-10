@@ -1,4 +1,4 @@
-apiVersion: skaffold/v1
+apiVersion: skaffold/v2beta13
 kind: Config
 profiles:
 - name: local
@@ -9,20 +9,18 @@ profiles:
       jib: {}
     local:
       push: true
-      useDockerCLI: false
   deploy:
     helm:
       releases:
       - name: frontend
         chartPath: frontend-charts
-        namespace: my-project
-        wait: true
         valuesFiles:
         - frontend-charts/values-default.yaml
         - frontend-charts/values-local.yaml
-        values:
+        artifactOverrides:
           image.repository: localhost:32000/frontend
-
+        namespace: my-project
+        wait: true
 - name: do
   build:
     artifacts:
@@ -31,16 +29,15 @@ profiles:
       jib: {}
     local:
       push: true
-      useDockerCLI: false
   deploy:
     helm:
       releases:
       - name: frontend
         chartPath: frontend-charts
-        namespace: my-project
-        wait: true
         valuesFiles:
         - frontend-charts/values-default.yaml
         - frontend-charts/values-do.yaml
-        values:
+        artifactOverrides:
           image.repository: balchu/frontend
+        namespace: my-project
+        wait: true

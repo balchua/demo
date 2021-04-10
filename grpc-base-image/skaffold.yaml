@@ -1,8 +1,8 @@
-apiVersion: skaffold/v1beta11
+apiVersion: skaffold/v2beta13
 kind: Config
 build:
+  artifacts:
+  - image: balchu/grpc-base
   tagPolicy:
     envTemplate:
-      template: "{{.IMAGE_NAME}}:{{.GRPC_BASE_CURRENT_VERSION}}"
-  artifacts:
-    - image: balchu/grpc-base
+      template: '{{.GRPC_BASE_CURRENT_VERSION}}'

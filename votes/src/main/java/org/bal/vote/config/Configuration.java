@@ -3,11 +3,10 @@ package org.bal.vote.config;
 
 import brave.rpc.RpcRequest;
 import brave.rpc.RpcRuleSampler;
-import brave.sampler.Matcher;
 import brave.sampler.Sampler;
 import brave.sampler.SamplerFunction;
 import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.cloud.sleuth.instrument.rpc.RpcServerSampler;
+import org.springframework.cloud.sleuth.brave.instrument.rpc.RpcServerSampler;
 import org.springframework.context.annotation.Bean;
 
 import static brave.rpc.RpcRequestMatchers.serviceEquals;

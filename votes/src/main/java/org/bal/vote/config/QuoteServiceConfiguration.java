@@ -1,11 +1,10 @@
 package org.bal.vote.config;
 
-
 import io.grpc.ManagedChannel;
 import org.bal.quote.proto.internal.QuoteManagementGrpc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.sleuth.instrument.grpc.SpringAwareManagedChannelBuilder;
+import org.springframework.cloud.sleuth.brave.instrument.grpc.SpringAwareManagedChannelBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -5,3 +5,6 @@ image:
 db:
   pvc:
     enabled: false
+
+zipkin:
+  host: "http://simplest-collector.default:9411"

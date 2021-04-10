@@ -11,7 +11,7 @@ The demo also presents better observability with Prometheus, Grafana, Loki and S
 
 ## Prerequisites:
 
-1. Kubernetes cluster (ex. [microk8s](https://microk8s.io/) ) 
+1. [MicroK8s](https://microk8s.io/) ) 
 2. Docker
 3. [Skaffold](https://skaffold.dev/) version 1.17.1
 4. [Helm](https://helm.sh/), version 3
@@ -29,6 +29,12 @@ Install MicroK8s to easily bootstrap a Kubernetes cluster.  For simplicity we wi
 $ sudo snap install microk8s --channel 1.19/stable
 $ microk8s config > $HOME/.kube/config #Export the kubeconfig to the default location
 ```
+
+Enable the following addons:
+* microk8s enable rbac
+* microk8s enable dns
+* microk8s enable prometheus
+* microk8s enable jaeger
 
 ### Install kubectl
 
@@ -70,23 +76,9 @@ Make sure that you set the http url to `http://loki:3100`
 
 After that click ***Save and Test***
 
-### Sign up to Sentry
+## Distributed Tracing
 
-#### What is Sentry
-
-*Sentry is a service that helps you monitor and fix crashes in realtime. The server is in Python, but it contains a full API for sending events from any language, in any application.*
-
-You can sign up for free [here](https://sentry.io/welcome/)
-
-The java source codes already comes with Sentry Java SDK.
-
-Sample screenshot from the application.
-
-![Sentry issues page](assets/sentry-1.png)
-
-![Sentry drill down](assets/sentry-2.png)
-
-### Zipkin
+### Zipkin Option
 
 To start Zipkin
 
@@ -111,6 +103,40 @@ Sample screenshot
 ![Zipkin](assets/zipkin-1.png)
 
 ![Zipkin Drill Down](assets/zipkin-2.png)
+
+### Jaeger
+
+If you are using MicroK8s, you can simply enable the jaeger addon.
+
+```shell
+microk8s enable jaeger
+```
+This will deploy Jaeger operator and the simplest Jaeger into the `default` namespace.
+
+After enabling the addon, you should see the `jaeger-operator` and the `simplest` pods running in the `default` namespace.
+
+```shell
+kubectl get pods
+NAME                               READY   STATUS    RESTARTS   AGE
+jaeger-operator-85fb5c9745-q2lgk   1/1     Running   0          66s
+simplest-54b7455bf9-9dnlz          1/1     Running   0          58s
+```
+
+To access the Jaeger UI, simply do port forwarding to the simplest pod.
+
+```shell
+kubectl port-forward svc/simplest-query 16686
+Forwarding from 127.0.0.1:16686 -> 16686
+Forwarding from [::1]:16686 -> 16686
+```
+
+Then you can access it with `localhost:16686`
+![Jaeger dashboard](assets/jaeger-dashboard-1.png)
+
+Drill-down
+![Jaeger Spans](assets/jaeger-dashboard-2.png)
+
+In the `master` branch jaeger addon is the default collector endpoint used.
 
 ## Project structure
   

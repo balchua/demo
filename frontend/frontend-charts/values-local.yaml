@@ -6,10 +6,10 @@ linkerd:
   enabled: false
 
 ingress:
-  host: "frontend.10.152.183.83.nip.io"
+  host: "frontend.127.0.0.1.nip.io"
 
-keycloak:
-  auth_server_url: http://keycloak.10.152.183.83.nip.io/auth
-  clientSecret: b6ea155f-e521-4add-a2a6-885d23b8e2a8
-  clientId: frontend
-  realm: demo
+zipkin:
+  host: "http://simplest-collector.default:9411"
+
+sentry:
+  client_dsn: https://caf6e96f48f646daa151b14d1cbb90f0@o487195.ingest.sentry.io/5545720

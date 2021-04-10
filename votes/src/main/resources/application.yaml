@@ -29,7 +29,7 @@ grpc:
 
 logging:
   pattern:
-    console: "%d [%X{traceId}/%X{spanId}] [%thread] %-5level %logger{36} - %m %replace(%xException){'\n','\u2028'}%nopex%n"
+    console: "%d [%X{traceId}/%X{spanId}] [%thread] %-5level %logger{36} - %m%n"
   level:
     org.bal: DEBUG
 
