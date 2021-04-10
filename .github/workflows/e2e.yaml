@@ -55,7 +55,6 @@ jobs:
       - name: Build and install the votes service
         run: |
           cd votes
-          yq w -i vote-charts/values-default.yaml sentry.client_dsn $SENTRY_DSN
           skaffold run -p votes-db-local
           skaffold run -p local
           kubectl -n my-project wait --for=condition=available --timeout=600s deployment/votes
