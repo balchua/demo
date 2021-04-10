@@ -7,17 +7,17 @@ It is a simple project that lists quotes from Marvel movies and users can vote w
 
 The application then tally the votes.
 
-The demo also presents better observability with Prometheus, Grafana, Loki and Sentry
+The demo also presents better observability with Prometheus, Grafana, Loki and Jaeger/Zipkin
 
 ## Prerequisites:
 
-1. [MicroK8s](https://microk8s.io/) ) 
+1. [MicroK8s](https://microk8s.io/)
 2. Docker
-3. [Skaffold](https://skaffold.dev/) version 1.17.1
-4. [Helm](https://helm.sh/), version 3
+3. [Skaffold](https://skaffold.dev/) version 1.21.1
+4. [Helm](https://helm.sh/), version 3.5.0+
 4. [Maven](https://maven.apache.org/)
 5. [jib-maven-plugin](https://github.com/GoogleContainerTools/jib/tree/master/jib-maven-plugin)
-6. Observability tools - Prometheus, Grafana, Loki and Sentry
+6. Observability tools - Prometheus, Grafana, Loki and Jaeger / Zipkin
 
 ## Install Infrastructure
 
@@ -26,15 +26,15 @@ The demo also presents better observability with Prometheus, Grafana, Loki and S
 Install MicroK8s to easily bootstrap a Kubernetes cluster.  For simplicity we will use a single node MicroK8s.
 
 ```shell script
-$ sudo snap install microk8s --channel 1.19/stable
-$ microk8s config > $HOME/.kube/config #Export the kubeconfig to the default location
+$ sudo snap install microk8s --channel 1.21/stable
+$ microk8s config -l > $HOME/.kube/config #Export the kubeconfig to the default location
 ```
 
-Enable the following addons:
-* microk8s enable rbac
-* microk8s enable dns
-* microk8s enable prometheus
-* microk8s enable jaeger
+These addons must be enabled:
+* rbac
+* dns
+* prometheus
+* jaeger
 
 ### Install kubectl
 
@@ -44,7 +44,7 @@ $ sudo snap install kubectl --classic
 
 ### Create your application namespace
 
-We will be installing your application to `my-projecct` namespace.
+We will be installing your application to `my-project` namespace.
 
 ```
 $ kubectl create ns my-project
