@@ -25,8 +25,10 @@ public class HealthService extends HealthGrpc.HealthImplBase {
         HealthCheckResponse response = null;
 
         if (voteId == null) {
+            log.debug("NOT OK");
             response = HealthCheckResponse.newBuilder().setStatus(HealthCheckResponse.ServingStatus.NOT_SERVING).build();
         } else {
+            log.debug("OK");
             response = HealthCheckResponse.newBuilder().setStatus(HealthCheckResponse.ServingStatus.SERVING).build();
         }
         

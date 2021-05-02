@@ -1,4 +1,4 @@
-package org.bal.vote.server;
+package org.bal.vote.server.service;
 
 import com.google.protobuf.Empty;
 import io.grpc.ManagedChannel;
