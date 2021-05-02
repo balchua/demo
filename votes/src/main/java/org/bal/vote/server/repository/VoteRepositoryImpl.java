@@ -8,7 +8,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -48,21 +47,20 @@ public class VoteRepositoryImpl implements VoteRepository {
     public List<Vote> getAllVotes(List<Quote> quotes) {
 
         List<String> keys = new ArrayList<>();
-        quotes.forEach(quote -> {
-           keys.add(KEY_PREFIX + quote.getId());
-        });
+        quotes.forEach(quote -> keys.add(KEY_PREFIX + quote.getId()));
 
         List<Integer> results = redisTemplate.opsForValue().multiGet(keys);
-
-        log.info("Size of votes: {}", results.size());
+        if (results != null) {
+            log.info("Size of votes: {}", results.size());
+        }
 
         List<Vote> votes = new ArrayList<>();
-        final AtomicInteger index = new AtomicInteger();
+        final var index = new AtomicInteger();
         quotes.forEach(quote -> {
             int count = index.getAndIncrement();
             Integer voteCount = 0;
             if (results.get(count) != null ){
-                voteCount = Integer.valueOf((Integer)results.get(count));
+                voteCount = Integer.valueOf(results.get(count));
             }
             log.info("Quote id: {} has {} many votes", String.valueOf(quote.getId()), voteCount);
             votes.add(Vote.newBuilder().setId(quote.getId()).setQuoteId(quote.getId()).setQuote(quote.getQuote()).setCount(voteCount).build());

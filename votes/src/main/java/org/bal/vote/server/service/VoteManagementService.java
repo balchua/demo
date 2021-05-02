@@ -39,15 +39,15 @@ public class VoteManagementService extends VoteManagementGrpc.VoteManagementImpl
             return;
         }
         voteRepository.castVote(request.getQuoteId());
-        Quote q = quoteClient.getQuoteById(request.getQuoteId());
-        String message = String.format("'%s'", q.getQuote());
+        var q = quoteClient.getQuoteById(request.getQuoteId());
+        var message = String.format("'%s'", q.getQuote());
         responseObserver.onNext(VoteResponse.newBuilder().setStatusMessage(message).build());
         responseObserver.onCompleted();
     }
 
     @Override
     public void getAllVotes(Empty request, StreamObserver<VotesList> responseObserver) {
-        VotesList.Builder builder = VotesList.newBuilder();
+        var builder = VotesList.newBuilder();
 
         List<Quote> quotes = quoteClient.allQuotes();
 
