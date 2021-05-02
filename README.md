@@ -2,6 +2,9 @@
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fbalchua%2Fdemo.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fbalchua%2Fdemo?ref=badge_shield)
 ![Build Demo project](https://github.com/balchua/demo/workflows/Build%20Demo%20project/badge.svg?branch=master)
 
+Quotes module: [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=demo-quotes&metric=alert_status)](https://sonarcloud.io/dashboard?id=demo-quotes)
+
+Votes module: [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=demo-votes&metric=alert_status)](https://sonarcloud.io/dashboard?id=demo-votes)
 This project is a simple demonstration of microservices using Springboot integrated with Zipkin.
 It is a simple project that lists quotes from Marvel movies and users can vote which one of them they like.
 
