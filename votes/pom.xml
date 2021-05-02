@@ -41,6 +41,7 @@
         <sonar.language>java</sonar.language>
         <sonar.sources>src/main/java</sonar.sources>
         <sonar.test.exclusions>*</sonar.test.exclusions>
+        <sonar.exclusions>src/test</sonar.exclusions>
     </properties>
     <dependencyManagement>
         <dependencies>
