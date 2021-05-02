@@ -47,6 +47,13 @@ jobs:
           skaffold run -p local
           kubectl -n my-project wait --for=condition=available --timeout=600s deployment/zipkin
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
       - name: Build protos
         run: |
           cd protos
@@ -60,8 +67,12 @@ jobs:
           kubectl -n my-project wait --for=condition=available --timeout=600s deployment/votes
 
       - name: Build and install the quotes service
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           cd quotes
+          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           skaffold run -p quotes-db-local
           skaffold run -p local
           kubectl -n my-project wait --for=condition=available --timeout=600s deployment/quotes

@@ -17,7 +17,6 @@
 package org.bal.starters;
 
 
-import org.bal.quote.server.repository.QuoteRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;

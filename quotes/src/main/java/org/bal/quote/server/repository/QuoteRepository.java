@@ -1,6 +1,5 @@
 package org.bal.quote.server.repository;
 
-import org.springframework.cloud.sleuth.SpanName;
 import org.springframework.cloud.sleuth.annotation.NewSpan;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

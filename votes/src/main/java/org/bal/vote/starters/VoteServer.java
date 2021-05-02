@@ -19,7 +19,6 @@ package org.bal.vote.starters;
 
 import lombok.extern.slf4j.Slf4j;
 import org.bal.vote.config.Configuration;
-import org.bal.vote.config.QuoteServiceConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.bal.quote.proto.internal.Quote;
 import org.bal.vote.proto.internal.Vote;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.sleuth.SpanName;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;

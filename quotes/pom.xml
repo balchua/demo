@@ -30,6 +30,9 @@
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
         <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
         <os-maven-plugin.version>1.6.2</os-maven-plugin.version>
+        <sonar.projectKey>demo-quotes</sonar.projectKey>
+        <sonar.organization>balchua</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -159,6 +162,7 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
         </dependency>
+
     </dependencies>
     <build>
         <extensions>
