@@ -16,14 +16,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Component
 @Slf4j
 public class VoteRepositoryImpl implements VoteRepository {
-
-    @Autowired
     private RedisTemplate<String, Integer> redisTemplate;
 
-    @Resource(name = "redisTemplate")
     private ValueOperations<String, Integer> valueOps;
 
     private static final String KEY_PREFIX = "quote:";
+
+    @Autowired
+    public VoteRepositoryImpl(RedisTemplate<String, Integer> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+        this.valueOps = redisTemplate.opsForValue();
+    }
 
     @Override
     public void castVote(int quoteId) {
