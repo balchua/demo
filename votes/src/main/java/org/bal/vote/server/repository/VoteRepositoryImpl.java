@@ -60,7 +60,7 @@ public class VoteRepositoryImpl implements VoteRepository {
             int count = index.getAndIncrement();
             Integer voteCount = 0;
             if (results.get(count) != null ){
-                voteCount = Integer.valueOf(results.get(count));
+                voteCount = results.get(count);
             }
             log.info("Quote id: {} has {} many votes", String.valueOf(quote.getId()), voteCount);
             votes.add(Vote.newBuilder().setId(quote.getId()).setQuoteId(quote.getId()).setQuote(quote.getQuote()).setCount(voteCount).build());
