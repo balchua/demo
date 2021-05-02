@@ -32,10 +32,14 @@ public class QuoteManagementService extends QuoteManagementGrpc.QuoteManagementI
 
 
         Optional<QuoteEntity> quoteResponse = quoteRepository.findById(request.getId());
-        QuoteEntity reply = quoteResponse.get();
-        log.info("Hi {}", reply.getName());
-        Quote quote = Quote.newBuilder().setName(reply.getName()).setId(reply.getId()).setQuote(reply.getQuote()).build();
-        responseObserver.onNext(quote);
+
+        if (quoteResponse.isPresent()) {
+            QuoteEntity reply = quoteResponse.get();
+            log.info("Hi {}", reply.getName());
+            Quote quote = Quote.newBuilder().setName(reply.getName()).setId(reply.getId()).setQuote(reply.getQuote()).build();
+            responseObserver.onNext(quote);
+        }
+
         responseObserver.onCompleted();
     }
 

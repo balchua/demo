@@ -32,9 +32,9 @@ public class VoteServer {
     /**
      * Main launches the server from the command line.
      */
-    public static void main(String... args) throws Exception {
+    public static void main(String... args) {
 
-        SpringApplication.run(VoteServer.class, args);
+        SpringApplication.run(VoteServer.class);
     }
 
 

@@ -29,7 +29,7 @@ public class HealthService extends HealthGrpc.HealthImplBase {
 
         HealthCheckResponse response = null;
 
-        if (Optional.of(quote).isEmpty()) {
+        if (quote.isEmpty()) {
             response = HealthCheckResponse.newBuilder().setStatus(HealthCheckResponse.ServingStatus.NOT_SERVING).build();
         } else {
             response = HealthCheckResponse.newBuilder().setStatus(HealthCheckResponse.ServingStatus.SERVING).build();

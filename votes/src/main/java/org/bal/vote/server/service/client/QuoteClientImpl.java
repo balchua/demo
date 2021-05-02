@@ -26,7 +26,7 @@ public class QuoteClientImpl implements QuoteClient {
      * @param quoteId, the quote id
      */
     public Quote getQuoteById(int quoteId) {
-        Quote quote = blockingStub.getQuoteById(QuoteById.newBuilder().setId(quoteId).build());
+        var quote = blockingStub.getQuoteById(QuoteById.newBuilder().setId(quoteId).build());
 
         log.debug("Quote id: {}, Quote: {}", quote.getId(), quote.getQuote());
         return quote;

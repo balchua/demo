@@ -1,6 +1,5 @@
 package org.bal.vote.server.repository;
 
-import com.google.api.Quota;
 import org.bal.quote.proto.internal.Quote;
 import org.bal.vote.proto.internal.Vote;
 import org.junit.jupiter.api.DisplayName;
@@ -9,7 +8,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -17,11 +15,11 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class VoteRepositoryTest {
+class VoteRepositoryTest {
 
     @Test
     @DisplayName("Must allow to vote")
-    public void mustAllowToVote(){
+    void mustAllowToVote(){
         RedisTemplate<String, Integer> redisTemplate = mock(RedisTemplate.class);
         ValueOperations<String, Integer> valueOps = (ValueOperations<String, Integer>) mock(ValueOperations.class);
         when(valueOps.increment("quote:1")).thenReturn(Long.valueOf(1));
@@ -34,7 +32,7 @@ public class VoteRepositoryTest {
 
     @Test
     @DisplayName("Must allow to get the number of votes for a quote.")
-    public void shouldReturnTheNumberOfVotesForAQuote(){
+    void shouldReturnTheNumberOfVotesForAQuote(){
         RedisTemplate<String, Integer> redisTemplate = mock(RedisTemplate.class);
         ValueOperations<String, Integer> valueOps = (ValueOperations<String, Integer>) mock(ValueOperations.class);
         when(valueOps.get("quote:1")).thenReturn(Integer.valueOf(10));
@@ -43,12 +41,12 @@ public class VoteRepositoryTest {
 
         VoteRepositoryImpl repo = new VoteRepositoryImpl(redisTemplate);
         assertThat(repo.getVote(1)).isEqualTo(10);
-        assertThat(repo.getVote(2)).isEqualTo(0);
+        assertThat(repo.getVote(2)).isZero();
     }
 
     @Test
     @DisplayName("Must allow to get all the votes for all quotes.")
-    public void shouldReturnAllVotesOfAllQuotes(){
+    void shouldReturnAllVotesOfAllQuotes(){
         RedisTemplate<String, Integer> redisTemplate = mock(RedisTemplate.class);
         ValueOperations<String, Integer> valueOps = (ValueOperations<String, Integer>) mock(ValueOperations.class);
         when(redisTemplate.opsForValue()).thenReturn(valueOps);

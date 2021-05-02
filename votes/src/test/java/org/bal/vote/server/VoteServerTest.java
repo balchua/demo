@@ -42,7 +42,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {TestConfig.class})
 @Slf4j
-public class VoteServerTest {
+class VoteServerTest {
 
     /**
      * This creates and starts an in-process server, and creates a starters with an in-process channel.
@@ -73,7 +73,7 @@ public class VoteServerTest {
     }
 
     @BeforeEach
-    public void setUp() throws Exception {
+    void setUp() throws Exception {
         // Generate a unique in-process server name.
         String serverName = InProcessServerBuilder.generateName();
 
@@ -90,7 +90,7 @@ public class VoteServerTest {
      * behaviors or state changes from the starters side.
      */
     @Test
-    public void should_add_a_vote() throws Exception {
+    void should_add_a_vote() throws Exception {
 
         VoteManagementGrpc.VoteManagementBlockingStub blockingStub =
                 VoteManagementGrpc.newBlockingStub(inProcessChannel);

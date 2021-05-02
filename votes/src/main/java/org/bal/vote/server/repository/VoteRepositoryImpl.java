@@ -20,6 +20,7 @@ public class VoteRepositoryImpl implements VoteRepository {
     private ValueOperations<String, Integer> valueOps;
 
     private static final String KEY_PREFIX = "quote:";
+    private static final String QUOTE_LOGS = "Quote id: {} has {} many votes";
 
     @Autowired
     public VoteRepositoryImpl(RedisTemplate<String, Integer> redisTemplate) {
@@ -30,7 +31,7 @@ public class VoteRepositoryImpl implements VoteRepository {
     @Override
     public void castVote(int quoteId) {
         Long votesCasted = valueOps.increment(KEY_PREFIX + String.valueOf(quoteId), 1l);
-        log.info("Quote id: {} has {} many votes", String.valueOf(quoteId), votesCasted);
+        log.info(QUOTE_LOGS, String.valueOf(quoteId), votesCasted);
     }
 
     @Override
@@ -39,7 +40,7 @@ public class VoteRepositoryImpl implements VoteRepository {
         if (votesCasted == null) {
             votesCasted = Integer.valueOf(0);
         }
-        log.info("Quote id: {} has {} many votes", String.valueOf(quoteId), votesCasted);
+        log.info(QUOTE_LOGS, String.valueOf(quoteId), votesCasted);
         return votesCasted;
     }
 
@@ -62,7 +63,7 @@ public class VoteRepositoryImpl implements VoteRepository {
             if (results.get(count) != null ){
                 voteCount = results.get(count);
             }
-            log.info("Quote id: {} has {} many votes", String.valueOf(quote.getId()), voteCount);
+            log.info(QUOTE_LOGS, String.valueOf(quote.getId()), voteCount);
             votes.add(Vote.newBuilder().setId(quote.getId()).setQuoteId(quote.getId()).setQuote(quote.getQuote()).setCount(voteCount).build());
 
         });

@@ -66,7 +66,7 @@ public class VoteManagementService extends VoteManagementGrpc.VoteManagementImpl
 
     @Override
     public void getAllVotesWithMultiget(Empty request, StreamObserver<VotesList> responseObserver) {
-        VotesList.Builder builder = VotesList.newBuilder();
+        var builder = VotesList.newBuilder();
 
         List<Quote> quotes = quoteClient.allQuotes();
 
@@ -85,7 +85,7 @@ public class VoteManagementService extends VoteManagementGrpc.VoteManagementImpl
 
     private void failVoteCasting(int quoteId) {
         if (quoteId == 2) {
-            IllegalArgumentException ex = new IllegalArgumentException("Unable to cast vote to Hulk Smash.");
+            var ex = new IllegalArgumentException("Unable to cast vote to Hulk Smash.");
             log.error("Invalid Vote", ex);
             throw ex;
         }
