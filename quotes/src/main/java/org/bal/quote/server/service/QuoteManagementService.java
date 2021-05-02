@@ -36,7 +36,7 @@ public class QuoteManagementService extends QuoteManagementGrpc.QuoteManagementI
         if (quoteResponse.isPresent()) {
             QuoteEntity reply = quoteResponse.get();
             log.info("Hi {}", reply.getName());
-            Quote quote = Quote.newBuilder().setName(reply.getName()).setId(reply.getId()).setQuote(reply.getQuote()).build();
+            var quote = Quote.newBuilder().setName(reply.getName()).setId(reply.getId()).setQuote(reply.getQuote()).build();
             responseObserver.onNext(quote);
         }
 
@@ -49,7 +49,7 @@ public class QuoteManagementService extends QuoteManagementGrpc.QuoteManagementI
         List<QuoteEntity> quotes = quoteRepository.findAll();
         log.info("allQuotes size: {}", quotes.size());
 
-        QuoteList.Builder builder = QuoteList.newBuilder();
+        var builder = QuoteList.newBuilder();
 
         for (QuoteEntity quote : quotes) {
             builder.addQuotes(Quote.newBuilder().setQuote(quote.getQuote()).setId(quote.getId()).setName(quote.getName()).build());

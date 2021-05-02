@@ -21,7 +21,6 @@ public class HealthService extends HealthGrpc.HealthImplBase {
     @Autowired
     private QuoteRepository quoteRepository;
 
-
     @Override
     public void check(io.grpc.health.v1.HealthCheckRequest request,
                       io.grpc.stub.StreamObserver<io.grpc.health.v1.HealthCheckResponse> responseObserver) {
@@ -30,8 +29,10 @@ public class HealthService extends HealthGrpc.HealthImplBase {
         HealthCheckResponse response = null;
 
         if (quote.isEmpty()) {
+            log.debug("NOT OK");
             response = HealthCheckResponse.newBuilder().setStatus(HealthCheckResponse.ServingStatus.NOT_SERVING).build();
         } else {
+            log.debug("OK");
             response = HealthCheckResponse.newBuilder().setStatus(HealthCheckResponse.ServingStatus.SERVING).build();
         }
 

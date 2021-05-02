@@ -30,7 +30,7 @@
         <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
         <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
         <os-maven-plugin.version>1.6.2</os-maven-plugin.version>
-
+        <logcaptor.version>2.5.0</logcaptor.version>
         <jacoco.version>0.8.6</jacoco.version>
         <sonar.projectKey>demo-quotes</sonar.projectKey>
         <sonar.organization>balchua</sonar.organization>
@@ -40,6 +40,7 @@
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
         <sonar.language>java</sonar.language>
+        <sonar.sources>src/main/java</sonar.sources>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -170,6 +171,12 @@
             <version>${lombok.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.github.hakky54</groupId>
+            <artifactId>logcaptor</artifactId>
+            <version>${logcaptor.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <extensions>
@@ -196,7 +203,9 @@
                     <output>file</output>
                     <append>true</append>
                     <excludes>
-                        <exclude>*MethodAccess</exclude>
+                        <exclude>org.bal.quote.proto.*</exclude>
+                        <exclude>org.bal.vote.proto.*</exclude>
+                        <exclude>org.bal.starters.*</exclude>
                     </excludes>
                 </configuration>
                 <executions>

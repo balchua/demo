@@ -22,8 +22,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-import java.util.logging.Logger;
-
 /**
  * Server that manages startup/shutdown of a {@code Greeter} server.
  */
@@ -31,14 +29,13 @@ import java.util.logging.Logger;
 @EnableJpaRepositories("org.bal.quote.server.repository")
 @EntityScan("org.bal.quote.server.repository")
 public class QuoteServer {
-    private static final Logger logger = Logger.getLogger(QuoteServer.class.getName());
 
     /**
      * Main launches the server from the command line.
      */
-    public static void main(String... args) throws Exception {
+    public static void main(String... args) {
 
-        SpringApplication.run(QuoteServer.class, args);
+        SpringApplication.run(QuoteServer.class);
     }
 
 
