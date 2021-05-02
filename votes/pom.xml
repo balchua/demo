@@ -187,7 +187,8 @@
                     <output>file</output>
                     <append>true</append>
                     <excludes>
-                        <exclude>*MethodAccess</exclude>
+                        <exclude>org.bal.quote.proto.*</exclude>
+                        <exclude>org.bal.vote.proto.*</exclude>
                     </excludes>
                 </configuration>
                 <executions>
