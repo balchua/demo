@@ -18,7 +18,7 @@
         <release.train.version>2020.0.2</release.train.version>
         <grpc.version>1.36.0</grpc.version>
         <slf4j.version>1.7.30</slf4j.version>
-        <logback.version>1.2.3</logback.version>
+        <logback.version>1.2.10</logback.version>
         <image-registry-host>localhost</image-registry-host>
         <image-registry-port>32000</image-registry-port>
         <jib.version>3.0.0</jib.version>
