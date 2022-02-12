@@ -11,6 +11,7 @@ spec:
   - protocol: TCP
     port: 9411
     targetPort: 9411
+    nodePort: 31941
   selector:
     run: zipkin
-  type: ClusterIP
+  type: NodePort

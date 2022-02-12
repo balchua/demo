@@ -5,6 +5,7 @@
 Quotes module: [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=demo-quotes&metric=alert_status)](https://sonarcloud.io/dashboard?id=demo-quotes)
 
 Votes module: [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=demo-votes&metric=alert_status)](https://sonarcloud.io/dashboard?id=demo-votes)
+
 This project is a simple demonstration of microservices using Springboot integrated with Zipkin.
 It is a simple project that lists quotes from Marvel movies and users can vote which one of them they like.
 

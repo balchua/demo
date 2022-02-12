@@ -46,7 +46,6 @@ public class HealthTest {
     @MockBean
     private QuoteRepository quoteRepository;
 
-
     @Autowired
     private HealthService service;
 
@@ -75,15 +74,15 @@ public class HealthTest {
         entity.setId(0);
         entity.setName("Steve Rogers");
         entity.setQuote("test me");
-
+        LogCaptor logCaptor = LogCaptor.forClass(HealthService.class);
         HealthGrpc.HealthBlockingStub blockingStub = HealthGrpc.newBlockingStub(inProcessChannel);
 
         when(quoteRepository.findById(0)).thenReturn(Optional.of(entity));
 
         blockingStub.check(HealthCheckRequest.newBuilder().build());
 
-        LogCaptor logCaptor = LogCaptor.forClass(HealthService.class);
-        logCaptor.getDebugLogs().contains("OK");
+ 
+        assertThat(logCaptor.getDebugLogs().contains("OK")).isTrue();
     }
 
     @Test

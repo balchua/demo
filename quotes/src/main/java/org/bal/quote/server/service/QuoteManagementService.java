@@ -11,7 +11,6 @@ import org.bal.quote.proto.internal.QuoteManagementGrpc;
 import org.bal.quote.server.repository.QuoteEntity;
 import org.bal.quote.server.repository.QuoteRepository;
 import org.lognet.springboot.grpc.GRpcService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -22,10 +21,11 @@ import java.util.Optional;
 @Component
 @Slf4j
 public class QuoteManagementService extends QuoteManagementGrpc.QuoteManagementImplBase {
-
-    @Autowired
     private QuoteRepository quoteRepository;
 
+    public QuoteManagementService(QuoteRepository quoteRepository) {
+        this.quoteRepository = quoteRepository;
+    }
     @Override
     public void getQuoteById(QuoteById request,
                              StreamObserver<Quote> responseObserver) {

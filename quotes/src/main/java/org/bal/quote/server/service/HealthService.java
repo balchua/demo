@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.bal.quote.server.repository.QuoteEntity;
 import org.bal.quote.server.repository.QuoteRepository;
 import org.lognet.springboot.grpc.GRpcService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -18,8 +17,11 @@ import java.util.Optional;
 @Slf4j
 public class HealthService extends HealthGrpc.HealthImplBase {
 
-    @Autowired
     private QuoteRepository quoteRepository;
+
+    public HealthService(QuoteRepository quoteRepository) {
+        this.quoteRepository = quoteRepository;
+    }
 
     @Override
     public void check(io.grpc.health.v1.HealthCheckRequest request,
