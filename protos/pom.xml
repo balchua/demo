@@ -7,7 +7,7 @@
     <groupId>org.bal.app</groupId>
     <version>2.0.3</version>
     <properties>
-        <grpc.version>1.36.0</grpc.version><!-- CURRENT_GRPC_VERSION -->
+        <grpc.version>1.53.0</grpc.version><!-- CURRENT_GRPC_VERSION -->
         <javax.annotation.version>1.3.2</javax.annotation.version>
         <protoc.version>3.15.8</protoc.version>
         <grpc-common-protos.version>2.0.1</grpc-common-protos.version>
